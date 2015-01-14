@@ -1,0 +1,16 @@
+@import url(PTSans/stylesheet.css);
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+body {
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
+  background-attachment: fixed;
+  font-family: "HelveticaNeue-Light", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  height: 1536px;
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
+  width: 2048px; }

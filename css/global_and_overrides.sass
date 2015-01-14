@@ -1,0 +1,61 @@
+//import lib's styles
+@import "jq-mobile.min.css"
+
+$menu-width: 450px
+$display-height: 1536px
+$display-width: 2048px
+$status-bar-height: 40px
+
+$menu-height: $display-height - $status-bar-height
+$menu-item-height: 250px
+$menu-item-margin-top: 30px
+$menu-items-height: ($menu-item-height + $menu-item-margin-top) * 5
+$menu-margin-top: ( $menu-height - $menu-items-height ) / 2
+
+
+$dark-gray: #414141
+$light-gray: #8f8f8f
+$disable-links-color: #c6c6c6
+
+@import 'PTSans/stylesheet.css'
+
+*
+  -webkit-tap-highlight-color: rgba(0,0,0,0) /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+
+
+body
+  -webkit-touch-callout: none                /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none             /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none                  /* prevent copy paste, to allow, change 'none' to 'text' */
+  background-attachment: fixed
+  font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif
+  font-size: 12px
+  min-height: $display-height
+  max-height: $display-height
+  height: $display-height
+  margin: 0px
+  padding: 0px
+  width: $display-width
+  max-width: $display-width
+  min-width: $display-width
+  border: 1px solid
+
+a
+  text-decoration: none
+  color: inherit
+  &:hover, &:active, &:focus, &:visited
+    color: inherit
+
+.wrapper
+  width: $display-width
+  height: $display-height
+
+.status-bar
+  width: 100%
+  height: $status-bar-height
+
+.content, .ui-mobile .ui-page-active
+  width: $display-width - $menu-width !important
+  height: $display-height - $status-bar-height !important
+  position: inherit
+  margin-left: $menu-width

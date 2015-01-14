@@ -1,0 +1,122 @@
+@import url(jq-mobile.min.css);
+@import url(PTSans/stylesheet.css);
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+body {
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
+  background-attachment: fixed;
+  font-family: "HelveticaNeue-Light", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  min-height: 1536px;
+  max-height: 1536px;
+  height: 1536px;
+  margin: 0px;
+  padding: 0px;
+  width: 2048px;
+  max-width: 2048px;
+  min-width: 2048px;
+  border: 1px solid; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+  a:hover, a:active, a:focus, a:visited {
+    color: inherit; }
+
+.wrapper {
+  width: 2048px;
+  height: 1536px; }
+
+.status-bar {
+  width: 100%;
+  height: 40px; }
+
+.content, .ui-mobile .ui-page-active {
+  width: 1598px !important;
+  height: 1496px !important;
+  position: inherit;
+  margin-left: 450px; }
+
+.menu {
+  position: absolute;
+  background-color: white;
+  width: 450px;
+  height: 1496px;
+  font-size: 29px;
+  vertical-align: middle; }
+
+.menu-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 48px;
+  height: 250px; }
+  .menu-items li {
+    text-align: center;
+    margin-top: 30px; }
+    .menu-items li a {
+      width: 165px;
+      margin: 0 auto; }
+    .menu-items li .menu-icon {
+      height: 213px;
+      width: 165px;
+      margin: 0 auto; }
+  .menu-items li.disable {
+    color: #c6c6c6; }
+  .menu-items .objects-menu-item .menu-icon {
+    background-image: url("images/objects-menu.png"); }
+  .menu-items .objects-menu-item.active .menu-icon {
+    background-image: url("images/objects-menu.png"); }
+  .menu-items .material-menu-item .menu-icon {
+    background-image: url("images/material-menu.png"); }
+  .menu-items .material-menu-item.active .menu-icon {
+    background-image: url("images/material-menu.png"); }
+  .menu-items .empl-menu-item .menu-icon {
+    background-image: url("images/empl-menu.png"); }
+  .menu-items .empl-menu-item.active .menu-icon {
+    background-image: url("images/empl-menu.png"); }
+  .menu-items .tech-menu-item .menu-icon {
+    background-image: url("images/tech-menu.png"); }
+  .menu-items .tech-menu-item.active .menu-icon {
+    background-image: url("images/tech-menu.png"); }
+  .menu-items .avto-menu-item .menu-icon {
+    background-image: url("images/avto-menu.png"); }
+  .menu-items .avto-menu-item.active .menu-icon {
+    background-image: url("images/avto-menu.png"); }
+
+.main-window {
+  background-image: url("images/main-window_bg.jpg");
+  height: 100%;
+  width: 100%; }
+
+.main-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 960px;
+  height: 100%;
+  float: right;
+  text-align: center; }
+  .main-content .main-logo {
+    background-color: #f0f3f6;
+    background-image: url("images/main-logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 212px;
+    margin-bottom: 190px; }
+  .main-content .main-info-part-header {
+    font-size: 40px;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 500px;
+    margin: 0 auto;
+    color: #414141; }
+  .main-content .main-info-pert-data {
+    font-size: 36px;
+    color: #8f8f8f;
+    margin-top: 40px; }
+  .main-content hr {
+    margin: 90px 320px;
+    border-bottom: 1px solid #8f8f8f;
+    border-top: 1px solid #8f8f8f; }
