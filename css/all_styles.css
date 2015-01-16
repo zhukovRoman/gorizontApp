@@ -218,7 +218,8 @@ a {
 
 .left-content {
   padding: 10px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  margin-bottom: 20px; }
 
 .object-search-result .object-item {
   width: 460px;
@@ -234,6 +235,31 @@ a {
     background-size: cover; }
   .object-search-result .object-item .object-item-info {
     height: 70px; }
+
+.object-search-result-header span:first-child, .object-search-result a span:first-child {
+  width: 100%;
+  text-align: left; }
+
+.object-search-result-header span:last-child, .object-search-result a span:last-child {
+  min-width: 140px;
+  text-align: center; }
+
+.object-search-result a {
+  font-size: 30px;
+  color: #737b7e;
+  border-bottom: 2px solid #8f8f8f;
+  height: 80px;
+  line-height: 80px;
+  padding-right: 30px;
+  padding-left: 10px;
+  display: inline-block; }
+  .object-search-result a span {
+    display: table-cell; }
+
+#objects_map {
+  float: left;
+  width: 700px;
+  height: 1300px; }
 
 .touch-filter {
   width: 100%;
