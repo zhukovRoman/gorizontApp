@@ -43,7 +43,7 @@ var gorizontApp = {
     },
     showMenu: function(e){
         console.log('swipe')
-        if ( e.swipestart.coords[0] <100) {
+
             $('#new_menu').animate({
                 left: 0
             }, {
@@ -54,7 +54,7 @@ var gorizontApp = {
             }, {
                 duration: gorizontApp.options.animationDuration, queue: false
             })
-        }
+
     },
     hideMenu: function(){
         $('#new_menu').animate({
