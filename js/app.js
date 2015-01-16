@@ -32,27 +32,8 @@ var gorizontApp = {
                 duration: gorizontApp.options.animationDuration, queue: false
             })
         })
-        $(document).on( "pageshow",'#objects', function( event ) {
-            $('#type-filter').touchFilter({
-                name: "Объект",
-                items: [['roads','Дороги'],['junction','Переход'],['bridges','Мосты']]
-            })
-
-            $('#type-filter').on('tf.change', function(){console.log($('#type-filter').touchFilter('getValues'))})
-
-
-            $('#distinct-filter').touchFilter({
-                name: "Округ",
-                columns: 4,
-                items: [['СВАО','СВАО'],['ЗАО','ЗАО'],['САО','САО'],['ЮВАО','ЮВАО'],
-                    ['ВАО','ВАО'],['ЮАО','ЮАО'],['ЮЗАО','ЮЗАО'],['СЗАО','СЗАО'],
-                    ['ЦАО','ЦАО']]
-            })
-
-            $('#menu-button').click(gorizontApp.toggleMenu)
-            $( ".content" ).on( "swiperight", gorizontApp.showMenu)
-            $( ".content" ).on( "swipeleft", gorizontApp.hideMenu)
-        })
+        $(document).on( "pageshow",'#objects', gorizontApp.objects.onShowActions)
+        $(document).on('pagebeforehide', gorizontApp.hideMenu);
     },
     toggleMenu: function(){
         if ($('#new_menu').css('left') == '0px')
@@ -60,17 +41,20 @@ var gorizontApp = {
         else
             gorizontApp.showMenu()
     },
-    showMenu: function(){
-        $('#new_menu').animate({
-            left: 0
-        }, {
-            duration: gorizontApp.options.animationDuration, queue: false
-        })
-        $('.content').animate({
-            'margin-left': '478px'
-        }, {
-            duration: gorizontApp.options.animationDuration, queue: false
-        })
+    showMenu: function(e){
+        console.log('swipe')
+        if ( e.swipestart.coords[0] <100) {
+            $('#new_menu').animate({
+                left: 0
+            }, {
+                duration: gorizontApp.options.animationDuration, queue: false
+            })
+            $('.content').animate({
+                'margin-left': '478px'
+            }, {
+                duration: gorizontApp.options.animationDuration, queue: false
+            })
+        }
     },
     hideMenu: function(){
         $('#new_menu').animate({
@@ -83,11 +67,8 @@ var gorizontApp = {
         }, {
             duration: gorizontApp.options.animationDuration, queue: false
         })
-    },
-    filterObjects: function(){
-
-        console.log($(this).val())
     }
+
 
 }
 

@@ -576,7 +576,7 @@ var utils = require('cordova/utils'),
  *
  * onDOMContentLoaded*         Internal event that is received when the web page is loaded and parsed.
  * onNativeReady*              Internal event that indicates the Cordova native side is ready.
- * onCordovaReady*             Internal event fired when all Cordova JavaScript objects have been created.
+ * onCordovaReady*             Internal event fired when all Cordova JavaScript objects.js have been created.
  * onDeviceReady*              User event fired to indicate that Cordova is ready
  * onResume                    User event fired to indicate a start/resume lifecycle event
  * onPause                     User event fired to indicate a pause lifecycle event
@@ -775,7 +775,7 @@ channel.createSticky('onDOMContentLoaded');
 // Event to indicate the Cordova native side is ready.
 channel.createSticky('onNativeReady');
 
-// Event to indicate that all Cordova JavaScript objects have been created
+// Event to indicate that all Cordova JavaScript objects.js have been created
 // and it's time to run plugin constructors.
 channel.createSticky('onCordovaReady');
 
@@ -1215,14 +1215,14 @@ setTimeout(function() {
 }, 0);
 
 /**
- * Create all cordova objects once native side is ready.
+ * Create all cordova objects.js once native side is ready.
  */
 channel.join(function() {
     modulemapper.mapModules(window);
 
     platform.initialize && platform.initialize();
 
-    // Fire event to notify that all objects are created
+    // Fire event to notify that all objects.js are created
     channel.onCordovaReady.fire();
 
     // Fire onDeviceReady event once page has fully loaded, all
@@ -1322,13 +1322,13 @@ if (window._nativeReady) {
 platform.bootstrap && platform.bootstrap();
 
 /**
- * Create all cordova objects once native side is ready.
+ * Create all cordova objects.js once native side is ready.
  */
 channel.join(function() {
     
     platform.initialize && platform.initialize();
 
-    // Fire event to notify that all objects are created
+    // Fire event to notify that all objects.js are created
     channel.onCordovaReady.fire();
 
     // Fire onDeviceReady event once page has fully loaded, all

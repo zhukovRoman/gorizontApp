@@ -9,6 +9,10 @@
     <script type="application/javascript" src="/js/libs/jq-mobile-1.4.5.min.js"></script>
     <script type="application/javascript" src="js/filter_plugin.js"></script>
     <link rel="stylesheet" type="text/css" href="css/all_styles.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+
     <meta name="msapplication-tap-highlight" content="no" />
     <title>Горизонт</title>
 </head>
@@ -26,20 +30,13 @@
         </div><!-- /header -->
         <div class="left-content">
             <input id="objects_search_input" type="text" class="search-input" placeholder="Поиск"/>
-            <div class="object-search-result">
-                <div class="object-item">
-                    <div class="object-item-map"></div>
-                    <div class="object-item-info">Москва сити</div>
+            <div id="objects_map"></div>
+            <div class="objects-search-wrapper">
+                <div class="object-search-result-header list-header">
+                    <span>Название</span>
+                    <span>Тип</span>
                 </div>
-                <div class="object-item">
-                    <div class="object-item-map"></div>
-                    <div class="object-item-info">
-                        Москва сити
-                    </div>
-                </div>
-                <div class="object-item">
-                    <div class="object-item-map"></div>
-                    <div class="object-item-info">Москва сити</div>
+                <div class="object-search-result gorizont-list" id="object_search_result">
                 </div>
             </div>
         </div>
@@ -58,25 +55,16 @@
 </div>
 </body>
 <script type="application/javascript" src="js/app.js"></script>
+<script type="application/javascript" src="js/objs.js"></script>
+<script type="application/javascript" src="js/data/objects_data.js"></script>
+<script type="application/javascript">
+    $(function(){
+        gorizontApp.objects.onShowActions();
+    })
+
+</script>
    <script>
-       $(function(){
-           $('#type-filter').touchFilter({
-               name: "Объект",
-               items: [['roads','Дороги'],['junction','Переход'],['bridges','Мосты']]
-           })
 
-           $('#type-filter').on('tf.change', function(){console.log($('#type-filter').touchFilter('getValues'))})
-
-           $('#objects_search_input').on('keyup', gorizontApp.filterObjects);
-
-           $('#distinct-filter').touchFilter({
-               name: "Округ",
-               columns: 4,
-               items: [['СВАО','СВАО'],['ЗАО','ЗАО'],['САО','САО'],['ЮВАО','ЮВАО'],
-                        ['ВАО','ВАО'],['ЮАО','ЮАО'],['ЮЗАО','ЮЗАО'],['СЗАО','СЗАО'],
-                        ['ЦАО','ЦАО']]
-           })
-       })
 
    </script>
 </html>
