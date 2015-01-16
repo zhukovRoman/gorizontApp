@@ -72,6 +72,28 @@ a {
     font-size: 32px;
     text-transform: uppercase; }
 
+.objects-search-wrapper {
+  width: 700px;
+  float: right; }
+
+.list-header {
+  font-size: 26px;
+  color: #737b7e;
+  text-transform: uppercase;
+  border-bottom: 4px solid #8f8f8f;
+  height: 80px;
+  line-height: 80px;
+  padding-right: 30px;
+  font-weight: bold;
+  padding-left: 10px; }
+  .list-header span {
+    display: table-cell; }
+
+.gorizont-list a {
+  background-image: url("images/right-arrow.png");
+  background-repeat: no-repeat;
+  background-position: right; }
+
 .ui-input-text {
   border: 1px solid #8f8f8f; }
   .ui-input-text .search-input {
