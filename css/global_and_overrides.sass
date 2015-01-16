@@ -1,7 +1,7 @@
 //import lib's styles
-@import "jq-mobile.min.css"
-@import 'PTSans/stylesheet.css'
-@import "font-awesome/font-awesome.min.css"
+@import "jq-mobile.min"
+//@import 'PTSans/stylesheet.css'
+@import "font-awesome/font-awesome.min.scss"
 
 $menu-width: 450px
 $display-height: 1536px
@@ -101,5 +101,24 @@ a
     color: $dark-gray
     font-size: 32px
     text-transform: uppercase
+.objects-search-wrapper
+  width: 700px
+  float: right
 
-
+.list-header
+  font-size: 26px
+  color: $dark-font
+  text-transform: uppercase
+  border-bottom: 4px solid $light-gray
+  height: 80px
+  line-height: 80px
+  padding-right: 30px
+  font-weight: bold
+  padding-left: 10px
+  span
+    display: table-cell
+.gorizont-list
+  a
+    background-image: url('images/right-arrow.png')
+    background-repeat: no-repeat
+    background-position: right
