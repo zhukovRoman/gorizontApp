@@ -1,0 +1,74 @@
+$border-bottom-color: #d7dbdf
+$filter-name-color: #737b7e
+
+
+.touch-filter
+  input
+    display: none
+
+  width: 100%
+  border-bottom: 3px solid $border-bottom-color
+  margin-top: 30px
+  .tf-header
+    height: 60px
+    border-bottom: 5px solid $border-bottom-color
+    color: $filter-name-color
+    padding: 0 12px
+    label
+      font-size: 30px
+      font-weight: bold
+      text-transform: uppercase
+      vertical-align: middle
+      display: table-cell
+      margin: 0
+      height: 60px
+      width: 100%
+      background-repeat: no-repeat
+      background-position: left center
+      padding-left: 50px
+
+    input:checked+label
+      background-image: url('images/tf-header-checked.png')
+
+    input+label
+      background-image: url('images/tf-unchecked.png')
+
+    .additional-action
+      font-size: 26px
+      display: table-cell
+      text-align: right
+      height: 60px
+      vertical-align: middle
+      text-transform: lowercase
+      width: 200px
+      min-width: 200px
+      cursor: pointer
+  .tf-body
+    .tf-row
+      display: inline-block
+      line-height: 90px
+      vertical-align: middle
+      height: 90px
+      width: 100%
+      box-sizing: border-box
+      border-bottom: 2px solid $border-bottom-color
+      font-size: 24px
+      padding: 0 12px
+      label
+        display: inline-block
+        height: 85px
+        margin: 0
+        color: $filter-name-color
+        background-repeat: no-repeat
+        background-position: left center
+        padding-left: 50px
+        box-sizing: border-box
+
+    input:checked+label
+      background-image: url('images/tf-checked.png')
+
+    input+label
+      background-image: url('images/tf-unchecked.png')
+
+
+

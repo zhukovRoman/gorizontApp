@@ -1,10 +1,13 @@
 //import lib's styles
 @import "jq-mobile.min.css"
+@import 'PTSans/stylesheet.css'
+@import "font-awesome/font-awesome.min.css"
 
 $menu-width: 450px
 $display-height: 1536px
 $display-width: 2048px
 $status-bar-height: 40px
+$header-height: 88px
 
 $menu-height: $display-height - $status-bar-height
 $menu-item-height: 250px
@@ -12,12 +15,16 @@ $menu-item-margin-top: 30px
 $menu-items-height: ($menu-item-height + $menu-item-margin-top) * 5
 $menu-margin-top: ( $menu-height - $menu-items-height ) / 2
 
+$right-side-padding: 10px
+$right-side-width: 600px
+$left-side-width: $display-width - ($right-side-width )
 
 $dark-gray: #414141
 $light-gray: #8f8f8f
 $disable-links-color: #c6c6c6
 
-@import 'PTSans/stylesheet.css'
+$dark-font: #737b7e
+
 
 *
   -webkit-tap-highlight-color: rgba(0,0,0,0) /* make transparent link selection, adjust last value opacity 0 to 1.0 */
@@ -28,7 +35,7 @@ body
   -webkit-text-size-adjust: none             /* prevent webkit from resizing text to fit */
   -webkit-user-select: none                  /* prevent copy paste, to allow, change 'none' to 'text' */
   background-attachment: fixed
-  font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif
+  font-family: 'PT Sans', sans-serif
   font-size: 12px
   min-height: $display-height
   max-height: $display-height
@@ -55,7 +62,44 @@ a
   height: $status-bar-height
 
 .content, .ui-mobile .ui-page-active
-  width: $display-width - $menu-width !important
-  height: $display-height - $status-bar-height !important
+  width: $display-width
+  height: $display-height - $status-bar-height
+  min-height: $display-height - $status-bar-height !important
   position: inherit
-  margin-left: $menu-width
+  margin-left: 0
+
+.left-content
+  float: left
+  width: $left-side-width
+  height: $display-height - $status-bar-height - $header-height
+
+
+.right-content
+  width: $right-side-width
+  float: right
+  height: $display-height - $status-bar-height - $header-height
+  padding: $right-side-padding
+  box-sizing: border-box
+
+.ui-header
+  height: 87px
+  border: 0px
+  border-bottom: 1px solid #eae9e8
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+  -moz-box-shadow:    0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+  box-shadow:         0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+
+  .ui-btn-left
+    font-size: 45px
+    padding: 10px 20px
+
+  .ui-btn-right
+    font-size: 32px
+
+
+  .ui-title
+    color: $dark-gray
+    font-size: 32px
+    text-transform: uppercase
+
+

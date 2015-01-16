@@ -1,0 +1,58 @@
+/*
+Syntax error: Undefined variable: "$dark-gray".
+        on line 3 of objects.sass
+
+1: .filter-row
+2:   font-size: 26px
+3:   color: $dark-gray
+
+Backtrace:
+objects.sass:3
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/script/variable.rb:49:in `_perform'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/script/node.rb:40:in `perform'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:298:in `visit_prop'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:320:in `visit_rule'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/tree/root_node.rb:20:in `render'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/engine.rb:315:in `_render'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/engine.rb:262:in `render'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/plugin/compiler.rb:362:in `update_stylesheet'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/plugin/compiler.rb:201:in `each'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/plugin.rb:81:in `update_stylesheets'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/exec.rb:443:in `watch_or_update'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/exec.rb:326:in `process_result'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/exec.rb:41:in `parse'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/lib/sass/exec.rb:21:in `parse!'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/gems/sass-3.2.19/bin/scss:13:in `<top (required)>'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/bin/scss:23:in `load'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/bin/scss:23:in `<main>'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/bin/ruby_executable_hooks:15:in `eval'
+/Users/zhuk/.rvm/gems/ruby-2.2.0/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Undefined variable: \"$dark-gray\".\A         on line 3 of objects.sass\A \A 1: .filter-row\A 2:   font-size: 26px\A 3:   color: $dark-gray"; }

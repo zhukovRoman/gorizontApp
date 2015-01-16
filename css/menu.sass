@@ -1,3 +1,54 @@
+.new-menu
+  height: $display-height
+  width: 478px
+  position: absolute
+  top: 0px
+  left: -478px
+  //left: -0px
+  background: white
+  z-index: 1
+  -webkit-box-shadow: inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+  -moz-box-shadow:    inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+  box-shadow:         inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
+
+
+  a
+    display: block
+    height: 180px
+    width: 100%
+    line-height: 180px
+    font-size: 28px
+    color: $dark-font
+    padding-left: 180px
+    background-repeat: no-repeat
+    background-size: contain
+    background-position-x: 25px
+
+  //a.objects-menu-item
+  //  background-image: url('images/objects-menu.png')
+  //
+  //a.objects-menu-item
+  //  background-image: url('images/objects-menu.png')
+  //
+  //a.objects-menu-item
+  //  background-image: url('images/objects-menu.png')
+  //
+  //a.objects-menu-item
+  //  background-image: url('images/objects-menu.png')
+  //
+  //a.objects-menu-item
+  //  background-image: url('images/objects-menu.png')
+
+
+  .menu-logo
+    background-image: url('images/logo.png')
+    width: 330px
+    height: 72px
+    margin-left: 30px
+    margin-top: 150px
+    display: block
+    padding: 0
+
 .menu
   position: absolute
   background-color: #ffffff
@@ -28,32 +79,32 @@
   li.disable
     color:  $disable-links-color
 
-  .objects-menu-item  .menu-icon
-    background-image: url('images/objects-menu.png')
+.objects-menu-item  .menu-icon, .new-menu a.objects-menu-item
+  background-image: url('images/objects-menu.png')
 
-  .objects-menu-item.active  .menu-icon
-    background-image: url('images/objects-menu.png')
+.objects-menu-item.active  .menu-icon, .new-menu a.objects-menu-item.active
+  background-image: url('images/objects-menu.png')
 
-  .material-menu-item  .menu-icon
-    background-image: url('images/material-menu.png')
+.material-menu-item  .menu-icon, .new-menu a.material-menu-item
+  background-image: url('images/material-menu.png')
 
-  .material-menu-item.active  .menu-icon
-    background-image: url('images/material-menu.png')
+.material-menu-item.active  .menu-icon, .new-menu a.material-menu-item.active
+  background-image: url('images/material-menu.png')
 
-  .empl-menu-item  .menu-icon
-    background-image: url('images/empl-menu.png')
+.empl-menu-item  .menu-icon, .new-menu a.empl-menu-item
+  background-image: url('images/empl-menu.png')
 
-  .empl-menu-item.active  .menu-icon
-    background-image: url('images/empl-menu.png')
+.empl-menu-item.active  .menu-icon, .new-menu a.empl-menu-item.active
+  background-image: url('images/empl-menu.png')
 
-  .tech-menu-item   .menu-icon
-    background-image: url('images/tech-menu.png')
+.tech-menu-item   .menu-icon, .new-menu a.tech-menu-item
+  background-image: url('images/tech-menu.png')
 
-  .tech-menu-item.active  .menu-icon
-    background-image: url('images/tech-menu.png')
+.tech-menu-item.active  .menu-icon, .new-menu a.tech-menu-item.active
+  background-image: url('images/tech-menu.png')
 
-  .avto-menu-item .menu-icon
-    background-image: url('images/avto-menu.png')
+.avto-menu-item .menu-icon, .new-menu a.avto-menu-item
+  background-image: url('images/avto-menu.png')
 
-  .avto-menu-item.active .menu-icon
-    background-image: url('images/avto-menu.png')
+.avto-menu-item.active .menu-icon , .new-menu a.avto-menu-item.active
+  background-image: url('images/avto-menu.png')
