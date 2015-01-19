@@ -93,7 +93,9 @@ a {
 .gorizont-list a {
   background-image: url("images/right-arrow.png");
   background-repeat: no-repeat;
-  background-position: right; }
+  background-position: right;
+  background-size: 16px 23px;
+  border-bottom: 2px solid #d7dbdf; }
 
 .gorizont-tabs {
   text-align: justify;
@@ -304,7 +306,7 @@ a {
   .object-search-result a {
     font-size: 30px;
     color: #737b7e;
-    border-bottom: 2px solid #8f8f8f;
+    border-bottom: 2px solid #d7dbdf;
     height: 80px;
     line-height: 80px;
     padding-right: 30px;
@@ -371,9 +373,17 @@ a {
   #object_view .chart-control div {
     display: table-cell;
     font-size: 30px; }
-  #object_view .chart-control .current-month {
+  #object_view .chart-control .current-month, #object_view .chart-control .current-year {
     width: 100%;
     text-align: center; }
+    #object_view .chart-control .current-month > div, #object_view .chart-control .current-year > div {
+      vertical-align: top;
+      display: inline-block;
+      margin: 0; }
+      #object_view .chart-control .current-month > div > div, #object_view .chart-control .current-year > div > div {
+        padding: 0; }
+      #object_view .chart-control .current-month > div:after, #object_view .chart-control .current-year > div:after {
+        content: ""; }
   #object_view .chart-control .left-arrow {
     padding-left: 100px; }
   #object_view .chart-control .right-arrow {

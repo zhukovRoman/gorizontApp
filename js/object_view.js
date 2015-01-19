@@ -1,74 +1,27 @@
-gorizontApp.objects={
-    current_id:null,
-    current_object:null,
-    filterObjects: function(){
-        console.log($(this).val())
-
-    },
-    onShowActions: function(){
-        $.mobile.defaultPageTransition = 'slide'
-        //bind events
-        $('#type-filter').touchFilter({
-            name: "Объект",
-            items: [['roads','Дороги'],['junction','Переход'],['bridges','Мосты']]
-        })
-
-        $('#distinct-filter').touchFilter({
-            name: "Округ",
-            columns: 4,
-            items: [['СВАО','СВАО'],['ЗАО','ЗАО'],['САО','САО'],['ЮВАО','ЮВАО'],
-                ['ВАО','ВАО'],['ЮАО','ЮАО'],['ЮЗАО','ЮЗАО'],['СЗАО','СЗАО'],
-                ['ЦАО','ЦАО']]
-        })
-
-
-        $('#type-filter').on('tf.change', function(){console.log($('#type-filter').touchFilter('getValues'))})
-
-        $('#objects_search_input').on('keyup', gorizontApp.objects.filterObjects);
-
-        gorizontApp.objects.bindRowsInList();
-
-        var map = L.map('objects_map').setView([55.5705, 37.43], 10);
-        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '',
-            //id: 'examples.map-20v6611k'
-            id: 'zhuk99.kpafdddm'
-        }).addTo(map);
-
-        map.dragging.enable()
-
-    },
-    bindRowsInList: function(){
-        var container = $('#object_search_result')
-        $.each(objects, function (i,val){
-            var a = $(document.createElement('a')).attr('href', 'object_detail.html?id='+val.id)
-            a.append($(document.createElement('span')).text(val.name))
-            a.append($(document.createElement('span')).text(val.type))
-            container.append(a)
-        })
-    },
+gApp.object_view = {
+    current_id: null,
+    current_object: null,
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
         $.each(objects, function(i,val){
-            if(val.id==gorizontApp.objects.current_id)
-                gorizontApp.objects.current_object = val;
+            if(val.id==gApp.object_view.current_id)
+                gApp.object_view.current_object = val;
         })
 
-        $('#object_view .left-content [name=object-view-tab]').on('change', gorizontApp.objects.changeObjectViewTab)
-        gorizontApp.objects.changeObjectViewTab();
+        $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
+        gApp.object_view.changeObjectViewTab();
 
     },
     changeObjectViewTab: function(){
         $('#object_view .tab-content').hide();
         var current_tab=$('#object_view .left-content [name=object-view-tab]:checked').attr('id')
         if (current_tab=='budget')
-            gorizontApp.objects.fillBudgetTab();
+            gApp.object_view.fillBudgetTab();
         if (current_tab=='consumption')
-            gorizontApp.objects.fillConsumptionTab();
+            gApp.object_view.fillConsumptionTab();
         if (current_tab=='material')
-            gorizontApp.objects.fillBudgetTab();
+            gApp.object_view.fillBudgetTab();
     },
     fillBudgetTab: function(){
         //show map
@@ -76,26 +29,19 @@ gorizontApp.objects={
         $('#object_view .left-content').css('width',"1448px")
 
         $('#object_view .budget-content').show();
-        gorizontApp.objects.fillObjectInfo()
-        gorizontApp.objects.initMap()
-        gorizontApp.objects.drawConsumptionChart();
-        gorizontApp.objects.drawBudgetChart();
+        gApp.object_view.fillObjectInfo()
+        gApp.object_view.initMap()
+        gApp.object_view.drawConsumptionChart();
+        gApp.object_view.drawBudgetChart();
     },
-    fillConsumptionTab: function() {
-        $('#object_view .consumption-content').show();
-        $('#object_view .right-content').hide();
-        $('#object_view .left-content').css('width',"100%")
 
-        gorizontApp.objects.drawConsumtionYearChart();
-        gorizontApp.objects.drawConsumtionMonthChart();
-    },
     fillObjectInfo: function(){
         $.each($('#object_view [data-value-name]'), function(i, element){
-          $(element).text(gorizontApp.objects.current_object[$(element).attr('data-value-name')])
+            $(element).text(gApp.object_view.current_object[$(element).attr('data-value-name')])
         })
     },
     initMap: function(){
-        var obj =  gorizontApp.objects.current_object
+        var obj =  gApp.object_view.current_object
         var map = L.map('object_map', {
             zoomControl: false,
             dragging: false,
@@ -110,7 +56,7 @@ gorizontApp.objects={
             id: 'zhuk99.kpafdddm'
         }).addTo(map);
         L.marker(obj.latlng).addTo(map)
-        map.dragging.disable()
+
 
     } ,
     drawConsumptionChart: function(){
@@ -161,8 +107,8 @@ gorizontApp.objects={
                 innerSize: '45%',
                 size: 550,
                 data: [
-                    ['Израсходовано материалов на сумму', gorizontApp.objects.current_object.material_spent],
-                    ['Осталось материалов на сумму', gorizontApp.objects.current_object.material_left]
+                    ['Израсходовано материалов на сумму', gApp.object_view.current_object.material_spent],
+                    ['Осталось материалов на сумму', gApp.object_view.current_object.material_left]
                 ]
             }]
         });
@@ -228,16 +174,65 @@ gorizontApp.objects={
             },
             series: [{
                 name: 'Закуплено материалов на сумму',
-                data: [gorizontApp.objects.current_object.current_year_budget_spent]
+                data: [gApp.object_view.current_object.current_year_budget_spent]
             }, {
                 name: 'Остаток бюджета',
-                data: [gorizontApp.objects.current_object.current_year_budget-
-                        gorizontApp.objects.current_object.current_year_budget_spent]
+                data: [gApp.object_view.current_object.current_year_budget-
+                gApp.object_view.current_object.current_year_budget_spent]
             }]
         });
 
     },
+
+    //Consumption tab
+    fillConsumptionTab: function() {
+        $('#object_view .consumption-content').show();
+        $('#object_view .right-content').hide();
+        $('#object_view .left-content').css('width',"100%")
+
+
+        gApp.object_view.fillConsumtionYearSelect();
+
+        $('#consumption_current_year').on('change', gApp.object_view.redrawConsumtionCharts)
+        $('#prev_year_button').click(gApp.object_view.selectPrevYear)
+        $('#next_year_button').click(gApp.object_view.selectNextYear)
+
+        gApp.object_view.drawConsumtionYearChart();
+        gApp.object_view.drawConsumtionMonthChart();
+    },
+    fillConsumtionYearSelect: function(){
+        var select = $('#consumption_current_year');
+        $.each(gApp.object_view.current_object.consumption_data, function(year, data){
+            select.append($('<option>', {value:year, text:year}));
+        })
+        select.val($('#consumption_current_year option').last().attr('value'));
+        select.selectmenu( "refresh" );
+    },
+    redrawConsumtionCharts: function(){
+        gApp.object_view.drawConsumtionYearChart();
+        gApp.object_view.drawConsumtionMonthChart();
+    },
+    getCurrentConsumtionYear: function(){
+        return $('#consumption_current_year').val()
+    },
+    selectNextYear: function(){
+        var selected = $('#consumption_current_year option:selected').next();
+        selected = (selected.length==0) ? $('#consumption_current_year option').first() : selected
+        selected.attr('selected', 'selected');
+        $('#consumption_current_year').val(selected.attr('value'))
+        $('#consumption_current_year').selectmenu( "refresh" );
+        gApp.object_view.redrawConsumtionCharts();
+    },
+    selectPrevYear: function(){
+        var selected = $('#consumption_current_year option:selected').prev();
+        selected = (selected.length==0) ? $('#consumption_current_year option').last() : selected
+        selected.attr('selected', 'selected');
+        $('#consumption_current_year').val(selected.attr('value'))
+        $('#consumption_current_year').selectmenu( "refresh" );
+        gApp.object_view.redrawConsumtionCharts();
+    },
     drawConsumtionYearChart: function(){
+        var selected_year=gApp.object_view.getCurrentConsumtionYear();
         var chart = new Highcharts.Chart({
             chart: {
                 type: 'column',
@@ -267,11 +262,11 @@ gorizontApp.objects={
             },
             series: [{
                 name: 'завезено материалов на сумму',
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_bought
 
             }, {
                 name: 'Потрачено материалов на сумму',
-                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_spent
 
             }]
         });
@@ -305,7 +300,7 @@ gorizontApp.objects={
                 }
             },
             legend:{
-              enabled: false
+                enabled: false
             },
 
             series: [{
@@ -315,5 +310,4 @@ gorizontApp.objects={
             }]
         });
     }
-
 }

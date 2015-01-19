@@ -48,7 +48,7 @@ $dark-font: #737b7e
   a
     font-size: 30px
     color: $dark-font
-    border-bottom: 2px solid $light-gray
+    border-bottom: 2px solid $super-light-gray
     height: 80px
     line-height: 80px
     padding-right: 30px
@@ -122,9 +122,17 @@ $dark-font: #737b7e
     div
       display: table-cell
       font-size: 30px
-    .current-month
+    .current-month, .current-year
       width: 100%
       text-align: center
+      & > div
+        vertical-align: top
+        display: inline-block
+        margin: 0
+        & > div
+          padding: 0
+        &:after
+          content: ''
     .left-arrow
       padding-left: 100px
       //float: left
