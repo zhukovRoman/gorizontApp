@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, target-densitydpi=medium-dpi" />
+    <script type="application/javascript" src="/js/libs/jquery-2.1.3.min.js"></script>
+    <script type="application/javascript" src="/js/libs/jq-mobile-1.4.5.min.js"></script>
+    <script type="application/javascript" src="/js/filter_plugin.js"></script>
+    <script type="application/javascript" src="/js/libs/highcharts.js"></script>
+    <script type="application/javascript" src="/js/common_script.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/all_styles.css" />
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>Горизонт</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="status-bar"></div>
+    <div class="new-menu" id="new_menu">
+
+    </div>
+    <div id="object_view" class="content" data-role="page" style="">
+        <div data-role="header" class="shadow">
+            <a href="#"  data-rel="back"  class="ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+            <h1 data-value-name="name"></h1>
+
+        </div><!-- /header -->
+        <div class="left-content">
+            <div class="object-tabs gorizont-tabs" data-role="none">
+                <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" checked="checked" data-role="none">
+                <label for="budget">Бюджет</label>
+                <input type="radio" name="object-view-tab" id="consumption" data-content-div=consumption-content" data-role="none">
+                <label for="consumption">Расход</label>
+                <input type="radio" name="object-view-tab" id="material" data-content-div="material-content" data-role="none">
+                <label for="material">Материалы</label>
+            </div>
+            <div class="budget-content tab-content">
+                <div class="object-chart shadow" id="consumption_chart"></div>
+                <div class="object-chart shadow" id="budget_chart"></div>
+                <div class="object-info">
+                    <h1>Параметры объекта</h1>
+                    <div class="info-part">
+                        <h4>Назначение объекта:</h4>
+                        <div class="object-info-content" data-value-name="full_type"></div>
+                    </div>
+                    <div class="info-part">
+                        <h4>Адрес объекта:</h4>
+                        <div class="object-info-content" data-value-name="address"></div>
+                    </div>
+                    <div class="info-part">
+                        <h4>Начальник объекта:</h4>
+                        <div class="object-info-content" data-value-name="objects_director"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="consumption-content tab-content">
+                <div class="chart-control shadow">
+                    <div class="left-arrow"><i class="fa fa-angle-double-left"></i></div>
+                    <div class="current-month">2015</div>
+                    <div class="right-arrow"><i class="fa fa-angle-double-right"></i></div>
+                </div>
+                <div id="year_consumption_chart" style="height: 595px"></div>
+                <div class="chart-control shadow">
+                    <div class="left-arrow"><i class="fa fa-angle-double-left"></i></div>
+                    <div class="current-month">Январь</div>
+                    <div class="right-arrow"><i class="fa fa-angle-double-right"></i></div>
+                </div>
+                <div id="month_consumption_chart" style="height: 590px"></div>
+            </div>
+        </div>
+        <div class="right-content">
+            <div id="object_map"></div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script type="application/javascript" src="js/app.js"></script>
+<script type="application/javascript" src="js/objs.js"></script>
+<script type="application/javascript" src="js/data/objects_data.js"></script>
+<script type="application/javascript">
+    $(function(){
+       gorizontApp.objects.initObjectDetail(window.location.href)
+    })
+
+</script>
+   <script>
+
+
+   </script>
+</html>

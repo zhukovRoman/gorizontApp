@@ -34,6 +34,19 @@ var gorizontApp = {
         })
         $(document).on( "pageshow",'#objects', gorizontApp.objects.onShowActions)
         $(document).on('pagebeforehide', gorizontApp.hideMenu);
+        $(document).on('pageshow', '#object_view', function(event, data){
+            gorizontApp.objects.initObjectDetail($(this).data('url'));
+        })
+        $(document).on('pageshow', function(e, data){
+            if( data.toPage[0].id!='main'){
+                $('#menu-button').click(gorizontApp.toggleMenu)
+                $( ".content" ).on( "swiperight", gorizontApp.showMenu)
+                $( ".content" ).on( "swipeleft", gorizontApp.hideMenu)
+            }
+
+        });
+
+
     },
     toggleMenu: function(){
         if ($('#new_menu').css('left') == '0px')
@@ -68,7 +81,6 @@ var gorizontApp = {
             duration: gorizontApp.options.animationDuration, queue: false
         })
     }
-
 
 }
 
