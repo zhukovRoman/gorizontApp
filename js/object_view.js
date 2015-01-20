@@ -219,7 +219,8 @@ gApp.object_view = {
         var selected = $('#consumption_current_year option:selected').next();
         selected = (selected.length==0) ? $('#consumption_current_year option').first() : selected
         selected.attr('selected', 'selected');
-        $('#consumption_current_year').val(selected.attr('value'))
+        //$('#consumption_current_year').val(selected.attr('value'))
+        selected.prop('selected', true);
         $('#consumption_current_year').selectmenu( "refresh" );
         gApp.object_view.redrawConsumtionCharts();
     },
@@ -227,7 +228,8 @@ gApp.object_view = {
         var selected = $('#consumption_current_year option:selected').prev();
         selected = (selected.length==0) ? $('#consumption_current_year option').last() : selected
         selected.attr('selected', 'selected');
-        $('#consumption_current_year').val(selected.attr('value'))
+        //$('#consumption_current_year').val(selected.attr('value'))
+        selected.prop('selected', true);
         $('#consumption_current_year').selectmenu( "refresh" );
         gApp.object_view.redrawConsumtionCharts();
     },
