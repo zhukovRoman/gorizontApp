@@ -43,10 +43,15 @@ var gApp = {
                 $( ".content" ).on( "swiperight", gApp.showMenu)
                 $( ".content" ).on( "swipeleft", gApp.hideMenu)
             }
-
+            gApp.attachFastClick();
         });
 
 
+    },
+    attachFastClick: function(){
+        $.each(document.getElementsByClassName('need-fastclick'), function(i,el){
+            FastClick.attach(el);
+        })
     },
     toggleMenu: function(){
         if ($('#new_menu').css('left') == '0px')

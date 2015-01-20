@@ -10,6 +10,7 @@
         <script type="application/javascript" src="js/filter_plugin.js"></script>
         <script type="application/javascript" src="js/libs/highcharts.js"></script>
         <script type="application/javascript" src="js/common_script.js"></script>
+        <script type="application/javascript" src="js/libs/fastclick.js"></script>
         <link rel="stylesheet" type="text/css" href="css/all_styles.css" />
 
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -20,7 +21,7 @@
     <body>
         <div class="wrapper">
             <div class="status-bar"></div>
-            <div class="new-menu" id="new_menu">
+            <div class="new-menu need-fastclick" id="new_menu">
                 <a href="index.html" class="menu-logo"></a>
                 <a href="objects.html" class="menu-item objects-menu-item" data-transition="slide">Объекты</a>
                 <a href="objects.html" class="menu-item material-menu-item" data-transition="slide">Материалы</a>
@@ -28,7 +29,7 @@
                 <a href="objects.html" class="menu-item tech-menu-item" data-transition="slide">Техника</a>
                 <a href="objects.html" class="menu-item avto-menu-item" data-transition="slide">Автопарк</a>
             </div>
-            <div class="menu" id="main_menu">
+            <div class="menu need-fastclick" id="main_menu">
                 <!--<div class="menu-header"></div>-->
                 <ul class="menu-items">
                     <li class="menu-item objects-menu-item">
