@@ -54,7 +54,8 @@ gApp.object_view = {
             maxZoom: 18,
             attribution: '',
             //id: 'examples.map-20v6611k'
-            id: 'zhuk99.kpafdddm'
+            //id: 'zhuk99.kpafdddm'
+            id: 'examples.map-i86l3621'
         }).addTo(map);
         L.marker(obj.latlng).addTo(map)
 

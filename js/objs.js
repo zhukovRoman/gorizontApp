@@ -84,12 +84,13 @@ gApp.objects = {
     ],
     initMap: function() {
 
-        gApp.objects.map = L.map('objects_map').setView([55.5705, 37.43], 10);
+        gApp.objects.map = L.map('objects_map',{maximumAge: 1000000}).setView([55.5705, 37.43], 10);
         L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: '',
             //id: 'examples.map-20v6611k'
-            id: 'zhuk99.kpafdddm'
+            //id: 'zhuk99.kpafdddm'
+            id: 'examples.map-i86l3621'
         }).addTo(gApp.objects.map);
         gApp.objects.map.dragging.enable()
     },
