@@ -98,8 +98,11 @@ gApp.objects = {
         if (gApp.objects.map && gApp.objects.marker_group)
             gApp.objects.map.removeLayer(gApp.objects.marker_group)
         var markerArray = [];
+        var activeIcon = gApp.activeIconForMap();
+        var disactiveIcon = gApp.disactiveIconForMap();
         $.each(gApp.objects.filterate_objects, function (i,obj){
-            markerArray.push(L.marker(obj.latlng))
+            markerArray.push(L.marker(obj.latlng,
+                                {icon: obj.is_complete ? disactiveIcon : activeIcon}))
         })
         if (markerArray.length==0) return
         gApp.objects.marker_group = L.featureGroup(markerArray).addTo(gApp.objects.map);
