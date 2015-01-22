@@ -125,6 +125,12 @@ a {
     border-bottom: 6px solid #f17e30;
     height: 76px; }
 
+#dummy .dummy_header {
+  font-size: 40px;
+  text-align: center;
+  line-height: 300px;
+  color: #737b7e; }
+
 .ui-input-text {
   border: 1px solid #8f8f8f; }
   .ui-input-text .search-input {
