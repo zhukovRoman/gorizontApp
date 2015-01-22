@@ -86,24 +86,24 @@ var gApp = {
     },
     activeIconForMap: function(){
         return L.icon({
-            iconUrl: '../css/images/marker_active@2x.png',
-            iconRetinaUrl: './css/images/marker_active@2x.png',
+            iconUrl: 'img/marker_active.png',
+            iconRetinaUrl: 'img/marker_active@2x.png',
 
-            iconSize:     [46, 79], // size of the icon
+            iconSize:     [46, 74], // size of the icon
             //shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [23, 79], // point of the icon which will correspond to marker's location
+            iconAnchor:   [23, 74], // point of the icon which will correspond to marker's location
             //shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
     },
     disactiveIconForMap: function(){
         return L.icon({
-            iconUrl: '../css/images/marker_disactive@2x.png',
-            iconRetinaUrl: './css/images/marker_disactive@2x.png',
+            iconUrl: 'img/marker_disactive.png',
+            iconRetinaUrl: 'img/marker_disactive@2x.png',
 
-            iconSize:     [44, 79], // size of the icon
+            iconSize:     [46, 74], // size of the icon
             //shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [22, 79], // point of the icon which will correspond to marker's location
+            iconAnchor:   [22, 74], // point of the icon which will correspond to marker's location
             //shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
