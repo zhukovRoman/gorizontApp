@@ -90,7 +90,10 @@ gApp.objects = {
             attribution: '',
             //id: 'examples.map-20v6611k'
             //id: 'zhuk99.kpafdddm'
-            id: 'examples.map-i86l3621'
+            id: 'examples.map-i86l3621',
+            detectRetina: false,
+            reuseTiles: true,
+            unloadInvisibleTiles: false
         }).addTo(gApp.objects.map);
         gApp.objects.map.dragging.enable()
     },
@@ -104,6 +107,7 @@ gApp.objects = {
             markerArray.push(L.marker(obj.latlng,
                                 {icon: obj.is_complete ? disactiveIcon : activeIcon}))
         })
+
         if (markerArray.length==0) return
         gApp.objects.marker_group = L.featureGroup(markerArray).addTo(gApp.objects.map);
         gApp.objects.map.fitBounds(gApp.objects.marker_group.getBounds().pad(0.1));
