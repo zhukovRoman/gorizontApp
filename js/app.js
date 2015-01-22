@@ -37,11 +37,15 @@ var gApp = {
         $(document).on('pageshow', '#object_view', function(event, data){
             gApp.object_view.initObjectDetail($(this).data('url'));
         })
+        gApp.addCommonEvents();
+    },
+    addCommonEvents: function(){
         $(document).on('pageshow', function(e, data){
             if( data.toPage[0].id!='main'){
                 $('#menu-button').click(gApp.toggleMenu)
                 $( ".content" ).on( "swiperight", gApp.showMenu)
                 $( ".content" ).on( "swipeleft", gApp.hideMenu)
+                $( ".need-hide-menu" ).on( "click", gApp.hideMenuByClickOnContent)
             }
             gApp.attachFastClick();
         });
@@ -84,6 +88,10 @@ var gApp = {
             duration: gApp.options.animationDuration, queue: false
         })
     },
+    hideMenuByClickOnContent: function(){
+        if ($('#new_menu').css('left') == '0px')
+            gApp.hideMenu();
+    },
     activeIconForMap: function(){
         return L.icon({
             iconUrl: 'img/marker_active.png',
@@ -107,6 +115,10 @@ var gApp = {
             //shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
+    },
+    setActiveIconOnMenu:function(newActivePage){
+        $('#new_menu a').removeClass('active');
+        $('#new_menu a.'+newActivePage+'-menu-item').addClass('active')
     }
 
 }
