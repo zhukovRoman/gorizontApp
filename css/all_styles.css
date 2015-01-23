@@ -1,6 +1,7 @@
 @import url(jq-mobile.min.css);
 @import url(PTSans/stylesheet.css);
 @import url(font-awesome/font-awesome.min.css);
+@import url(switchery.min.css);
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
@@ -270,7 +271,11 @@ a {
 .filter-row {
   font-size: 26px;
   color: #414141;
-  position: relative; }
+  position: relative;
+  line-height: 50px; }
+  .filter-row .switchery {
+    float: right;
+    margin-right: 20px; }
   .filter-row label {
     position: absolute;
     top: -17px;
@@ -290,14 +295,6 @@ a {
   border: 1px solid #8f8f8f;
   height: 460px;
   float: left; }
-  .object-search-result .object-item .object-item-map {
-    width: 100%;
-    height: 360px;
-    background-image: url("images/map.png");
-    background-repeat: no-repeat;
-    background-size: cover; }
-  .object-search-result .object-item .object-item-info {
-    height: 70px; }
 
 .object-search-result-header span:first-child, .object-search-result a span:first-child {
   width: 100%;
@@ -387,7 +384,11 @@ a {
       display: inline-block;
       margin: 0; }
       #object_view .chart-control .current-month > div > div, #object_view .chart-control .current-year > div > div {
-        padding: 0; }
+        padding: 0;
+        padding-right: 30px;
+        background-image: url("images/schevron_down_icon.png");
+        background-repeat: no-repeat;
+        background-position: right; }
       #object_view .chart-control .current-month > div:after, #object_view .chart-control .current-year > div:after {
         content: ""; }
   #object_view .chart-control .left-arrow {

@@ -18,6 +18,8 @@ gApp.objects = {
             columns: 4,
             items:  gApp.objects.getAllDistinctsByObjects()
         })
+        //var elem = ;
+        new Switchery(document.querySelector('.js-switch'), { color: '#f17e30', size: 'large' });
 
         gApp.objects.initMap();
 
