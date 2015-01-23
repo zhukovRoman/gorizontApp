@@ -6,12 +6,14 @@ var gApp = {
         gApp.bindPageEvents();
     },
     bindPageEvents: function(){
+        $(document).on('pagebeforehide', gApp.hideMenu);
         $( document ).on( "pagebeforehide","#main", function( event ) {
             $('#main_menu').animate({
                 left: '-450px'
             }, {
                 duration: gApp.options.animationDuration, queue: false
             })
+
             $('.content').animate({
                 'margin-left': '0px',
                 width: '2048px'
@@ -25,6 +27,8 @@ var gApp = {
             }, {
                 duration: gApp.options.animationDuration, queue: false
             })
+            $('.content').removeClass('move-content-left')
+            $('.content').removeClass('move-content-right')
             $('.content').animate({
                 'margin-left': '450px',
                 width: '1598px'
@@ -33,7 +37,7 @@ var gApp = {
             })
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
-        $(document).on('pagebeforehide', gApp.hideMenu);
+
         $(document).on('pageshow', '#object_view', function(event, data){
             gApp.object_view.initObjectDetail($(this).data('url'));
         })
@@ -45,7 +49,7 @@ var gApp = {
                 $('#menu-button').click(gApp.toggleMenu)
                 $( ".content" ).on( "swiperight", gApp.showMenu)
                 $( ".content" ).on( "swipeleft", gApp.hideMenu)
-                $( ".need-hide-menu" ).on( "click", gApp.hideMenuByClickOnContent)
+                $( ".need-hide-menu" ).on( "mousedown", gApp.hideMenuByClickOnContent)
             }
             gApp.attachFastClick();
         });
@@ -56,51 +60,40 @@ var gApp = {
         })
     },
     toggleMenu: function(){
-        if ($('#new_menu').css('left') == '0px')
+        if ($('#new_menu').hasClass('show-new-menu'))
             gApp.hideMenu()
         else
             gApp.showMenu()
     },
     showMenu: function(e){
-        console.log('swipe')
-
-            $('#new_menu').animate({
-                left: 0
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            })
-            $('.content').animate({
-                'margin-left': '478px'
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            })
+        $('#new_menu').addClass('show-new-menu')
+        $('.content').addClass('move-content-right')
+        $('#new_menu').removeClass('hide-new-menu')
+        $('.content').removeClass('move-content-left')
 
     },
     hideMenu: function(){
-        $('#new_menu').animate({
-            left: '-478px'
-        }, {
-            duration: gApp.options.animationDuration, queue: false
-        })
-        $('.content').animate({
-            'margin-left': '0px'
-        }, {
-            duration: gApp.options.animationDuration, queue: false
-        })
+        if ($('#new_menu').hasClass('show-new-menu')) {
+            $('#new_menu').addClass('hide-new-menu')
+            $('.content').addClass('move-content-left')
+            $('#new_menu').removeClass('show-new-menu')
+            $('.content').removeClass('move-content-right')
+        }
     },
     hideMenuByClickOnContent: function(){
-        if ($('#new_menu').css('left') == '0px')
+        if ($('#new_menu').hasClass('show-new-menu'))
             gApp.hideMenu();
     },
     activeIconForMap: function(){
         return L.icon({
             iconUrl: 'img/marker_active.png',
             iconRetinaUrl: 'img/marker_active@2x.png',
+            shadowUrl: 'img/marker_shadow.png',
 
             iconSize:     [46, 74], // size of the icon
-            //shadowSize:   [50, 64], // size of the shadow
+            shadowSize:   [72, 61], // size of the shadow
             iconAnchor:   [23, 74], // point of the icon which will correspond to marker's location
-            //shadowAnchor: [4, 62],  // the same for the shadow
+            shadowAnchor: [1, 61],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
     },
@@ -108,11 +101,12 @@ var gApp = {
         return L.icon({
             iconUrl: 'img/marker_disactive.png',
             iconRetinaUrl: 'img/marker_disactive@2x.png',
+            shadowUrl: 'img/marker_shadow.png',
 
             iconSize:     [46, 74], // size of the icon
-            //shadowSize:   [50, 64], // size of the shadow
+            shadowSize:   [72, 61], // size of the shadow
             iconAnchor:   [22, 74], // point of the icon which will correspond to marker's location
-            //shadowAnchor: [4, 62],  // the same for the shadow
+            shadowAnchor: [1, 61],  // the same for the shadow
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
     },

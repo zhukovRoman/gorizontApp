@@ -114,7 +114,7 @@ gApp.objects = {
 
         if (markerArray.length==0) return
         gApp.objects.marker_group = L.featureGroup(markerArray).addTo(gApp.objects.map);
-        gApp.objects.map.fitBounds(gApp.objects.marker_group.getBounds().pad(0.1));
+        gApp.objects.map.fitBounds(gApp.objects.marker_group.getBounds().pad(0.03));
 
 
 

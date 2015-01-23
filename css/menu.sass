@@ -1,3 +1,53 @@
+@-webkit-keyframes content-move-right
+  from
+    margin-left: 0px
+  to
+    margin-left: 478px
+
+@-webkit-keyframes content-move-left
+  from
+    margin-left: 478px
+  to
+    margin-left: 0px
+
+@-webkit-keyframes hide-menu
+  from
+    left: 0px
+  to
+    left: -478px
+
+@-webkit-keyframes show-menu
+  from
+    left: -478px
+  to
+    left: 0px
+
+
+.hide-new-menu
+  animation: hide-menu 400ms
+  -webkit-animation: hide-menu 400ms
+  animation-fill-mode: forwards
+  -webkit-animation-fill-mode: forwards
+.show-new-menu
+  animation: show-menu 1s
+  -webkit-animation: show-menu 1s
+  animation-fill-mode: forwards
+  -webkit-animation-fill-mode: forwards
+
+.move-content-right
+  animation: content-move-right 400ms
+  -webkit-animation: content-move-right 400ms
+  animation-fill-mode: forwards
+  -webkit-animation-fill-mode: forwards
+
+.move-content-left
+  animation: content-move-left 400ms
+  -webkit-animation: content-move-left 400ms
+  animation-fill-mode: forwards
+  -webkit-animation-fill-mode: forwards
+
+
+
 .new-menu
   height: $display-height
   width: 478px
