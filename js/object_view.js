@@ -194,28 +194,48 @@ gApp.object_view = {
 
 
         gApp.object_view.fillConsumtionYearSelect();
+        gApp.object_view.fillConsumptionMonthSelect();
 
-        $('#consumption_current_year').on('change', gApp.object_view.redrawConsumtionCharts)
+        $('#consumption_current_year').on('change', gApp.object_view.redrawConsumtionsCharts)
         $('#prev_year_button').click(gApp.object_view.selectPrevYear)
         $('#next_year_button').click(gApp.object_view.selectNextYear)
+
+        $('#consumption_current_month').on('change', gApp.object_view.drawConsumtionMonthChart)
+        $('#prev_month_button').click(gApp.object_view.selectPrevMonth)
+        $('#next_month_button').click(gApp.object_view.selectNextMonth)
 
         gApp.object_view.drawConsumtionYearChart();
         gApp.object_view.drawConsumtionMonthChart();
     },
     fillConsumtionYearSelect: function(){
         var select = $('#consumption_current_year');
+        select.html('')
         $.each(gApp.object_view.current_object.consumption_data, function(year, data){
             select.append($('<option>', {value:year, text:year}));
         })
         select.val($('#consumption_current_year option').last().attr('value'));
         select.selectmenu( "refresh" );
     },
-    redrawConsumtionCharts: function(){
+    fillConsumptionMonthSelect: function(){
+        var select = $('#consumption_current_month');
+        select.html('')
+        var currentYear = gApp.object_view.getCurrentConsumtionYear();
+        $.each(gApp.object_view.current_object.consumption_data[currentYear].month_data, function(year, data){
+            select.append($('<option>', {value:year, text:year}));
+        })
+        select.val($('#consumption_current_month option').last().attr('value'));
+        select.selectmenu( "refresh" );
+    },
+    redrawConsumtionsCharts: function(){
         gApp.object_view.drawConsumtionYearChart();
+        gApp.object_view.fillConsumptionMonthSelect();
         gApp.object_view.drawConsumtionMonthChart();
     },
     getCurrentConsumtionYear: function(){
         return $('#consumption_current_year').val()
+    },
+    getCurrentConsumtionMonth: function(){
+        return $('#consumption_current_month').val()
     },
     selectNextYear: function(){
         var selected = $('#consumption_current_year option:selected').next();
@@ -224,7 +244,7 @@ gApp.object_view = {
         $('#consumption_current_year option:selected').prop('selected', false)
         selected.prop('selected', true);
         $('#consumption_current_year').selectmenu( "refresh" );
-        gApp.object_view.redrawConsumtionCharts();
+        gApp.object_view.redrawConsumtionsCharts();
     },
     selectPrevYear: function(){
         var selected = $('#consumption_current_year option:selected').prev();
@@ -234,7 +254,24 @@ gApp.object_view = {
         //$('#consumption_current_year').val(selected.attr('value'))
         selected.prop('selected', true);
         $('#consumption_current_year').selectmenu( "refresh" );
-        gApp.object_view.redrawConsumtionCharts();
+        gApp.object_view.redrawConsumtionsCharts();
+    },
+
+    selectNextMonth: function(){
+        var selected = $('#consumption_current_month option:selected').next();
+        selected = (selected.length==0) ? $('#consumption_current_month option').first() : selected
+        $('#consumption_current_month option:selected').prop('selected', false)
+        selected.prop('selected', true);
+        $('#consumption_current_month').selectmenu( "refresh" );
+        gApp.object_view.drawConsumtionMonthChart();
+    },
+    selectPrevMonth: function(){
+        var selected = $('#consumption_current_month option:selected').prev();
+        selected = (selected.length==0) ? $('#consumption_current_month option').last() : selected
+        $('#consumption_current_month option:selected').prop('selected', false)
+        selected.prop('selected', true);
+        $('#consumption_current_month').selectmenu( "refresh" );
+        gApp.object_view.drawConsumtionMonthChart()
     },
     drawConsumtionYearChart: function(){
         var selected_year=gApp.object_view.getCurrentConsumtionYear();
@@ -245,7 +282,7 @@ gApp.object_view = {
                 backgroundColor: 'rgba(255,255,255, 0)'
             },
             title: {
-                text: 'Расход бюджета на материалы ПО МЕСЯЦАМ ЗА 2015 ГОД'
+                text: 'Расход бюджета на материалы ПО МЕСЯЦАМ ЗА '+gApp.object_view.getCurrentConsumtionYear()+' ГОД'
             },
             xAxis: {
                 categories: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
@@ -277,6 +314,8 @@ gApp.object_view = {
         });
     },
     drawConsumtionMonthChart: function(){
+        var selectedMonth = gApp.object_view.getCurrentConsumtionMonth();
+        var selectedYear = gApp.object_view.getCurrentConsumtionYear();
         var chart = new Highcharts.Chart({
             chart: {
                 type: 'column',
@@ -310,7 +349,7 @@ gApp.object_view = {
 
             series: [{
                 name: 'завезено материалов на сумму',
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4, 49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                data: gApp.object_view.current_object.consumption_data[selectedYear].month_data[selectedMonth]
 
             }]
         });
