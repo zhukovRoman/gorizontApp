@@ -9,4 +9,5 @@ function mln_to_text (value){
 
 $(function(){
     $.mobile.defaultPageTransition = 'slide'
+    $.mobile.page.prototype.options.domCache = false;
 });
