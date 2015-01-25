@@ -14,7 +14,7 @@ var gApp = {
                 duration: gApp.options.animationDuration, queue: false
             })
 
-            $('.content').animate({
+            $('.main-window').animate({
                 'margin-left': '0px',
                 width: '2048px'
             }, {
@@ -29,7 +29,7 @@ var gApp = {
             })
             $('.content').removeClass('move-content-left')
             $('.content').removeClass('move-content-right')
-            $('.content').animate({
+            $('.main-window').animate({
                 'margin-left': '450px',
                 width: '1598px'
             }, {
