@@ -46,8 +46,6 @@
   animation-fill-mode: forwards
   -webkit-animation-fill-mode: forwards
 
-
-
 .new-menu
   height: $display-height
   width: 478px
@@ -60,8 +58,6 @@
   -webkit-box-shadow: inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
   -moz-box-shadow:    inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
   box-shadow:         inset 0px 0px 14px 0px rgba(50, 50, 50, 0.15)
-
-
   a
     display: block
     height: 180px
@@ -74,23 +70,6 @@
     background-size: contain
     background-position-x: 25px
     box-sizing: border-box
-
-  //a.objects-menu-item
-  //  background-image: url('images/objects-menu.png')
-  //
-  //a.objects-menu-item
-  //  background-image: url('images/objects-menu.png')
-  //
-  //a.objects-menu-item
-  //  background-image: url('images/objects-menu.png')
-  //
-  //a.objects-menu-item
-  //  background-image: url('images/objects-menu.png')
-  //
-  //a.objects-menu-item
-  //  background-image: url('images/objects-menu.png')
-
-
   .menu-logo
     background-image: url('images/logo.png')
     width: 330px
@@ -100,62 +79,75 @@
     display: block
     padding: 0
 
-.menu
+.main-menu
   position: absolute
   background-color: #ffffff
   width: $menu-width
   height: $menu-height
   font-size: 29px
   vertical-align: middle
-
-.menu-items
-
-  list-style: none
-  margin: 0
-  padding: 0
-  margin-top: $menu-margin-top
-  height: $menu-item-height
-  li
+  border-right: 2px solid $light-light-gray
+  a
+    display: list-item
+    list-style: none
+    padding-top: 250px
     text-align: center
-    margin-top: $menu-item-margin-top
-    a
-      width: 165px
-      margin: 0 auto
+    background-repeat: no-repeat
+    background-position: center
+    vertical-align: bottom
 
-    .menu-icon
-      height: 213px
-      width: 165px
-      margin: 0 auto
+.pages-menu
+  position: absolute
+  background-color: #ffffff
+  width: $menu-width-small
+  height: $menu-height - $header-height
+  margin-top: $header-height
+  font-size: 29px
+  vertical-align: middle
+  border-right: 2px solid $light-light-gray
+  left: -180px
+  a
+    display: list-item
+    list-style: none
+    padding-top: 215px
+    text-align: center
+    background-repeat: no-repeat
+    background-position: center
+    vertical-align: bottom
+    background-size: 150px 200px
+  a.logo
+    padding-top: 60px
+    background-image: url('images/logo_short.png')
+    background-size: contain
+    margin-top: 10px
 
-  li.disable
-    color:  $disable-links-color
 
-.objects-menu-item  .menu-icon, .new-menu a.objects-menu-item
+a.objects-menu-item
   background-image: url('images/objects-menu.png')
 
-.objects-menu-item.active  .menu-icon, .new-menu a.objects-menu-item.active
+a.objects-menu-item.active
   background-image: url('images/objects-menu-active.png')
 
-.material-menu-item  .menu-icon, .new-menu a.material-menu-item
+a.material-menu-item
   background-image: url('images/material-menu.png')
 
-.material-menu-item.active  .menu-icon, .new-menu a.material-menu-item.active
+a.material-menu-item.active
   background-image: url('images/material-menu-active.png')
 
-.empl-menu-item  .menu-icon, .new-menu a.empl-menu-item
+a.empl-menu-item
   background-image: url('images/empl-menu.png')
 
-.empl-menu-item.active  .menu-icon, .new-menu a.empl-menu-item.active
+a.empl-menu-item.active
   background-image: url('images/empl-menu-active.png')
 
-.tech-menu-item   .menu-icon, .new-menu a.tech-menu-item
+a.tech-menu-item
   background-image: url('images/tech-menu.png')
 
-.tech-menu-item.active  .menu-icon, .new-menu a.tech-menu-item.active
+a.tech-menu-item.active
   background-image: url('images/tech-menu-active.png')
 
-.avto-menu-item .menu-icon, .new-menu a.avto-menu-item
+a.avto-menu-item
   background-image: url('images/avto-menu.png')
 
-.avto-menu-item.active .menu-icon , .new-menu a.avto-menu-item.active
+a.avto-menu-item.active
   background-image: url('images/avto-menu-active.png')

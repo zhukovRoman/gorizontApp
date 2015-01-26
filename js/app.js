@@ -8,33 +8,38 @@ var gApp = {
     bindPageEvents: function(){
         $(document).on('pagebeforehide', gApp.hideMenu);
         $( document ).on( "pagebeforehide","#main", function( event ) {
-            $('#main_menu').animate({
-                left: '-450px'
+            $('.content').animate({
+                'padding-left': '0px'
             }, {
                 duration: gApp.options.animationDuration, queue: false
-            })
-
-            $('.main-window').animate({
-                'margin-left': '0px',
-                width: '2048px'
+            });
+            $('.main-menu').animate({
+                'left': '-450px'
             }, {
-                duration: gApp.animationDuration, queue: false
-            })
+                duration: gApp.options.animationDuration, queue: false
+            });
         })
         $( document ).on( "pageshow","#main", function( event ) {
-            $('#main_menu').animate({
-                left: '0px'
+            $('.content').animate({
+                'padding-left': '450px'
             }, {
                 duration: gApp.options.animationDuration, queue: false
             })
-            $('.content').removeClass('move-content-left')
-            $('.content').removeClass('move-content-right')
-            $('.main-window').animate({
-                'margin-left': '450px',
-                width: '1598px'
+            $('.main-menu').animate({
+                'left': '0px'
             }, {
                 duration: gApp.options.animationDuration, queue: false
-            })
+            });
+        })
+
+        $( document ).on( "pagebeforehide", function( event,data ) {
+            console.log(data)
+            if (data.prevPage[0].id=='main')
+                $('.pages-menu').animate({
+                    'left': '-180px'
+                }, {
+                    duration: gApp.options.animationDuration, queue: false
+                });
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
 
@@ -46,10 +51,15 @@ var gApp = {
     addCommonEvents: function(){
         $(document).on('pageshow', function(e, data){
             if( data.toPage[0].id!='main'){
-                $('#menu-button').click(gApp.toggleMenu)
-                $( ".content" ).on( "swiperight", gApp.showMenu)
-                $( ".content" ).on( "swipeleft", gApp.hideMenu)
-                $( ".need-hide-menu" ).on( "mousedown", gApp.hideMenuByClickOnContent)
+                $('.pages-menu').animate({
+                    'left': '0px'
+                }, {
+                    duration: gApp.options.animationDuration, queue: false
+                });
+                //$('#menu-button').click(gApp.toggleMenu)
+                //$( ".content" ).on( "swiperight", gApp.showMenu)
+                //$( ".content" ).on( "swipeleft", gApp.hideMenu)
+                //$( ".need-hide-menu" ).on( "mousedown", gApp.hideMenuByClickOnContent)
             }
             gApp.attachFastClick();
         });

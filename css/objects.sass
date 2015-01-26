@@ -19,11 +19,15 @@
   padding: 10px
   box-sizing: border-box
   margin-bottom: 0px
+  padding-left: 185px
 .objects-search-wrapper
   float: left
+  width: 630px
+  //float: right
+
 .object-search-result
   .object-item
-    width: 460px
+    width: 380px
     margin: 5px
     border: 1px solid $light-gray
     height: 460px
@@ -62,29 +66,39 @@
 
 #objects_map
   float: right
-  width: 700px
+  width: 600px
   height: 1300px
 
-
-
 #object_view
-  .right-content, .left-content
-    padding: 0
+  .left-content
+    padding: 0px
+    padding-left: 180px
     margin-bottom: 0
+    width: 100%
   .object-tabs
     padding: 0 230px
-  .object-chart
-    width: 100%
-    margin-top: 30px
-  #consumption_chart
-    height: 780px
-    border-bottom: 2px solid $light-light-gray
-    box-sizing: border-box
-  #budget_chart
-    height: 300px
-    width: 100%
-    border-bottom: 2px solid $light-light-gray
-    box-sizing: border-box
+  .budget-content
+    padding: 5px
+  .budget-content
+    #material_budget_chart, #finance_budget_chart
+      width: ($display-width - $menu-width-small) / 2 - 20px
+      float: left
+      height: 900px
+    #material_finance_chart
+      width: 1760px
+      height: 420px
+      float: left
+      margin: 0 20px
+
+  //#consumption_chart
+  //  height: 780px
+  //  border-bottom: 2px solid $light-light-gray
+  //  box-sizing: border-box
+  //#budget_chart
+  //  height: 300px
+  //  width: 100%
+  //  border-bottom: 2px solid $light-light-gray
+  //  box-sizing: border-box
 
   .object-info
     width: 100%
@@ -131,7 +145,6 @@
         vertical-align: top
         display: inline-block
         margin: 0
-
         & > div
           padding: 0
           padding-right: 30px
@@ -142,9 +155,7 @@
           content: ''
     .left-arrow
       padding-left: 100px
-      //float: left
     .right-arrow
-      //float: right
       padding-right: 100px
 
 

@@ -10,6 +10,9 @@ $display-width: 2048px
 $status-bar-height: 40px
 $header-height: 88px + 4px
 
+$menu-width-small: 180px
+$content-width_with-small-menu: $display-width - $menu-width-small
+
 
 $menu-height: $display-height - $status-bar-height
 $menu-item-height: 250px
@@ -71,12 +74,12 @@ a
   height: $display-height - $status-bar-height
   min-height: $display-height - $status-bar-height !important
   position: inherit
-  margin-left: 0
 
 .left-content
   float: left
   width: $left-side-width
   height: $display-height - $status-bar-height - $header-height
+  padding-left: 180px
 
 
 .right-content
@@ -109,9 +112,6 @@ a
     color: $dark-gray
     font-size: 32px
     text-transform: uppercase
-.objects-search-wrapper
-  width: 700px
-  float: right
 
 .list-header
   font-size: 26px

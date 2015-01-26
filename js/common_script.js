@@ -8,6 +8,6 @@ function mln_to_text (value){
 }
 
 $(function(){
-    $.mobile.defaultPageTransition = 'slide'
+    $.mobile.defaultPageTransition = 'fade'
     $.mobile.page.prototype.options.domCache = false;
 });

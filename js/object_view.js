@@ -4,13 +4,14 @@ gApp.object_view = {
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
+        this.current_id = 1;
         $.each(objects, function(i,val){
             if(val.id==gApp.object_view.current_id)
                 gApp.object_view.current_object = val;
         })
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
-
+        gApp.object_view.fillObjectInfo()
         gApp.object_view.changeObjectViewTab();
 
     },
@@ -24,20 +25,226 @@ gApp.object_view = {
         if (current_tab=='material')
             gApp.object_view.fillBudgetTab();
     },
-    fillBudgetTab: function(){
+    fillInfoTab: function(){
         //show map
-        $('#object_view .right-content').show();
-        $('#object_view .left-content').css('width',"1448px")
-
+        //$('#object_view .right-content').show();
+        //$('#object_view .left-content').css('width',"1448px")
+        //
+        //$('#object_view .budget-content').show();
+        //gApp.object_view.fillObjectInfo()
+        //gApp.object_view.initMap()
+        //gApp.object_view.drawConsumptionChart();
+        //gApp.object_view.drawBudgetChart();
+    },
+    fillBudgetTab: function(){
         $('#object_view .budget-content').show();
-        gApp.object_view.fillObjectInfo()
-        gApp.object_view.initMap()
-        gApp.object_view.drawConsumptionChart();
-        gApp.object_view.drawBudgetChart();
+        drawMaterialBudgetChart();
+        drawFinanceBudgetChart();
+        drawMaterialFinanceChart();
+
+        function calcAngile (full, part){
+          return (360)*(part/full)
+        };
+        function drawMaterialBudgetChart (){
+            var chart = new Highcharts.Chart({
+                chart: {
+                    type: 'pie',
+                    renderTo:'material_budget_chart',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Материалы'
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        shadow: false,
+                        center: ['50%', '35%'],
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                tooltip: {
+                    enabled: false
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    floating: true,
+                    x: 150,
+                    y: 670,
+                    useHTML: true,
+                    itemMarginBottom: 20,
+                    //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
+                    labelFormatter: function () {
+                        return '<div style="width: 650px; padding-top: 5px">' +
+                            '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
+                            '<div style="text-align: right; float: right; width: 250px;"> '+ (this.y) +' унивресальные шт</div></div>';
+                    }
+                },
+                series: [{
+                    name: 'Бюджет',
+                    data: [{
+                        name: 'Принято материалов',
+                        y: 22
+                    },{
+                        name: 'Осталось закупить',
+                        y:44
+                    }],
+                    size: 450,
+                    innerSize: 300
+                }, {
+                    name: 'Списано',
+                    data: [{
+                        name: 'Списано материалов',
+                        y: 22,
+                        color: 'red'
+                    },],
+                    color: 'red',
+                    size: 550,
+                    innerSize: 450,
+                    startAngle: 0,
+                    endAngle: calcAngile(22+44, 22)
+                }]
+            })
+        };
+        function drawFinanceBudgetChart(){
+            var chart = new Highcharts.Chart({
+                chart: {
+                    type: 'pie',
+                    renderTo:'finance_budget_chart',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Финансы'
+                },
+                yAxis: {
+                    title: {
+                        text: ''
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        shadow: false,
+                        center: ['50%', '35%'],
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                tooltip: {
+                    enabled: false
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    floating: true,
+                    x: 150,
+                    y: 670,
+                    useHTML: true,
+                    itemMarginBottom: 20,
+                    //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
+                    labelFormatter: function () {
+                        return '<div style="width: 650px; padding-top: 5px">' +
+                            '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
+                            '<div style="text-align: right; float: right; width: 250px;"> '+ mln_to_text(this.y) +'</div></div>';
+                    }
+                },
+                series: [{
+                    name: 'Бюджет',
+                    data: [{
+                        name: 'Принято на сумму',
+                        y: 22000000
+                    },{
+                        name: 'Остаток бюджета',
+                        y:40000000
+                    }],
+                    size: 450,
+                    innerSize: 300
+                }, {
+                    name: 'Списано',
+                    data: [{
+                        name: 'Списано на сумму',
+                        y: 22000000,
+                        color: 'red'
+                    },],
+                    color: 'red',
+                    size: 550,
+                    innerSize: 450,
+                    startAngle: 0,
+                    endAngle: 150
+                }]
+            })
+        };
+        function drawMaterialFinanceChart(){
+            var chart = new Highcharts.Chart({
+                chart: {
+                    type: 'bar',
+                    renderTo:'material_finance_chart'
+                },
+                title: {
+                    text: 'Расход бюджета'
+                },
+                xAxis: {
+                    categories: [''],
+                        title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                        title: {
+                        text: ''
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' millions'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Планировали потратить',
+                    data: [107]
+                }, {
+                    name: 'Потратили',
+                    data: [133]
+                }]
+            }
+            )
+        }
+
     },
 
     fillObjectInfo: function(){
         $.each($('#object_view [data-value-name]'), function(i, element){
+            console.log(gApp.object_view.current_object[$(element).attr('data-value-name')])
             $(element).text(gApp.object_view.current_object[$(element).attr('data-value-name')])
         })
     },
