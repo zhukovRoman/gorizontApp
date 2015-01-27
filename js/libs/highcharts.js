@@ -311,8 +311,10 @@ V.LN10))}function nb(a,b,c,d){var e,c=p(c,1);e=a/c;b||(b=[1,2,2.5,5,10],d===!1&&
 Highcharts.theme = {
     colors: ['#f17e30', '#cccccf', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
         '#FF9655', '#FFF263', '#6AF9C4'],
+    colors: ['#f47920', '#cccccf', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
+        '#FF9655', '#FFF263', '#6AF9C4'],
     chart: {
-
+        backgroundColor: 'transparent'
     },
     credits:  {
         enabled: false
@@ -321,7 +323,8 @@ Highcharts.theme = {
         style: {
             color: '#737b7e',
             font: '32px "PT Sans", sans-serif',
-            'text-transform': 'uppercase'
+            'text-transform': 'uppercase',
+            'font-weight': 'bold'
         }
     },
     yAxis:{
