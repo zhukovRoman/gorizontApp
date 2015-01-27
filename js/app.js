@@ -95,6 +95,14 @@ var gApp = {
         if ($('#new_menu').hasClass('show-new-menu'))
             gApp.hideMenu();
     },
+    getMarkerOption: function(obj){
+        var activeIcon = gApp.activeIconForMap();
+        var disactiveIcon = gApp.disactiveIconForMap();
+        return {icon: obj.is_complete ? disactiveIcon : activeIcon}
+    },
+    getMarkerPopupContent: function(obj){
+        return '<a href="/object_view.html?id="'+obj.id+'>'+obj.name+'</a>'
+    },
     activeIconForMap: function(){
         return L.icon({
             iconUrl: 'img/marker_active.png',
