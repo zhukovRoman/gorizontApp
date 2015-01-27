@@ -25,12 +25,12 @@
     </div>
     <div id="object_view" class="content" data-role="page" style="">
         <div data-role="header" class="shadow">
-            <a href="#"  data-rel="back"  class="ui-btn-left need-fastclick"><i class="fa fa-chevron-left"></i></a>
+            <a href="#"  data-rel="back"  class="ui-btn-left need-fastclick"><i class="fa fa-angle-left"></i></a>
             <h1 data-value-name="name"></h1>
 
         </div><!-- /header -->
         <div class="left-content need-hide-menu">
-            <div class="object-tabs gorizont-tabs" data-role="none">
+            <div class="object-tabs gorizont-tabs need-fastclick" data-role="none">
                 <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" data-role="none">
                 <label for="info">Информация</label>
                 <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" checked="checked" data-role="none">
@@ -60,6 +60,7 @@
             <div class="budget-content tab-content">
                 <div class="object-chart" id="material_budget_chart"></div>
                 <div class="object-chart" id="finance_budget_chart"></div>
+                <div class="shadow shadow-devider"></div>
                 <div class="object-chart" id="material_finance_chart"></div>
             </div>
             <div class="consumption-content tab-content">

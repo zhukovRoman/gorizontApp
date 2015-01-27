@@ -107,9 +107,9 @@ gApp.object_view = {
                     data: [{
                         name: 'Списано материалов',
                         y: 22,
-                        color: 'red'
+                        color: '#C31A1A'
                     },],
-                    color: 'red',
+                    //color: 'red',
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
@@ -179,9 +179,9 @@ gApp.object_view = {
                     data: [{
                         name: 'Списано на сумму',
                         y: 22000000,
-                        color: 'red'
+                        color: '#C31A1A'
                     },],
-                    color: 'red',
+                    //color: 'red',
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
@@ -202,7 +202,9 @@ gApp.object_view = {
                     categories: [''],
                         title: {
                         text: null
-                    }
+                    },
+                    lineColor: '#414141',
+                    lineWidth: 2
                 },
                 yAxis: {
                     min: 0,
@@ -210,31 +212,45 @@ gApp.object_view = {
                         text: ''
                     },
                     labels: {
-                        overflow: 'justify'
-                    }
+                        overflow: 'justify',
+                        formatter: function() {return this.value/1000000}
+                    },
+                    lineColor: '#414141',
+                    lineWidth: 2
                 },
                 tooltip: {
-                    valueSuffix: ' millions'
+                    enabled: false
                 },
                 plotOptions: {
                     bar: {
-                        dataLabels: {
-                            enabled: true
+                            pointWidth: 70,
+                            pointPadding: 0.1,
+                            groupPadding: 0.1
                         }
-                    }
+
                 },
                 legend: {
-
+                    useHTML: true,
+                    itemMarginBottom: 0,
+                    //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
+                    labelFormatter: function () {
+                        console.log(this.yData)
+                        //
+                        return '<div style="display: inline-block; padding-top: 5px; margin-right: 20px">' +
+                            '<div class = "legend-series-name" style="display: inline-block; white-space: nowrap">'+this.name+'</div>' +
+                            '<div style="text-align: right; padding-left: 30px; display: inline-block"> '+ mln_to_text(this.yData[0]) +'</div></div>';
+                    }
                 },
                 credits: {
                     enabled: false
                 },
-                series: [{
+                series: [
+                    {
+                        name: 'Потратили',
+                        data: [133000000]
+                    },{
                     name: 'Планировали потратить',
-                    data: [107]
-                }, {
-                    name: 'Потратили',
-                    data: [133]
+                    data: [107000000]
                 }]
             }
             )
