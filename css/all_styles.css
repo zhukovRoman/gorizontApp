@@ -63,16 +63,18 @@ a {
 .ui-header {
   height: 87px;
   border: 0px;
-  border-bottom: 1px solid #eae9e8; }
+  border-bottom: 1px solid #eae9e8;
+  font-weight: 400; }
   .ui-header .ui-btn-left {
-    font-size: 45px;
-    padding: 10px 20px; }
+    font-size: 55px;
+    padding: 2px 20px; }
   .ui-header .ui-btn-right {
     font-size: 32px; }
   .ui-header .ui-title {
     color: #414141;
     font-size: 32px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    font-weight: 400; }
 
 .list-header {
   font-size: 26px;
@@ -395,15 +397,21 @@ a.avto-menu-item.active {
   width: 100%; }
 #object_view .object-tabs {
   padding: 0 230px; }
-#object_view .budget-content {
-  padding: 5px; }
 #object_view .budget-content #material_budget_chart, #object_view .budget-content #finance_budget_chart {
   width: 914px;
   float: left;
-  height: 900px; }
+  height: 880px;
+  margin-top: 5px;
+  margin-right: 3px;
+  margin-left: 3px; }
+#object_view .budget-content .shadow-devider {
+  width: 100%;
+  min-height: 12px;
+  margin-bottom: 12px;
+  float: left; }
 #object_view .budget-content #material_finance_chart {
   width: 1760px;
-  height: 420px;
+  height: 400px;
   float: left;
   margin: 0 20px; }
 #object_view .object-info {

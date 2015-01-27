@@ -33,13 +33,13 @@ var gApp = {
         })
 
         $( document ).on( "pagebeforehide", function( event,data ) {
-            console.log(data)
-            if (data.prevPage[0].id=='main')
+            if (data.nextPage[0].id=='main')
                 $('.pages-menu').animate({
                     'left': '-180px'
                 }, {
                     duration: gApp.options.animationDuration, queue: false
                 });
+
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
 
@@ -61,6 +61,7 @@ var gApp = {
                 //$( ".content" ).on( "swipeleft", gApp.hideMenu)
                 //$( ".need-hide-menu" ).on( "mousedown", gApp.hideMenuByClickOnContent)
             }
+
             gApp.attachFastClick();
         });
     },
