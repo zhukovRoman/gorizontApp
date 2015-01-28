@@ -1,6 +1,9 @@
 gApp.object_view = {
     current_id: null,
     current_object: null,
+    dateStart: null,
+    dateEnd:null,
+    filtered_by_dates_materials: null,
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
@@ -11,6 +14,19 @@ gApp.object_view = {
         })
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
+        $('#date_start').on('change', function(e){
+            gApp.object_view.dateStart = moment($(this).val())
+            gApp.object_view.getDataByDates();
+            gApp.object_view.refillTable();
+        })
+        $('#date_end').on('change', function(e){
+            gApp.object_view.dateEnd = moment($(this).val())
+            gApp.object_view.getDataByDates();
+            gApp.object_view.refillTable();
+        })
+        $('#materials_search_input').on('keyup', function(){
+            gApp.object_view.refillTable();
+        })
         gApp.object_view.fillObjectInfo()
         gApp.object_view.changeObjectViewTab();
 
@@ -25,16 +41,80 @@ gApp.object_view = {
         if (current_tab=='consumption')
             gApp.object_view.fillConsumptionTab();
         if (current_tab=='material')
-            gApp.object_view.fillBudgetTab();
+            gApp.object_view.fillMaterialTab();
+    },
+    fillMaterialTab: function(){
+        $('#object_view .material-content').show();
+        gApp.object_view.setDates();
+        gApp.object_view.getDataByDates();
+        gApp.object_view.refillTable();
+    },
+    getDataByDates: function(){
+        gApp.object_view.filtered_by_dates_materials = gApp.object_view.materialDataProvider()
+    },
+    setDates: function(){
+        if(!gApp.object_view.dateStart)
+            gApp.object_view.dateStart = moment().subtract(1, 'week')
+        if(!gApp.object_view.dateEnd)
+            gApp.object_view.dateEnd = moment()
+        $('#date_start').val(gApp.object_view.dateStart.format("YYYY-MM-DD"))
+        $('#date_end').val(gApp.object_view.dateEnd.format("YYYY-MM-DD"))
+    },
+    refillTable: function(){
+        var container = $('#materials_table_content').html('')
+        $.each(gApp.object_view.filtered_by_dates_materials, function(notation,materials){
+            if (!gApp.object_view.checkNotation(notation)) return;
+            var table_row = $(document.createElement('div')).addClass('material-table-row')
+            var notation =  $(document.createElement('div')).addClass('notation').text(notation)
+            var mat_spends = $(document.createElement('div')).addClass('material-spends')
+            $.each(materials, function(i, val){
+                var mat_row = $(document.createElement('div')).addClass('material-row')
+                mat_row.append($(document.createElement('span')).text(val.date))
+                mat_row.append($(document.createElement('span')).text(val.count+' '+val.unit))
+                mat_row.append($(document.createElement('span')).text(val.price.toFixed()+' Р'))
+                mat_row.append($(document.createElement('span')).text((val.price*val.count).toFixed()+' Р'))
+                mat_spends.append(mat_row)
+            })
+            table_row.append(notation).append(mat_spends)
+            container.append(table_row)
+        })
+    },
+    checkNotation: function(notation){
+
+        var query = $('#materials_search_input').val().toLowerCase()
+        if (query.length<2) return true;
+        notation = notation.toLowerCase();
+        if (notation.indexOf(query)>-1) return true;
+        return false
+    },
+    materialDataProvider: function(obj_id){
+        dateStart = gApp.object_view.dateStart
+        dateEnd = gApp.object_view.dateEnd
+        var data = {
+            "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л":
+            [{date: '13.01.2015', count: 2, unit:'шт', price:1222.50 },
+                {date: '12.01.2015', count: 2, unit:'шт', price:1222.50 }],
+            "Седелка компрессионная с резьбовым отводом 110х1 1/4 мм":
+                [{date: '15.01.2015', count: 2, unit:'шт', price:1222.50 },
+                    {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }],
+            "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем":
+                [{date: '25.01.2015', count: 2, unit:'шт', price:1222.50 },
+                    {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }]
+        }
+        var res = {}
+        $.each(data, function(not,mats){
+            $.each(mats, function(i,item){
+                var date =  moment(item.date, "DD-MM-YYYY")
+                if (date.isBefore(dateStart) || date.isAfter(dateEnd)) return;
+                if (!res[not]) res[not]=[]
+                res[not].push(item)
+            })
+        })
+        return res
     },
     fillInfoTab: function(){
-
         $('#object_view .info-content').show();
-        //gApp.object_view.fillObjectInfo()
         initMap()
-        //gApp.object_view.drawConsumptionChart();
-        //gApp.object_view.drawBudgetChart();
-
         function  initMap (){
             var obj =  gApp.object_view.current_object
             var map = L.map('object_map', {
@@ -252,8 +332,6 @@ gApp.object_view = {
                     itemMarginBottom: 0,
                     //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
                     labelFormatter: function () {
-                        console.log(this.yData)
-                        //
                         return '<div style="display: inline-block; padding-top: 5px; margin-right: 20px">' +
                             '<div class = "legend-series-name" style="display: inline-block; white-space: nowrap">'+this.name+'</div>' +
                             '<div style="text-align: right; padding-left: 30px; display: inline-block"> '+ mln_to_text(this.yData[0]) +'</div></div>';

@@ -9,11 +9,12 @@
     <script type="application/javascript" src="/js/libs/jq-mobile-1.4.5.min.js"></script>
     <script type="application/javascript" src="/js/filter_plugin.js"></script>
     <script type="application/javascript" src="/js/libs/highcharts.js"></script>
+    <script src="/js/libs/leaflet.js"></script>
+    <script type="application/javascript" src="/js/libs/moment.js"></script>
     <script type="application/javascript" src="/js/common_script.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/all_styles.css" />
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
     <meta name="msapplication-tap-highlight" content="no" />
     <title>Горизонт</title>
 </head>
@@ -31,9 +32,9 @@
         </div><!-- /header -->
         <div class="left-content need-hide-menu">
             <div class="object-tabs gorizont-tabs need-fastclick" data-role="none">
-                <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" checked="checked" data-role="none">
+                <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" data-role="none">
                 <label for="info">Информация</label>
-                <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" data-role="none">
+                <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" checked="checked" data-role="none">
                 <label for="budget">Бюджет</label>
                 <input type="radio" name="object-view-tab" id="consumption" data-content-div=consumption-content" data-role="none">
                 <label for="consumption">Расход</label>
@@ -99,34 +100,6 @@
                             Текущий этап <span class="object-info-content"  data-part='plan' data-value-name="current_step" >Коллектор 4</span>
                         </div>
                     </div>
-                    <!--<div class="info-column">-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Назначение объекта:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="full_type"></div>-->
-                        <!--</div>-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Адрес объекта:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="address"></div>-->
-                        <!--</div>-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Начальник объекта:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="objects_director"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="info-column">-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Начало работ:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="date_start"></div>-->
-                        <!--</div>-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Планируемая дата окончания:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="plan_date_end"></div>-->
-                        <!--</div>-->
-                        <!--<div class="info-part">-->
-                            <!--<h4>Бюджет объекта:</h4>-->
-                            <!--<div class="object-info-content" data-value-name="budget"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
                 </div>
             </div>
             <div class="budget-content tab-content" style="display: none">
@@ -155,11 +128,31 @@
                 </div>
                 <div id="month_consumption_chart" style="height: 590px"></div>
             </div>
+            <div class="material-content tab-content" style="display: none">
+                 <div class="controls">
+                     <span class="search">
+                        <input id="materials_search_input" type="text" class="search-input" placeholder="Поиск по номенклатуре"/>
+                     </span>
+                     <span class="dates">
+                         Показывать с
+                         <input type="date" name="date_start" id="date_start" data-role="none">
+                         по
+                         <input type="date" name="date_end" id="date_end" data-role="none">
+                     </span>
+                 </div>
+                 <div class="material-table">
+                     <div class="materials-table-header list-header">
+                         <span>Номенклатура</span>
+                         <span>Дата</span>
+                         <span>Кол-во</span>
+                         <span>Цена</span>
+                         <span>Сумма</span>
+                     </div>
+                     <div class="materials-table-content" id="materials_table_content">
+                     </div>
+                 </div>
+            </div>
         </div>
-        <!--<div class="right-content need-hide-menu">-->
-            <!--<div id="object_map"></div>-->
-        <!--</div>-->
-
     </div>
 </div>
 </body>
