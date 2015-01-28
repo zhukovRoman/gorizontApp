@@ -101,7 +101,7 @@ var gApp = {
         return {icon: obj.is_complete ? disactiveIcon : activeIcon}
     },
     getMarkerPopupContent: function(obj){
-        return '<a href="/object_view.html?id="'+obj.id+'>'+obj.name+'</a>'
+        return ('<a href="/object_detail.html?id='+obj.id+'">'+obj.name+'</a>')
     },
     activeIconForMap: function(){
         return L.icon({
