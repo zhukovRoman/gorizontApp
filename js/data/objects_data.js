@@ -5,14 +5,29 @@ objects=[
         address: 'Москва, Кутузовский проспект',
         distinct: 'СВАО',
         latlng: [55.6905, 37.67],
-        type: 'Дороги',
-        full_type: 'Автомобильные дороги',
-        objects_director: 'Иванов Иван Иванович',
+        type: 'Дороги', //depricated
+        director: {
+            fio: 'Иванов Иван Иванович',
+            phone: '+79251282427',
+            mail: 'mail@mail.com'
+        } ,
         is_complete: false,
-        material_spent: 12000000,
-        material_left: 36000000,
-        current_year_budget: 80000000,
-        current_year_budget_spent: 50000000,
+        date_start: "12.12.2014",
+        plan_date_end: '13.12.2015',
+        plan: {
+            steps_count: 7,
+            steps_complete: 4,
+            current_step: "Коллектор №4"
+        },
+        budget:12000000,
+        budget_spent: 10000000, //закуплено метериалов на сумму
+        budget_used: 7000000, //списано мат на сумму
+        budget_current_plan: 6000000, // планировали потратить на текущий момент
+
+        material_all_count: 60,  //матералов всего надо на объект в шт
+        material_bought: 50, // закуплено мат в шт
+        material_used: 40, // заюзано мат в шт
+
         consumption_data: {
             "2013":{
                 year_data: {

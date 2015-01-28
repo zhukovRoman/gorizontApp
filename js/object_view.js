@@ -18,6 +18,8 @@ gApp.object_view = {
     changeObjectViewTab: function(){
         $('#object_view .tab-content').hide();
         var current_tab=$('#object_view .left-content [name=object-view-tab]:checked').attr('id')
+        if (current_tab=='info')
+            gApp.object_view.fillInfoTab();
         if (current_tab=='budget')
             gApp.object_view.fillBudgetTab();
         if (current_tab=='consumption')
@@ -26,15 +28,31 @@ gApp.object_view = {
             gApp.object_view.fillBudgetTab();
     },
     fillInfoTab: function(){
-        //show map
-        //$('#object_view .right-content').show();
-        //$('#object_view .left-content').css('width',"1448px")
-        //
-        //$('#object_view .budget-content').show();
+
+        $('#object_view .info-content').show();
         //gApp.object_view.fillObjectInfo()
-        //gApp.object_view.initMap()
+        initMap()
         //gApp.object_view.drawConsumptionChart();
         //gApp.object_view.drawBudgetChart();
+
+        function  initMap (){
+            var obj =  gApp.object_view.current_object
+            var map = L.map('object_map', {
+                zoomControl: false,
+                dragging: false,
+                touchZoom: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false
+            }).setView(obj.latlng, 15);
+            L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '',
+                //id: 'examples.map-20v6611k'
+                //id: 'zhuk99.kpafdddm'
+                id: 'examples.map-i86l3621'
+            }).addTo(map);
+            L.marker(obj.latlng,gApp.getMarkerOption(obj)).addTo(map)
+        }
     },
     fillBudgetTab: function(){
         $('#object_view .budget-content').show();
@@ -95,10 +113,10 @@ gApp.object_view = {
                     name: 'Бюджет',
                     data: [{
                         name: 'Принято материалов',
-                        y: 22
+                        y: gApp.object_view.current_object.material_bought
                     },{
                         name: 'Осталось закупить',
-                        y:44
+                        y:gApp.object_view.current_object.material_all_count - gApp.object_view.current_object.material_bought
                     }],
                     size: 450,
                     innerSize: 300
@@ -106,14 +124,14 @@ gApp.object_view = {
                     name: 'Списано',
                     data: [{
                         name: 'Списано материалов',
-                        y: 22,
+                        y: gApp.object_view.current_object.material_used,
                         color: '#C31A1A'
                     },],
                     //color: 'red',
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
-                    endAngle: calcAngile(22+44, 22)
+                    endAngle: calcAngile(gApp.object_view.current_object.material_all_count, gApp.object_view.current_object.material_used)
                 }]
             })
         };
@@ -167,10 +185,10 @@ gApp.object_view = {
                     name: 'Бюджет',
                     data: [{
                         name: 'Принято на сумму',
-                        y: 22000000
+                        y: gApp.object_view.current_object.budget_spent
                     },{
                         name: 'Остаток бюджета',
-                        y:40000000
+                        y:  gApp.object_view.current_object.budget - gApp.object_view.current_object.budget_spent
                     }],
                     size: 450,
                     innerSize: 300
@@ -178,14 +196,14 @@ gApp.object_view = {
                     name: 'Списано',
                     data: [{
                         name: 'Списано на сумму',
-                        y: 22000000,
+                        y: gApp.object_view.current_object.budget_used,
                         color: '#C31A1A'
                     },],
                     //color: 'red',
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
-                    endAngle: 150
+                    endAngle: calcAngile(gApp.object_view.current_object.budget, gApp.object_view.current_object.budget_used)
                 }]
             })
         };
@@ -247,10 +265,10 @@ gApp.object_view = {
                 series: [
                     {
                         name: 'Потратили',
-                        data: [133000000]
+                        data: [gApp.object_view.current_object.budget_spent]
                     },{
                     name: 'Планировали потратить',
-                    data: [107000000]
+                    data: [gApp.object_view.current_object.budget_current_plan]
                 }]
             }
             )
@@ -260,30 +278,16 @@ gApp.object_view = {
 
     fillObjectInfo: function(){
         $.each($('#object_view [data-value-name]'), function(i, element){
-            console.log(gApp.object_view.current_object[$(element).attr('data-value-name')])
-            $(element).text(gApp.object_view.current_object[$(element).attr('data-value-name')])
+            var value = '';
+            if ($(element).attr('data-part'))
+                value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')])
+            else
+                value = (gApp.object_view.current_object[$(element).attr('data-value-name')])
+
+            $(element).text(value)
         })
     },
-    initMap: function(){
-        var obj =  gApp.object_view.current_object
-        var map = L.map('object_map', {
-            zoomControl: false,
-            dragging: false,
-            touchZoom: false,
-            scrollWheelZoom: false,
-            doubleClickZoom: false
-        }).setView(obj.latlng, 15);
-        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '',
-            //id: 'examples.map-20v6611k'
-            //id: 'zhuk99.kpafdddm'
-            id: 'examples.map-i86l3621'
-        }).addTo(map);
-        L.marker(obj.latlng).addTo(map)
 
-
-    } ,
     drawConsumptionChart: function(){
         var chart = new Highcharts.Chart({
             chart: {

@@ -31,39 +31,111 @@
         </div><!-- /header -->
         <div class="left-content need-hide-menu">
             <div class="object-tabs gorizont-tabs need-fastclick" data-role="none">
-                <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" data-role="none">
+                <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" checked="checked" data-role="none">
                 <label for="info">Информация</label>
-                <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" checked="checked" data-role="none">
+                <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content" data-role="none">
                 <label for="budget">Бюджет</label>
                 <input type="radio" name="object-view-tab" id="consumption" data-content-div=consumption-content" data-role="none">
                 <label for="consumption">Расход</label>
                 <input type="radio" name="object-view-tab" id="material" data-content-div="material-content" data-role="none">
                 <label for="material">Материалы</label>
             </div>
-            <div class="info-content tab-content">
-                <!--<div class="object-info">-->
+            <div class="info-content tab-content" style="display: none">
+                <div id="object_map"></div>
+                <div class="object-info">
                     <!--<h1>Параметры объекта</h1>-->
-                    <!--<div class="info-part">-->
-                        <!--<h4>Назначение объекта:</h4>-->
-                        <!--<div class="object-info-content" data-value-name="full_type"></div>-->
+                    <div class="info-part shadow">
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-map-marker"></i></span>
+                            <span class="object-info-content" data-value-name="address"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-rub"></i></span>
+                            Бюджет <span class="object-info-content" data-value-name="budget"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-rub"></i></span>
+                            Потрачено <span class="object-info-content" data-value-name="budget_spent"></span>
+                        </div>
+                    </div>
+                    <div class="info-part shadow">
+                        <h1>Сроки</h1>
+                        <div class="progress-bar">
+                            <div class="progress-part complete" style="width: 30%;"></div>
+                            <div class="progress-part not-complete" style="width: 70%;"></div>
+                        </div>
+                        <div class="date-info date-start"  data-value-name="date_start" style="float: left"></div>
+                        <div class="date-info date-end" data-value-name="plan_date_end" style="float: right"></div>
+
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-clock-o"></i></span>
+                            Осталось <span class="object-info-content" > 11 месяцев 7 дней </span>
+                        </div>
+                    </div>
+                    <div class="info-part shadow">
+                        <h1>Начальник</h1>
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-user"></i></span>
+                            <span class="object-info-content" data-part='director' data-value-name="fio"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-mobile"></i></span>
+                            <span class="object-info-content" data-part='director' data-value-name="phone">+ 7 (999) 999 99 99</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-icon"><i class="fa fa-envelope-o"></i></span>
+                            <span class="object-info-content" data-part='director' data-value-name="mail">mail@mail.com</span>
+                        </div>
+                    </div>
+                    <div class="info-part ">
+                        <h1>План</h1>
+                        <div class="info-row">
+                            Всего <span class="object-info-content" data-part='plan' data-value-name="steps_count" >7 этапов</span>
+                        </div>
+                        <div class="info-row">
+                            Выполнено <span class="object-info-content"  data-part='plan' data-value-name="steps_complete" >4 этапа</span>
+                        </div>
+                        <div class="info-row">
+                            Текущий этап <span class="object-info-content"  data-part='plan' data-value-name="current_step" >Коллектор 4</span>
+                        </div>
+                    </div>
+                    <!--<div class="info-column">-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Назначение объекта:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="full_type"></div>-->
+                        <!--</div>-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Адрес объекта:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="address"></div>-->
+                        <!--</div>-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Начальник объекта:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="objects_director"></div>-->
+                        <!--</div>-->
                     <!--</div>-->
-                    <!--<div class="info-part">-->
-                        <!--<h4>Адрес объекта:</h4>-->
-                        <!--<div class="object-info-content" data-value-name="address"></div>-->
+                    <!--<div class="info-column">-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Начало работ:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="date_start"></div>-->
+                        <!--</div>-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Планируемая дата окончания:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="plan_date_end"></div>-->
+                        <!--</div>-->
+                        <!--<div class="info-part">-->
+                            <!--<h4>Бюджет объекта:</h4>-->
+                            <!--<div class="object-info-content" data-value-name="budget"></div>-->
+                        <!--</div>-->
                     <!--</div>-->
-                    <!--<div class="info-part">-->
-                        <!--<h4>Начальник объекта:</h4>-->
-                        <!--<div class="object-info-content" data-value-name="objects_director"></div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                </div>
             </div>
-            <div class="budget-content tab-content">
+            <div class="budget-content tab-content" style="display: none">
                 <div class="object-chart" id="material_budget_chart"></div>
                 <div class="object-chart" id="finance_budget_chart"></div>
                 <div class="shadow shadow-devider"></div>
                 <div class="object-chart" id="material_finance_chart"></div>
             </div>
-            <div class="consumption-content tab-content">
+            <div class="consumption-content tab-content" style="display: none">
                 <div class="chart-control shadow need-fastclick" >
                     <div class="left-arrow " id="prev_year_button"><i class="fa fa-angle-double-left"></i></div>
                     <div class="current-year">
