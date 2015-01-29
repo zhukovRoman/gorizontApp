@@ -170,3 +170,41 @@ a
     text-align: center
     line-height: 300px
     color: $dark-font
+
+
+input[type=date] 
+  background: #fff
+  background: linear-gradient(90deg, #fff, #fff)
+  border: 3px solid #eee
+  background-image: url('images/schevron_down_icon.png')
+  background-repeat: no-repeat
+  background-position-x: 190px
+  background-position-y: 25px
+
+input[type=date]::-webkit-calendar-picker-indicator 
+  color: #999
+  height: 8px
+  position: relative
+  width: 8px
+  z-index: 0
+
+
+input[type=date]::-webkit-calendar-picker-indicator:before 
+  background: #eee
+  background: linear-gradient(90deg, #eee, #fff)
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1)
+  border-radius: 24px
+  content: ''
+  display: block
+  height: 22px
+  left: -2px
+  position: absolute
+  top: -5px
+  width: 22px
+  z-index: -1
+
+input[type=date]::-webkit-calendar-picker-indicator:hover 
+  background: none
+
+input[type=date]:focus 
+  border-color: #3399ff
