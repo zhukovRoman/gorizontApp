@@ -10,4 +10,5 @@ function mln_to_text (value){
 $(function(){
     $.mobile.defaultPageTransition = 'fade'
     $.mobile.page.prototype.options.domCache = false;
+    moment.locale('ru');
 });

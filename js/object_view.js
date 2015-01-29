@@ -125,7 +125,7 @@ gApp.object_view = {
                 touchZoom: false,
                 scrollWheelZoom: false,
                 doubleClickZoom: false
-            }).setView(obj.latlng, 15);
+            }).setView([obj.latlng[0]-0.01,obj.latlng[1]], 15);
             L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
                 maxZoom: 18,
                 attribution: '',
@@ -357,6 +357,20 @@ gApp.object_view = {
     },
 
     fillObjectInfo: function(){
+        // fill budjet info
+        $('#budget_info').text(mln_to_text(gApp.object_view.current_object.budget))
+        $('#budget_spent').text(mln_to_text(gApp.object_view.current_object.budget_spent))
+        var month_diff = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(moment(), 'months')
+        var days_diff = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(moment().add(month_diff, 'months'), 'days')
+        var daysLastText = month_diff  + ' месяцев '+ days_diff+' дней'
+        $('#days_last').text(daysLastText)
+
+        var daysBetweenStartAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
+            moment(gApp.object_view.current_object.date_start, "DD.MM.YYYY"), 'days')
+        var daysBetweenCurrentAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
+            moment(), 'days')
+        $('#complete_progres').css('width', (daysBetweenStartAndEnd-daysBetweenCurrentAndEnd)*100/daysBetweenStartAndEnd+'%')
+        $('#not_complete_progres').css('width', (daysBetweenCurrentAndEnd)*100/daysBetweenStartAndEnd+'%')
         $.each($('#object_view [data-value-name]'), function(i, element){
             var value = '';
             if ($(element).attr('data-part'))
