@@ -13,6 +13,9 @@ gApp.object_view = {
                 gApp.object_view.current_object = val;
         })
 
+        gApp.object_view.fillObjectInfo()
+        gApp.object_view.changeObjectViewTab();
+
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
         $('#date_start').on('change', function(e){
             gApp.object_view.dateStart = moment($(this).val())
@@ -27,8 +30,6 @@ gApp.object_view = {
         $('#materials_search_input').on('keyup', function(){
             gApp.object_view.refillTable();
         })
-        gApp.object_view.fillObjectInfo()
-        gApp.object_view.changeObjectViewTab();
 
     },
     changeObjectViewTab: function(){
@@ -53,6 +54,7 @@ gApp.object_view = {
         gApp.object_view.filtered_by_dates_materials = gApp.object_view.materialDataProvider()
     },
     setDates: function(){
+        console.log(gApp.object_view.dateStart, gApp.object_view.dateEnd)
         if(!gApp.object_view.dateStart)
             gApp.object_view.dateStart = moment().subtract(1, 'week')
         if(!gApp.object_view.dateEnd)
@@ -71,8 +73,8 @@ gApp.object_view = {
                 var mat_row = $(document.createElement('div')).addClass('material-row')
                 mat_row.append($(document.createElement('span')).text(val.date))
                 mat_row.append($(document.createElement('span')).text(val.count+' '+val.unit))
-                mat_row.append($(document.createElement('span')).text(val.price.toFixed()+' Р'))
-                mat_row.append($(document.createElement('span')).text((val.price*val.count).toFixed()+' Р'))
+                mat_row.append($(document.createElement('span')).text(val.price.toFixed()+' ₽'))
+                mat_row.append($(document.createElement('span')).text((val.price*val.count).toFixed()+' ₽'))
                 mat_spends.append(mat_row)
             })
             table_row.append(notation).append(mat_spends)
@@ -92,7 +94,7 @@ gApp.object_view = {
         dateEnd = gApp.object_view.dateEnd
         var data = {
             "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л":
-            [{date: '13.01.2015', count: 2, unit:'шт', price:1222.50 },
+            [{date: '10.02.2015', count: 2, unit:'шт', price:1222.50 },
                 {date: '12.01.2015', count: 2, unit:'шт', price:1222.50 }],
             "Седелка компрессионная с резьбовым отводом 110х1 1/4 мм":
                 [{date: '15.01.2015', count: 2, unit:'шт', price:1222.50 },
@@ -501,9 +503,14 @@ gApp.object_view = {
         gApp.object_view.fillConsumtionYearSelect();
         gApp.object_view.fillConsumptionMonthSelect();
 
+        $( "#prev_year_button, #next_year_button" ).unbind();
+
         $('#consumption_current_year').on('change', gApp.object_view.redrawConsumtionsCharts)
         $('#prev_year_button').click(gApp.object_view.selectPrevYear)
         $('#next_year_button').click(gApp.object_view.selectNextYear)
+
+
+        $( "#prev_month_button, #next_month_button" ).unbind();
 
         $('#consumption_current_month').on('change', gApp.object_view.drawConsumtionMonthChart)
         $('#prev_month_button').click(gApp.object_view.selectPrevMonth)
@@ -590,7 +597,16 @@ gApp.object_view = {
                 text: 'Расход бюджета на материалы ПО МЕСЯЦАМ ЗА '+gApp.object_view.getCurrentConsumtionYear()+' ГОД'
             },
             xAxis: {
-                categories: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+                categories: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                labels: {
+                    style:{
+                        border: '2px solid #e9e9e8',
+                        borderRadius: '10px',
+                        padding: '3px 7px'
+                    },
+                    useHTML: true
+                },
+                useHTML: true
             },
             yAxis: {
                 min: 0,
@@ -617,7 +633,20 @@ gApp.object_view = {
 
             }]
         });
+        $('#year_consumption_chart .highcharts-xaxis-labels span').click(goToMaterialsTabFromYearChart)
+         function goToMaterialsTabFromYearChart  (){
+            var months = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+            var month =   ""+(months.indexOf(this.textContent) + 1)
+            if (month.length==1) month = '0'+month
+            var year = gApp.object_view.getCurrentConsumtionYear()
+            gApp.object_view.dateStart = moment(year+"-"+month+"-01", "YYYY-MM-DD").startOf('month');
+            gApp.object_view.dateEnd = moment(year+"-"+month+"-01", "YYYY-MM-DD").endOf('month');
+            $('#object_view .left-content [name=object-view-tab]').prop('checked', false)
+            $('#object_view .left-content #material').prop('checked', true)
+            gApp.object_view.changeObjectViewTab();
+        };
     },
+
     drawConsumtionMonthChart: function(){
         var selectedMonth = gApp.object_view.getCurrentConsumtionMonth();
         var selectedYear = gApp.object_view.getCurrentConsumtionYear();
@@ -631,7 +660,17 @@ gApp.object_view = {
                 text: 'ИЗРАСХОДОВАННО МАТЕРИАЛОВ НА СУММУ'
             },
             xAxis: {
-                categories: function () { var res = []; for (var t = 1; t<32; t++) {res.push(t)} return res}
+                min: 1,
+                categories: function () { var res = []; for (var t = 1; t<32; t++) {res.push(t)} return res} ,
+                labels: {
+                    style:{
+                        border: '2px solid #e9e9e8',
+                        borderRadius: '10px',
+                        padding: '3px 7px'
+                    },
+                    useHTML: true
+                },
+                useHTML: true
             },
             yAxis: {
                 min: 0,
@@ -658,5 +697,21 @@ gApp.object_view = {
 
             }]
         });
+
+        $('#month_consumption_chart .highcharts-xaxis-labels span').click(goToMaterialsTabFromMonthChart)
+        function goToMaterialsTabFromMonthChart  (){
+            var months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+            var month =   ""+(months.indexOf(selectedMonth) + 1)
+            if (month.length==1) month = '0'+month
+            var year = gApp.object_view.getCurrentConsumtionYear()
+            var day = ""+(this.textContent)
+            if (day.length==1) day = '0'+day
+            console.log(year+"-"+month+"-"+day)
+            gApp.object_view.dateStart = moment(year+"-"+month+"-"+day, "YYYY-MM-DD").startOf('day');
+            gApp.object_view.dateEnd = moment(year+"-"+month+"-"+day, "YYYY-MM-DD").endOf('day');
+            $('#object_view .left-content [name=object-view-tab]').prop('checked', false)
+            $('#object_view .left-content #material').prop('checked', true)
+            gApp.object_view.changeObjectViewTab();
+        };
     }
 }
