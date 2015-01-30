@@ -7,6 +7,10 @@ function mln_to_text (value){
     return  thousands_sep(((parseFloat(value)||0)/1000000).toFixed(3)) + ' млн ₽'
 }
 
+function ths_to_text (value){
+    return  thousands_sep(((parseFloat(value)||0)/1000).toFixed(3)) + ' тыс ₽'
+}
+
 $(function(){
     $.mobile.defaultPageTransition = 'fade'
     $.mobile.page.prototype.options.domCache = false;
@@ -67,6 +71,31 @@ function format_num (num, cases) {
     return word;
 }
 
+/**
+ * Возвращает header для тултипа
+ *
+ * @param {String} text     Текст для заголовка
+ * @return {String} html строка
+ */
+function tooltipHeader (text) {
+    return "<div class='tooltip-header'>"+text+"</div>"
+}
+
+/**
+ * Возвращает строку для тултипа
+ *
+ * @param {String} name     Название
+ * @param {Number} value    Значение
+ * @param {String} color     Цвет серии
+ * @return {String} html строка
+ */
+function tooltipRow (name, value, color, formatFunction) {
+    if (!formatFunction) formatFunction =  mln_to_text;
+    return  "<div class='tooltip-row'>"
+            +"<span class='tooltip-point' style='background-color: "
+            + color+"'></span>"+ name + ": " + formatFunction(value)
+            + "</div>"
+}
 
 ///// METRICA
 (function (d, w, c) {
