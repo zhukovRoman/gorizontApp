@@ -489,6 +489,8 @@ a.avto-menu-item.active {
       text-align: center;
       text-transform: uppercase;
       padding-top: 40px; }
+      #object_view .object-info .time-info-part .info-column .object-lag {
+        color: #c31a1a; }
     #object_view .object-info .time-info-part .progress-bar {
       min-height: 30px;
       border-radius: 5px;

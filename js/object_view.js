@@ -364,6 +364,13 @@ gApp.object_view = {
         var daysLastText = text_between_dates( moment(),
                                 moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY"))
         $('#days_last').text(daysLastText)
+        $('#days_lag').text(
+            (gApp.object_view.current_object.days_lag <= 0 ) ? "" :
+                "(Отставание "
+                + gApp.object_view.current_object.days_lag
+                + format_num(gApp.object_view.current_object.days_lag, {nom: ' день', gen: ' дня', plu: ' дней'})
+                + ")"
+        )
 
         var daysBetweenStartAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
             moment(gApp.object_view.current_object.date_start, "DD.MM.YYYY"), 'days')
