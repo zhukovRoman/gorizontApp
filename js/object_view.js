@@ -167,7 +167,11 @@ gApp.object_view = {
                         shadow: false,
                         center: ['50%', '35%'],
                         dataLabels: {
-                            enabled: false
+                            enabled: true,
+                            style: {
+                                fontWeight: 'bold',
+                                fontSize: "20px"
+                            }
                         },
                         showInLegend: true
                     }
@@ -201,7 +205,16 @@ gApp.object_view = {
                         y:gApp.object_view.current_object.material_all_count - gApp.object_view.current_object.material_bought
                     }],
                     size: 450,
-                    innerSize: 300
+                    innerSize: 300,
+                    dataLabels: {
+                        formatter: function () {
+                            console.log(this)
+                            return this.y > 5 ? this.y + "%" : null;
+                        },
+                        color: 'white',
+
+                        distance: -45
+                    }
                 }, {
                     name: 'Списано',
                     data: [{
