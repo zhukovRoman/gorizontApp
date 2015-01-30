@@ -14,6 +14,7 @@ objects=[
         is_complete: false,
         date_start: "12.12.2014",
         plan_date_end: '13.12.2015',
+        days_lag: 30,
         plan: {
             steps_count: 7,
             steps_complete: 4,
