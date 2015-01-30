@@ -8,10 +8,10 @@ gApp.objects = {
     },
     onShowActions: function(){
 
-        $('#type-filter').touchFilter({
-            name: "Объект",
-            items: gApp.objects.getAllTypesByObjects()
-        })
+        //$('#type-filter').touchFilter({
+        //    name: "Объект",
+        //    items: gApp.objects.getAllTypesByObjects()
+        //})
 
         $('#distinct-filter').touchFilter({
             name: "Округ",
@@ -27,7 +27,7 @@ gApp.objects = {
 
         gApp.objects.filterObjectAndRedrawAll();
 
-        $('#type-filter, #distinct-filter').on('tf.change', gApp.objects.filterObjectAndRedrawAll)
+        $('#distinct-filter').on('tf.change', gApp.objects.filterObjectAndRedrawAll)
 
         $('#objects_search_input').on('keyup', gApp.objects.filterObjectAndRedrawAll);
         $('#show_complete_checkbox').on('change', gApp.objects.filterObjectAndRedrawAll);
@@ -35,17 +35,17 @@ gApp.objects = {
 
     },
 
-    getAllTypesByObjects: function(){
-        var items = {}
-        $.each(objects, function(i,val){
-            if (!items[val.type])items[val.type] = val.type
-        })
-        var res =[];
-        $.each(items, function(i, val){
-            res.push ([val, val])
-        })
-        return res;
-    },
+    //getAllTypesByObjects: function(){
+    //    var items = {}
+    //    $.each(objects, function(i,val){
+    //        if (!items[val.type])items[val.type] = val.type
+    //    })
+    //    var res =[];
+    //    $.each(items, function(i, val){
+    //        res.push ([val, val])
+    //    })
+    //    return res;
+    //},
     getAllDistinctsByObjects: function(){
         var items = {}
         $.each(objects, function(i,val){
@@ -69,9 +69,9 @@ gApp.objects = {
             return $('#distinct-filter').touchFilter('getValues').indexOf(obj.distinct)>=0
         },
         //testType:
-        function(obj){
-            return $('#type-filter').touchFilter('getValues').indexOf(obj.type)>=0
-        },
+        //function(obj){
+        //    return $('#type-filter').touchFilter('getValues').indexOf(obj.type)>=0
+        //},
         //testNameAndAddress:
         function(obj){
             var query = $('#objects_search_input').val().toLowerCase()
@@ -122,7 +122,7 @@ gApp.objects = {
         $.each(gApp.objects.filterate_objects, function (i,val){
             var a = $(document.createElement('a')).attr('href', 'object_detail.html?id='+val.id)
             a.append($(document.createElement('span')).text(val.name))
-            a.append($(document.createElement('span')).text(val.type))
+            a.append($(document.createElement('span')).text(val.distinct))
             container.append(a)
         })
     }
