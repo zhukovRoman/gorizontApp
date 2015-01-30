@@ -394,9 +394,9 @@ gApp.object_view = {
         // fill budjet info
         $('#budget_info').text(mln_to_text(gApp.object_view.current_object.budget))
         $('#budget_spent').text(mln_to_text(gApp.object_view.current_object.budget_spent))
-        var month_diff = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(moment(), 'months')
-        var days_diff = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(moment().add(month_diff, 'months'), 'days')
-        var daysLastText = month_diff  + ' месяцев '+ days_diff+' дней'
+
+        var daysLastText = text_between_dates( moment(),
+                                moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY"))
         $('#days_last').text(daysLastText)
 
         var daysBetweenStartAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
@@ -414,6 +414,11 @@ gApp.object_view = {
 
             $(element).text(value)
         })
+        $('#steps_count').text(gApp.object_view.current_object.plan.steps_count +
+         format_num(gApp.object_view.current_object.plan.steps_count, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
+        $('#steps_complete').text(gApp.object_view.current_object.plan.steps_complete +
+        format_num(gApp.object_view.current_object.plan.steps_complete, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
+
     },
 
     drawConsumptionChart: function(){
