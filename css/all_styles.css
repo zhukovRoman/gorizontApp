@@ -268,7 +268,8 @@ input[type=date]:focus {
   height: 1496px;
   font-size: 29px;
   vertical-align: middle;
-  border-right: 2px solid #e9e9e8; }
+  border-right: 2px solid #e9e9e8;
+  color: #c8c7c7; }
   .main-menu a {
     display: list-item;
     list-style: none;
@@ -287,7 +288,8 @@ input[type=date]:focus {
   font-size: 29px;
   vertical-align: middle;
   border-right: 2px solid #e9e9e8;
-  left: -180px; }
+  left: -180px;
+  color: #c8c7c7; }
   .pages-menu a {
     display: list-item;
     list-style: none;
@@ -302,6 +304,8 @@ input[type=date]:focus {
     background-image: url("images/logo_short.png");
     background-size: contain;
     margin-top: 10px; }
+  .pages-menu a.active {
+    color: #737b7e; }
 
 a.objects-menu-item {
   background-image: url("images/objects-menu.png"); }
@@ -484,13 +488,15 @@ a.avto-menu-item.active {
     height: 340px;
     padding: 0 35px; }
     #object_view .object-info .time-info-part .info-column {
-      width: 100%;
+      width: 42%;
       display: inline-block;
       text-align: center;
       text-transform: uppercase;
-      padding-top: 40px; }
-      #object_view .object-info .time-info-part .info-column .object-lag {
-        color: #c31a1a; }
+      padding-top: 80px;
+      font-size: 32px;
+      float: left; }
+      #object_view .object-info .time-info-part .info-column.object-lag .info-icon {
+        color: #f17e30; }
     #object_view .object-info .time-info-part .progress-bar {
       min-height: 30px;
       border-radius: 5px;
