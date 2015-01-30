@@ -672,10 +672,23 @@ gApp.object_view = {
                 min: 0,
                 title: {
                     text: 'Рубли, млн'
+                },
+                labels:{
+                    formatter: function() {return this.value/1000000}
                 }
             },
             tooltip: {
-                enabled: false
+                enabled: true,
+                useHTML: true,
+                shared: true,
+                formatter: function(){
+                    var tooltip = "<div class='gorizont-tooltip'>"
+                    tooltip += tooltipHeader(this.x)
+                    $.each(this.points, function(i,point){
+                        tooltip += tooltipRow(point.series.name, point.y,  point.series.color)
+                    })
+                    return tooltip;
+                }
             },
             plotOptions: {
                 column: {
@@ -683,13 +696,12 @@ gApp.object_view = {
                     //    borderWidth: 0
                 }
             },
-            series: [{
-                name: 'завезено материалов на сумму',
-                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_bought
-
-            }, {
+            series: [ {
                 name: 'Потрачено материалов на сумму',
                 data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_spent
+            }, {
+                name: 'Завезено материалов на сумму',
+                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_bought
 
             }]
         });
@@ -735,11 +747,24 @@ gApp.object_view = {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Рубли, млн'
+                    text: 'Рубли, тыс'
+                },
+                labels:{
+                    formatter: function() {return this.value/1000}
                 }
             },
             tooltip: {
-                enabled: false
+                enabled: true,
+                useHTML: true,
+                shared: true,
+                formatter: function(){
+                    var tooltip = "<div class='gorizont-tooltip'>"
+                    tooltip += tooltipHeader(this.x + " "+ tooltipDict[selectedMonth])
+                    $.each(this.points, function(i,point){
+                        tooltip += tooltipRow(point.series.name, point.y,  point.series.color, ths_to_text)
+                    })
+                    return tooltip;
+                }
             },
             plotOptions: {
                 column: {
@@ -752,12 +777,25 @@ gApp.object_view = {
             },
 
             series: [{
-                name: 'завезено материалов на сумму',
+                name: 'Израсходовано материалов на сумму',
                 data: gApp.object_view.current_object.consumption_data[selectedYear].month_data[selectedMonth]
 
             }]
         });
-
+        var tooltipDict ={
+            "Январь": "января",
+            "Февраль" : "февраля",
+            "Март": "марта",
+            "Апрель" : "апреля",
+            "Май": "мая",
+            "Июнь" : "июня",
+            "Июль" : "июля",
+            "Август": "авнуста",
+            "Сентябрь": "сентября",
+            "Октябрь": "декабря",
+            "Ноябрь" :"ноября",
+            "Декабрь":"декабря"
+        }
         $('#month_consumption_chart .highcharts-xaxis-labels span').click(goToMaterialsTabFromMonthChart)
         function goToMaterialsTabFromMonthChart  (){
             var months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
