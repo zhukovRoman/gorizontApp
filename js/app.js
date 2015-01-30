@@ -6,7 +6,7 @@ var gApp = {
         gApp.bindPageEvents();
     },
     bindPageEvents: function(){
-        $(document).on('pagebeforehide', gApp.hideMenu);
+        //$(document).on('pagebeforehide', gApp.hideMenu);
         $( document ).on( "pagebeforehide","#main", function( event ) {
             $('.content').animate({
                 'padding-left': '0px'
@@ -42,6 +42,14 @@ var gApp = {
 
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
+        $(document).on( "pagebeforeshow",'#objects', function(){
+            $(".pages-menu a").removeClass('active')
+            $(".pages-menu a.objects-menu-item").addClass('active')
+        })
+
+        $(document).on( "pagebeforeshow",'#dummy', function(){
+            $(".pages-menu a").removeClass('active')
+        })
 
         $(document).on('pageshow', '#object_view', function(event, data){
             gApp.object_view.initObjectDetail($(this).data('url'));
@@ -70,31 +78,31 @@ var gApp = {
             FastClick.attach(el);
         })
     },
-    toggleMenu: function(){
-        if ($('#new_menu').hasClass('show-new-menu'))
-            gApp.hideMenu()
-        else
-            gApp.showMenu()
-    },
-    showMenu: function(e){
-        $('#new_menu').addClass('show-new-menu')
-        $('.content').addClass('move-content-right')
-        $('#new_menu').removeClass('hide-new-menu')
-        $('.content').removeClass('move-content-left')
-
-    },
-    hideMenu: function(){
-        if ($('#new_menu').hasClass('show-new-menu')) {
-            $('#new_menu').addClass('hide-new-menu')
-            $('.content').addClass('move-content-left')
-            $('#new_menu').removeClass('show-new-menu')
-            $('.content').removeClass('move-content-right')
-        }
-    },
-    hideMenuByClickOnContent: function(){
-        if ($('#new_menu').hasClass('show-new-menu'))
-            gApp.hideMenu();
-    },
+    //toggleMenu: function(){
+    //    if ($('#new_menu').hasClass('show-new-menu'))
+    //        gApp.hideMenu()
+    //    else
+    //        gApp.showMenu()
+    //},
+    //showMenu: function(e){
+    //    $('#new_menu').addClass('show-new-menu')
+    //    $('.content').addClass('move-content-right')
+    //    $('#new_menu').removeClass('hide-new-menu')
+    //    $('.content').removeClass('move-content-left')
+    //
+    //},
+    //hideMenu: function(){
+    //    if ($('#new_menu').hasClass('show-new-menu')) {
+    //        $('#new_menu').addClass('hide-new-menu')
+    //        $('.content').addClass('move-content-left')
+    //        $('#new_menu').removeClass('show-new-menu')
+    //        $('.content').removeClass('move-content-right')
+    //    }
+    //},
+    //hideMenuByClickOnContent: function(){
+    //    if ($('#new_menu').hasClass('show-new-menu'))
+    //        gApp.hideMenu();
+    //},
     getMarkerOption: function(obj){
         var activeIcon = gApp.activeIconForMap();
         var disactiveIcon = gApp.disactiveIconForMap();
