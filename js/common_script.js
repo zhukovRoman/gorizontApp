@@ -36,7 +36,8 @@ function text_between_dates (dateFrom, dateTo){
         string += monthDiff + format_num(monthDiff, {nom: ' месяц ', gen: ' месяца ', plu: ' месяцев '})
         dateFrom = dateFrom.add(monthDiff, 'month')
     }
-    var daysDiff = dateTo.diff(dateFrom, 'day')
+    console.log(dateFrom)
+    var daysDiff = dateTo.diff(dateFrom, 'day') +1
     if (daysDiff != 0){
         string += daysDiff + format_num(daysDiff, {nom: ' день ', gen: ' дня ', plu: ' дней '})
     }

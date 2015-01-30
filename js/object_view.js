@@ -397,13 +397,16 @@ gApp.object_view = {
 
         var daysLastText = text_between_dates( moment(),
                                 moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY"))
-        $('#days_last').text(daysLastText)
+        $('#days_last').text("Осталось " + daysLastText)
+        if (gApp.object_view.current_object.days_lag <=0){
+            $('.days-left').width('100%');
+            $('.object-lag').hide();
+        }
         $('#days_lag').text(
             (gApp.object_view.current_object.days_lag <= 0 ) ? "" :
-                "(Отставание "
+                "Отставание "
                 + gApp.object_view.current_object.days_lag
                 + format_num(gApp.object_view.current_object.days_lag, {nom: ' день', gen: ' дня', plu: ' дней'})
-                + ")"
         )
 
         var daysBetweenStartAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
@@ -683,7 +686,7 @@ gApp.object_view = {
                 shared: true,
                 formatter: function(){
                     var tooltip = "<div class='gorizont-tooltip'>"
-                    tooltip += tooltipHeader(this.x)
+                    tooltip += tooltipHeader(this.x+ " " + selected_year)
                     $.each(this.points, function(i,point){
                         tooltip += tooltipRow(point.series.name, point.y,  point.series.color)
                     })
