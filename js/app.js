@@ -47,8 +47,24 @@ var gApp = {
             $(".pages-menu a.objects-menu-item").addClass('active')
         })
 
-        $(document).on( "pagebeforeshow",'#dummy', function(){
+        $(document).on( "pagebeforeshow",'#material', function(){
             $(".pages-menu a").removeClass('active')
+            $(".pages-menu a.material-menu-item").addClass('active')
+        })
+
+        $(document).on( "pagebeforeshow",'#employee', function(){
+            $(".pages-menu a").removeClass('active')
+            $(".pages-menu a.empl-menu-item").addClass('active')
+        })
+
+        $(document).on( "pagebeforeshow",'#tech', function(){
+            $(".pages-menu a").removeClass('active')
+            $(".pages-menu a.tech-menu-item").addClass('active')
+        })
+
+        $(document).on( "pagebeforeshow",'#avto', function(){
+            $(".pages-menu a").removeClass('active')
+            $(".pages-menu a.avto-menu-item").addClass('active')
         })
 
         $(document).on('pageshow', '#object_view', function(event, data){

@@ -188,7 +188,7 @@ gApp.object_view = {
                     labelFormatter: function () {
                         return '<div style="width: 650px; padding-top: 5px">' +
                             '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
-                            '<div style="text-align: right; float: right; width: 250px;"> '+ (this.y) +' унивресальные шт</div></div>';
+                            '<div style="text-align: right; float: right; width: 250px;"> '+ (this.y) +' шт</div></div>';
                     }
                 },
                 series: [{
