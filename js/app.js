@@ -6,6 +6,19 @@ var gApp = {
         gApp.bindPageEvents();
     },
     bindPageEvents: function(){
+        function fillCommonInfo(){
+            var data = {count:0, budget_spent:0, budget:0}
+            $.each(objects, function(i, obj){
+                if(obj.is_complete) return;
+                data.count++;
+                data.budget+=obj.budget||0;
+                data.budget_spent+=obj.budget_spent||0;
+            })
+            $('#objects_count').text(data.count);
+            $('#all_objects_budget_spent').text(mln_to_text(data.budget_spent))
+            $('#all_objects_budget').text(mln_to_text(data.budget))
+        }
+        fillCommonInfo()
         //$(document).on('pagebeforehide', gApp.hideMenu);
         $( document ).on( "pagebeforehide","#main", function( event ) {
             $('.content').animate({
@@ -20,6 +33,8 @@ var gApp = {
             });
         })
         $( document ).on( "pageshow","#main", function( event ) {
+            fillCommonInfo();
+
             $('.content').animate({
                 'padding-left': '450px'
             }, {
@@ -30,6 +45,8 @@ var gApp = {
             }, {
                 duration: gApp.options.animationDuration, queue: false
             });
+
+
         })
 
         $( document ).on( "pagebeforehide", function( event,data ) {
