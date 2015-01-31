@@ -92,17 +92,7 @@ gApp.object_view = {
     materialDataProvider: function(obj_id){
         dateStart = gApp.object_view.dateStart
         dateEnd = gApp.object_view.dateEnd
-        var data = {
-            "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л":
-            [{date: '10.02.2015', count: 2, unit:'шт', price:1222.50 },
-                {date: '12.01.2015', count: 2, unit:'шт', price:1222.50 }],
-            "Седелка компрессионная с резьбовым отводом 110х1 1/4 мм":
-                [{date: '15.01.2015', count: 2, unit:'шт', price:1222.50 },
-                    {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }],
-            "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем":
-                [{date: '25.01.2015', count: 2, unit:'шт', price:1222.50 },
-                    {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }]
-        }
+        var data = materials_data;
         var res = {}
         $.each(data, function(not,mats){
             $.each(mats, function(i,item){
