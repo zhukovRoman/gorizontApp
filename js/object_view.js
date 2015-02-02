@@ -192,7 +192,7 @@ gApp.object_view = {
                     labelFormatter: function () {
                         return '<div style="width: 650px; padding-top: 5px">' +
                             '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
-                            '<div style="text-align: right; float: right; width: 250px;"> '+ (this.y) +' унивресальные шт</div></div>';
+                            '<div style="text-align: right; float: right; width: 250px;"> '+ (this.y) +' шт</div></div>';
                     }
                 },
                 series: [{
@@ -208,11 +208,9 @@ gApp.object_view = {
                     innerSize: 300,
                     dataLabels: {
                         formatter: function () {
-                            console.log(this)
-                            return this.y > 5 ? this.y + "%" : null;
+                            return this.percentage > 5 ? this.percentage.toFixed() + "%" : null;
                         },
                         color: 'white',
-
                         distance: -45
                     }
                 }, {
@@ -226,6 +224,12 @@ gApp.object_view = {
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
+                    dataLabels: {
+                        formatter: function () {
+                            var percent = (gApp.object_view.current_object.material_used*100/gApp.object_view.current_object.material_bought).toFixed()
+                            return percent > 2 ? percent + "%" : null;
+                        }
+                    },
                     endAngle: calcAngile(gApp.object_view.current_object.material_all_count, gApp.object_view.current_object.material_used)
                 }]
             })
@@ -252,7 +256,11 @@ gApp.object_view = {
                         shadow: false,
                         center: ['50%', '35%'],
                         dataLabels: {
-                            enabled: false
+                            enabled: true,
+                            style: {
+                                fontWeight: 'bold',
+                                fontSize: "20px"
+                            }
                         },
                         showInLegend: true
                     }
@@ -286,7 +294,14 @@ gApp.object_view = {
                         y:  gApp.object_view.current_object.budget - gApp.object_view.current_object.budget_spent
                     }],
                     size: 450,
-                    innerSize: 300
+                    innerSize: 300,
+                    dataLabels: {
+                        formatter: function () {
+                            return this.percentage > 5 ? this.percentage.toFixed() + "%" : null;
+                        },
+                        color: 'white',
+                        distance: -45
+                    }
                 }, {
                     name: 'Списано',
                     data: [{
@@ -298,6 +313,12 @@ gApp.object_view = {
                     size: 550,
                     innerSize: 450,
                     startAngle: 0,
+                    dataLabels: {
+                        formatter: function () {
+                            var percent = (gApp.object_view.current_object.budget_used*100/gApp.object_view.current_object.budget_spent).toFixed()
+                            return percent > 2 ? percent + "%" : null;
+                        }
+                    },
                     endAngle: calcAngile(gApp.object_view.current_object.budget, gApp.object_view.current_object.budget_used)
                 }]
             })
