@@ -1,14 +1,14 @@
 objects=[
     {
         id:1,
-        name: 'Moscow-city',
-        address: 'Москва, Кутузовский проспект',
+        name: 'Ростокино',
+        address: 'г.Москва, Будайский проезд, дом 9',
         distinct: 'СВАО',
         latlng: [55.6905, 37.67], // координаты объекта
         type: 'Дороги', //depricated может быть пустым или отсутствовать
         director: {    // информация о начальнике участка
             fio: 'Иванов Иван Иванович',
-            phone: '+79251282427',
+            phone: '+79251282422',
             mail: 'mail@mail.com'
         } ,
         is_complete: false,  // завершен ли объект
@@ -66,22 +66,38 @@ objects=[
     },
     {
         id:2,
-        name: 'Moscow-city2',
-        address: 'Москва',
-        distinct: 'ВАО',
+        name: 'Большая Академическая (Николаев)',
+        address: 'г.Москва, Будайский проезд, дом 9',
+        distinct: 'ЮЗАО',
         latlng: [55.497657, 37.589328 ],
         type: 'Переход',
         objects_director: 'Иванов Иван Иванович',
         full_type: 'Автомобильные дороги',
-        is_complete: false,
-        material_spent: 12000000,
-        material_left: 36000000,
-        current_year_budget: 80000000,
-        current_year_budget_spent: 50000000
-    },
+        is_complete: false,  // завершен ли объект
+        date_start: "12.12.2014",  // дата начала работ
+        plan_date_end: '13.12.2015',   // планируемая дата окончания
+        director: {    // информация о начальнике участка
+        } ,
+        days_lag: 0, // отставание в днях
+        plan: {    // игформация о плане работ
+            steps_count: 7, // всего этапов/вех
+            steps_complete: 4, //завершено этапов/вех
+            current_step: "Коллектор №4"  // текущий этап
+        },
+        budget:12000000,
+        budget_spent: 11000000, //закуплено метериалов на сумму
+        budget_used: 8000000, //списано мат на сумму
+
+        budget_current_plan: 6000000, // планировали потратить на текущий момент
+
+        material_all_count: 60,  //матералов всего надо на объект в шт
+        material_bought: 50, // закуплено мат в шт
+        material_used: 40, // заюзано мат в шт
+        consumption_data: {}
+        },
     {
         id:3,
-        name: 'Moscow-city3',
+        name: 'Бескудниково (Васенев)',
         address: 'Москва',
         distinct: 'ЮВАО',
         latlng: [ 55.739023, 37.741063],
@@ -96,7 +112,7 @@ objects=[
     },
     {
         id:4,
-        name: 'Moscow-city4',
+        name: 'Большая Академическая,57 (Бобков)',
         address: 'Москва',
         distinct: 'ЗАО',
         latlng: [55.874276, 37.627562],
