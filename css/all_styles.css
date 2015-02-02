@@ -419,12 +419,14 @@ a.avto-menu-item.active {
     color: #737b7e;
     border-bottom: 2px solid #d7dbdf;
     height: 80px;
-    line-height: 80px;
+    line-height: 30px;
     padding-right: 30px;
     padding-left: 10px;
     display: inline-block; }
     .object-search-result a span {
-      display: table-cell; }
+      display: table-cell;
+      vertical-align: middle;
+      height: 80px; }
 
 #objects_map {
   float: right;

@@ -7,7 +7,7 @@ gApp.object_view = {
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
-        this.current_id = 1;
+        //this.current_id = 1;
         $.each(objects, function(i,val){
             if(val.id==gApp.object_view.current_id)
                 gApp.object_view.current_object = val;
@@ -408,9 +408,9 @@ gApp.object_view = {
         $.each($('#object_view [data-value-name]'), function(i, element){
             var value = '';
             if ($(element).attr('data-part'))
-                value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')])
+                value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')]||"")
             else
-                value = (gApp.object_view.current_object[$(element).attr('data-value-name')])
+                value = (gApp.object_view.current_object[$(element).attr('data-value-name')]||'')
 
             $(element).text(value)
         })
@@ -549,8 +549,8 @@ gApp.object_view = {
     //Consumption tab
     fillConsumptionTab: function() {
         $('#object_view .consumption-content').show();
-        $('#object_view .right-content').hide();
-        $('#object_view .left-content').css('width',"100%")
+        //$('#object_view .right-content').hide();
+        //$('#object_view .left-content').css('width',"100%")
 
 
         gApp.object_view.fillConsumtionYearSelect();
@@ -585,6 +585,7 @@ gApp.object_view = {
         var select = $('#consumption_current_month');
         select.html('')
         var currentYear = gApp.object_view.getCurrentConsumtionYear();
+        if (!currentYear) return
         $.each(gApp.object_view.current_object.consumption_data[currentYear].month_data, function(year, data){
             select.append($('<option>', {value:year, text:year}));
         })
@@ -640,6 +641,7 @@ gApp.object_view = {
     },
     drawConsumtionYearChart: function(){
         var selected_year=gApp.object_view.getCurrentConsumtionYear();
+        if (!selected_year) return
         var chart = new Highcharts.Chart({
             chart: {
                 type: 'column',
@@ -715,6 +717,7 @@ gApp.object_view = {
     drawConsumtionMonthChart: function(){
         var selectedMonth = gApp.object_view.getCurrentConsumtionMonth();
         var selectedYear = gApp.object_view.getCurrentConsumtionYear();
+        if (!selectedYear|| !selectedMonth) return
         var chart = new Highcharts.Chart({
             chart: {
                 type: 'column',
