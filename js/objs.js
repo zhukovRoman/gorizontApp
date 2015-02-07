@@ -49,7 +49,7 @@ gApp.objects = {
     getAllDistinctsByObjects: function(){
         var items = {}
         $.each(objects, function(i,val){
-            if (!items[val.distinct])items[val.distinct] = val.distinct
+            if (!items[val.district])items[val.district] = val.district
         })
         var res =[];
         $.each(items, function(i, val){
@@ -66,7 +66,7 @@ gApp.objects = {
     testsFunction: [
         //testDistinct:
         function(obj){
-            return $('#distinct-filter').touchFilter('getValues').indexOf(obj.distinct)>=0
+            return $('#distinct-filter').touchFilter('getValues').indexOf(obj.district)>=0
         },
         //testType:
         //function(obj){
@@ -76,12 +76,12 @@ gApp.objects = {
         function(obj){
             var query = $('#objects_search_input').val().toLowerCase()
             if (query.length == 0) return true
-            var name = [obj.name, objects.distinct, obj.address].join(' ').toLowerCase()
+            var name = [obj.name, objects.district, obj.address].join(' ').toLowerCase()
             return name.indexOf(query)>=0
         },
         //test is complete:
         function(obj){
-            if (!obj.is_complete) return true
+            if (!obj.is_completed) return true
             return $('#show_complete_checkbox').prop("checked")
         }
 
@@ -122,7 +122,7 @@ gApp.objects = {
         $.each(gApp.objects.filterate_objects, function (i,val){
             var a = $(document.createElement('a')).attr('href', 'object_detail.html?id='+val.id)
             a.append($(document.createElement('span')).text(val.name))
-            a.append($(document.createElement('span')).text(val.distinct))
+            a.append($(document.createElement('span')).text(val.district))
             container.append(a)
         })
     }

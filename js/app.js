@@ -11,7 +11,7 @@ var gApp = {
         function fillCommonInfo(){
             var data = {count:0, budget_spent:0, budget:0}
             $.each(objects, function(i, obj){
-                if(obj.is_complete) return;
+                if(obj.is_completed) return;
                 data.count++;
                 data.budget+=obj.budget||0;
                 data.budget_spent+=obj.budget_spent||0;
@@ -36,12 +36,6 @@ var gApp = {
             if (data.nextPage[0].id=='main')
                 $('.pages-menu').removeClass('show-pages-menu')
                 $('.pages-menu').addClass('hide-pages-menu');
-
-                //$('.pages-menu').animate({
-                //    'left': '-180px'
-                //}, {
-                //    duration: gApp.options.animationDuration, queue: false
-                //});
 
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
