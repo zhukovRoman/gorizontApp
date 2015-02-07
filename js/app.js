@@ -4,6 +4,8 @@ var gApp = {
     },
     initialize: function(){
         gApp.bindPageEvents();
+        gApp.dataSaver.initDB();
+
     },
     bindPageEvents: function(){
         function fillCommonInfo(){
@@ -18,44 +20,28 @@ var gApp = {
             $('#all_objects_budget_spent').text(mln_to_text(data.budget_spent))
             $('#all_objects_budget').text(mln_to_text(data.budget))
         }
-        fillCommonInfo()
-        //$(document).on('pagebeforehide', gApp.hideMenu);
+        fillCommonInfo();
+        $(document).on('databaseready', gApp.httpApi.updateData)
         $( document ).on( "pagebeforehide","#main", function( event ) {
-            $('.content').animate({
-                'padding-left': '0px'
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            });
-            $('.main-menu').animate({
-                'left': '-450px'
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            });
+            $('.main-menu').removeClass('show-main-menu');
+            $('.main-menu').addClass('hide-main-menu')
         })
-        $( document ).on( "pageshow","#main", function( event ) {
+        $(document).on( "pageshow","#main", function( event ) {
             fillCommonInfo();
-
-            $('.content').animate({
-                'padding-left': '450px'
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            })
-            $('.main-menu').animate({
-                'left': '0px'
-            }, {
-                duration: gApp.options.animationDuration, queue: false
-            });
-
-
+            $('.main-menu').removeClass('hide-main-menu');
+            $('.main-menu').addClass('show-main-menu');
         })
 
         $( document ).on( "pagebeforehide", function( event,data ) {
             if (data.nextPage[0].id=='main')
-                $('.pages-menu').animate({
-                    'left': '-180px'
-                }, {
-                    duration: gApp.options.animationDuration, queue: false
-                });
+                $('.pages-menu').removeClass('show-pages-menu')
+                $('.pages-menu').addClass('hide-pages-menu');
+
+                //$('.pages-menu').animate({
+                //    'left': '-180px'
+                //}, {
+                //    duration: gApp.options.animationDuration, queue: false
+                //});
 
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
@@ -92,17 +78,9 @@ var gApp = {
     addCommonEvents: function(){
         $(document).on('pageshow', function(e, data){
             if( data.toPage[0].id!='main'){
-                $('.pages-menu').animate({
-                    'left': '0px'
-                }, {
-                    duration: gApp.options.animationDuration, queue: false
-                });
-                //$('#menu-button').click(gApp.toggleMenu)
-                //$( ".content" ).on( "swiperight", gApp.showMenu)
-                //$( ".content" ).on( "swipeleft", gApp.hideMenu)
-                //$( ".need-hide-menu" ).on( "mousedown", gApp.hideMenuByClickOnContent)
+                $('.pages-menu').removeClass('hide-pages-menu')
+                $('.pages-menu').addClass('show-pages-menu')
             }
-
             gApp.attachFastClick();
         });
     },

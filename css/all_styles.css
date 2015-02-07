@@ -337,6 +337,58 @@ a.avto-menu-item {
 a.avto-menu-item.active {
   background-image: url("images/avto-menu-active.png"); }
 
+@-webkit-keyframes main-menu-move-right {
+  from {
+    left: -450px; }
+
+  to {
+    left: 0px; } }
+
+@-webkit-keyframes main-menu-move-left {
+  from {
+    left: 0px; }
+
+  to {
+    left: -450px; } }
+
+@-webkit-keyframes pages-menu-move-left {
+  from {
+    left: 0px; }
+
+  to {
+    left: -180px; } }
+
+@-webkit-keyframes pages-menu-move-right {
+  from {
+    left: -180px; }
+
+  to {
+    left: 0px; } }
+
+.show-main-menu {
+  animation: main-menu-move-right 300ms;
+  -webkit-animation: main-menu-move-right 300ms;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards; }
+
+.hide-main-menu {
+  animation: main-menu-move-left 300ms;
+  -webkit-animation: main-menu-move-left 300ms;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards; }
+
+.hide-pages-menu {
+  animation: pages-menu-move-left 200ms;
+  -webkit-animation: pages-menu-move-left 200ms;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards; }
+
+.show-pages-menu {
+  animation: pages-menu-move-right 200ms;
+  -webkit-animation: pages-menu-move-right 200ms;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards; }
+
 .main-window {
   background-image: url("images/main-window_bg.jpg");
   height: 100%;

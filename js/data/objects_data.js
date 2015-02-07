@@ -3,15 +3,15 @@ objects=[
         id:1,
         name: 'Ростокино',
         address: 'г.Москва, Будайский проезд, дом 9',
-        distinct: 'СВАО',
+        district: 'СВАО',
         latlng: [55.6905, 37.67], // координаты объекта
         type: 'Дороги', //depricated может быть пустым или отсутствовать
-        director: {    // информация о начальнике участка
+        manager: {    // информация о начальнике участка
             fio: 'Иванов Иван Иванович',
             phone: '+79251282422',
             mail: 'mail@mail.com'
         } ,
-        is_complete: false,  // завершен ли объект
+        is_completed: false,  // завершен ли объект
         date_start: "12.12.2014",  // дата начала работ
         plan_date_end: '13.12.2015',   // планируемая дата окончания
         days_lag: 30, // отставание в днях
@@ -68,15 +68,15 @@ objects=[
         id:2,
         name: 'Большая Академическая (Николаев)',
         address: 'г.Москва, Будайский проезд, дом 9',
-        distinct: 'ЮЗАО',
+        district: 'ЮЗАО',
         latlng: [55.497657, 37.589328 ],
         type: 'Переход',
-        objects_director: 'Иванов Иван Иванович',
+        objects_manager: 'Иванов Иван Иванович',
         full_type: 'Автомобильные дороги',
-        is_complete: false,  // завершен ли объект
+        is_completed: false,  // завершен ли объект
         date_start: "12.12.2014",  // дата начала работ
         plan_date_end: '13.12.2015',   // планируемая дата окончания
-        director: {    // информация о начальнике участка
+        manager: {    // информация о начальнике участка
         } ,
         days_lag: 0, // отставание в днях
         plan: {    // игформация о плане работ
@@ -99,12 +99,12 @@ objects=[
         id:3,
         name: 'Бескудниково (Васенев)',
         address: 'Москва',
-        distinct: 'ЮВАО',
+        district: 'ЮВАО',
         latlng: [ 55.739023, 37.741063],
         type: 'Мосты',
-        objects_director: 'Иванов Иван Иванович',
+        objects_manager: 'Иванов Иван Иванович',
         full_type: 'Автомобильные дороги',
-        is_complete: false,
+        is_completed: false,
         material_spent: 12000000,
         material_left: 36000000,
         current_year_budget: 80000000,
@@ -114,12 +114,12 @@ objects=[
         id:4,
         name: 'Большая Академическая,57 (Бобков)',
         address: 'Москва',
-        distinct: 'ЗАО',
+        district: 'ЗАО',
         latlng: [55.874276, 37.627562],
         type: 'Мосты',
-        objects_director: 'Иванов Иван Иванович',
+        objects_manager: 'Иванов Иван Иванович',
         full_type: 'Автомобильные дороги',
-        is_complete: true,
+        is_completed: true,
         material_spent: 12000000,
         material_left: 36000000,
         current_year_budget: 80000000,
