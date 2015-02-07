@@ -1,0 +1,10 @@
+.notify {
+  position: absolute;
+  height: 77px;
+  display: block;
+  background: orange;
+  vertical-align: middle;
+  width: 1868px;
+  border-left: 4px solid darkgrey;
+  box-sizing: border-box;
+  float: left; }
