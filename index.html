@@ -91,6 +91,20 @@
     <script type="application/javascript">
         $(function(){
             gApp.initialize();
+
+
+            $.ajax({
+                url: "http://cosmos.gorizontgroup.net/api/v1/plots",
+                user: "mobileapp",
+                password: 'yp6mFYjpxsgwY2',
+                beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + btoa('mobileapp' + ":" + 'yp6mFYjpxsgwY2')); },
+                dataType: 'jsonp'
+            })
+            .done(function( data ) {
+                if ( console && console.log ) {
+                    console.log( "Sample of data:", data.slice( 0, 100 ) );
+                }
+            });
             // Wait for device API libraries to load
             //
             document.addEventListener("deviceready", onDeviceReady, false);
