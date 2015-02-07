@@ -93,7 +93,7 @@
             options = $.extend( options, arguments[0]);
             return methods.init.apply( this, arguments );
         } else {
-            $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
+            $.error( 'Метод с именем ' +  method + ' не существует для jQuery.touch-filter' );
         }
 
     return this.each(init);
