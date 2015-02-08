@@ -31,7 +31,6 @@ gApp.objects = {
 
         $('#objects_search_input').on('keyup', gApp.objects.filterObjectAndRedrawAll);
         $('#show_complete_checkbox').on('change', gApp.objects.filterObjectAndRedrawAll);
-        gApp.setActiveIconOnMenu('objects')
 
     },
 
