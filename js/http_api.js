@@ -1,5 +1,5 @@
 gApp.httpApi = {
-    url: 'http://cosmos.gorizontgroup.net/api/v1/plots',
+    url: 'cosmos.gorizontgroup.net/api/',
     version: 'v1',
     username:'mobileapp',
     pass: 'yp6mFYjpxsgwY2',
@@ -9,8 +9,7 @@ gApp.httpApi = {
     },
     getRequestOption: function(method){
         return{
-            url: "http://cosmos.gorizontgroup.net/api/"+gApp.httpApi.version+'/'+method,
-            beforeSend: function(xhr) { xhr.setRequestHeader("Authorization", "Basic " + btoa(gApp.httpApi.username + ":" + gApp.httpApi.pass)); },
+            url: "http://"+gApp.httpApi.username+":"+gApp.httpApi.pass+"@"+gApp.httpApi.url+gApp.httpApi.version+'/'+method,
             dataType: 'jsonp'
         }
     },
