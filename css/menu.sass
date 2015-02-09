@@ -182,25 +182,43 @@ a.avto-menu-item.active
     left: 0px
 
 .show-main-menu
-  animation: main-menu-move-right 300ms
-  -webkit-animation: main-menu-move-right 300ms
-  animation-fill-mode: forwards
-  -webkit-animation-fill-mode: forwards
+  border: none
+  transform: translate(0px,0)
+  -webkit-transform: translate(0px,0)
+  transition: all 300ms linear
+  -webkit-transition: all 300ms linear
+  //animation: main-menu-move-right 300ms
+  //-webkit-animation: main-menu-move-right 300ms
+  //animation-fill-mode: forwards
+  //-webkit-animation-fill-mode: forwards
 
 .hide-main-menu
-  animation: main-menu-move-left 300ms
-  -webkit-animation: main-menu-move-left 300ms
-  animation-fill-mode: forwards
-  -webkit-animation-fill-mode: forwards
+  border: none
+  transform: translate(-450px,0)
+  -webkit-transform: translate(-450px,0)
+  transition: all 300ms linear
+  -webkit-transition: all 300ms linear
+  //animation: main-menu-move-left 300ms
+  //-webkit-animation: main-menu-move-left 300ms
+  //animation-fill-mode: forwards
+  //-webkit-animation-fill-mode: forwards
 
 .hide-pages-menu
-  animation: pages-menu-move-left 200ms
-  -webkit-animation: pages-menu-move-left 200ms
-  animation-fill-mode: forwards
-  -webkit-animation-fill-mode: forwards
+  transform: translate(-180px,0)
+  -webkit-transform: translate(-180px,0)
+  transition: all 300ms linear
+  -webkit-transition: all 300ms linear
+  //animation: pages-menu-move-left 200ms
+  //-webkit-animation: pages-menu-move-left 200ms
+  //animation-fill-mode: forwards
+  //-webkit-animation-fill-mode: forwards
 
 .show-pages-menu
-  animation: pages-menu-move-right 200ms
-  -webkit-animation: pages-menu-move-right 200ms
-  animation-fill-mode: forwards
-  -webkit-animation-fill-mode: forwards
+  transform: translate(180px,0)
+  -webkit-transform: translate(180px,0)
+  transition: all 300ms linear
+  -webkit-transition: all 300ms linear
+  //animation: pages-menu-move-right 200ms
+  //-webkit-animation: pages-menu-move-right 200ms
+  //animation-fill-mode: forwards
+  //-webkit-animation-fill-mode: forwards
