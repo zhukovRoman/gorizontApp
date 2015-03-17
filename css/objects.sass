@@ -82,7 +82,7 @@
     margin-bottom: 0
     width: 100%
   .object-tabs
-    padding: 0 230px
+    padding: 0 50px
   .budget-content
     #material_budget_chart, #finance_budget_chart
       width: ($display-width - $menu-width-small) / 2 - 20px
@@ -206,7 +206,67 @@
     width: 100%
     height: 100%
 
-    //float: left
+  .plan-content
+    padding: 30px 30px 3px 30px
+    .plan-table-header
+      padding-left: 0
+      span
+        text-align: center
+      span:first-child
+        min-width: 1000px
+        text-align: left
+        padding-left: 100px
+      span:nth-child(1n+2)
+        min-width: 350px
+    .plan-table-content
+      max-height: 1200px
+      overflow-y: scroll
+      .plan-item
+        border-bottom: 4px solid $light-gray
+      .plan-part, .plan-subpart
+        //height: 70px
+        font-size: 30px
+        color: $light-gray
+        font-weight: lighter
+        span
+          display: table-cell
+          vertical-align: middle
+          height: 70px
+          text-align: center
+          box-sizing: border-box
+        span:first-child
+          padding-left: 10px
+          min-width: 1100px
+          text-align: left
+        span:nth-child(1n+2)
+          min-width: 350px
+
+      .plan-part
+        border-left: 6px solid $orange-color
+        border-bottom: 2px solid $light-light-gray
+        span:last-child
+          padding-left: 80px
+          box-sizing: border-box
+          background-repeat: no-repeat
+          background-position: 45px 10px
+          &.completed
+            background-image: url("images/step_complete.png")
+          &.completed-intime
+            background-image: url("images/step_complete_intime.png")
+          &.completed-overdue
+            background-image: url("images/step_complete_overdue.png")
+          &.inprogress
+            background-image: url("images/step_inprogress.png")
+          &.inprogress-overdue
+            background-image: url("images/step_inprogress_overdue.png")
+      .plan-subpart
+        border-bottom: 2px solid $light-light-gray
+        margin-left: 120px
+        &:last-child
+          border-bottom: none
+        span:first-child
+          min-width: 985px
+
 
   .material-content
     padding: 30px 30px 3px 30px
@@ -265,6 +325,51 @@
                 display: table-cell
                 line-height: 70px
 
+
+  .storage-content
+    padding: 30px 30px 3px 30px
+    .controls
+      width: 100%
+      .search > div
+        width: 100%
+        float: left
+    .storage-table
+      margin-top: 50px
+      .list-header
+        height: inherit
+        span
+          display: table-cell
+          text-align: center
+          vertical-align: middle
+          //line-height: 60px
+        span:first-child
+          min-width: 1300px
+          text-align: left
+        span:nth-child(1n+2)
+          min-width: 245px
+      .storage-table-content
+        height: 1120px
+        color: #71787f
+        font-size: 30px
+        overflow-y: scroll
+        overflow-x: hidden
+        .storage-row
+          padding-left: 10px
+          height: 70px
+          border-bottom: 2px solid $light-light-gray
+          &:last-child
+            border-bottom: none
+        span
+          display: table-cell
+          text-align: center
+          vertical-align: middle
+          height: 70px
+        span:first-child
+          min-width: 1300px
+          max-width: 1300px
+          text-align: left
+        span:nth-child(1n+2)
+          min-width: 245px
 
   .chart-control
     height: 70px

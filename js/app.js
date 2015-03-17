@@ -70,7 +70,7 @@ var gApp = {
     getMarkerOption: function(obj){
         var activeIcon = gApp.activeIconForMap();
         var disactiveIcon = gApp.disactiveIconForMap();
-        return {icon: obj.is_complete ? disactiveIcon : activeIcon}
+        return {icon: obj.is_completed ? disactiveIcon : activeIcon}
     },
     getMarkerPopupContent: function(obj){
         return ('<a href="object_detail.html?id='+obj.id+'">'+obj.name+'</a>')
