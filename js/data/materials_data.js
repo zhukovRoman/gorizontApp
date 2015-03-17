@@ -9,12 +9,57 @@ var materials_data = {
     //              }
     // ]
     "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л":
-        [{date: '10.02.2015', count: 2, unit:'шт', price:1222.50 },
-            {date: '12.01.2015', count: 2, unit:'шт', price:1222.50 }],
+        [{date: '03.03.2015', count: 2, unit:'шт', price:1222.50 },
+            {date: '05.03.2015', count: 2, unit:'шт', price:1222.50 }],
     "Седелка компрессионная с резьбовым отводом 110х1 1/4 мм":
-        [{date: '15.01.2015', count: 2, unit:'шт', price:1222.50 },
-            {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }],
+        [{date: '07.03.2015', count: 2, unit:'шт', price:1222.50 },
+            {date: '06.03.2015', count: 2, unit:'шт', price:1222.50 }],
     "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем":
-        [{date: '25.01.2015', count: 2, unit:'шт', price:1222.50 },
-            {date: '22.01.2015', count: 2, unit:'шт', price:1222.50 }]
+        [{date: '01.03.2015', count: 2, unit:'шт', price:1222.50 },
+            {date: '02.03.2015', count: 2, unit:'шт', price:1222.50 }]
 }
+
+var materials_storage = [
+    {
+        name: "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л",
+        count: 2,
+        unit: 'шт',
+        price: 756.6
+    },{
+        name: "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем",
+        count: 32,
+        unit: 'шт',
+        price: 1756.6
+    },{
+        name: "Горелка пропановая ГВ1-03 (круглая)",
+        count: 5,
+        unit: 'шт',
+        price: 5432
+    },{
+        name: "Стяжка винтовая для опалубки L=1000mm",
+        count: 129,
+        unit: 'шт',
+        price: 14.4
+    },{
+        name: "Аппарат инверторный 'Кедр' (220/380В, 20-250А)",
+        count: 1,
+        unit: 'шт',
+        price: 34500
+    },{
+        name: "Перчатки",
+        count: 500,
+        unit: 'пар',
+        price: 35
+    },{
+        name: "Сетка заградительная для аварийного ограждения 1,5х25",
+        count: 207,
+        unit: 'м',
+        price: 54
+    },{
+        name: "Кабель КГ 1х25",
+        count: 1005,
+        unit: 'м',
+        price: 2
+    }
+
+]
