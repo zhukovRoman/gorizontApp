@@ -83,10 +83,8 @@ gApp.objects = {
             if (!obj.is_completed) return true
             return $('#show_complete_checkbox').prop("checked")
         }
-
     ],
     initMap: function() {
-
         gApp.objects.map = L.map('objects_map',{maximumAge: 1000000}).setView([55.5705, 37.43], 10);
         L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
             maxZoom: 18,
@@ -112,9 +110,6 @@ gApp.objects = {
         if (markerArray.length==0) return
         gApp.objects.marker_group = L.featureGroup(markerArray).addTo(gApp.objects.map);
         gApp.objects.map.fitBounds(gApp.objects.marker_group.getBounds().pad(0.03));
-
-
-
     },
     bindRowsInList: function(){
         var container = $('#object_search_result').html('')
