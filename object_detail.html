@@ -28,26 +28,23 @@
         <div data-role="header" class="shadow">
             <a href="#"  data-rel="back"  class="ui-btn-left need-fastclick"><i class="fa fa-angle-left"></i></a>
             <h1 data-value-name="name"></h1>
-
+            <div id="short_notyfication_container"></div>
         </div><!-- /header -->
         <div class="left-content need-hide-menu">
-            <!--<ul class="notify-layout">-->
-                <!--<li><div class="notify">-->
-                    <!--<i class="fa fa-exclamation-triangle"></i>Отображаются старые данные (от 22.22.2012)<i class="fa fa-times"></i></div></li>-->
-                <!--<li><div class="notify">-->
-                    <!--<i class="fa fa-check"></i>Отображаются старые данные (от 22.22.2012)</div></li>-->
-            <!--</ul>-->
-
-
+            <div id="notyfication_container_pages"></div>
             <div class="object-tabs gorizont-tabs need-fastclick" data-role="none">
                 <input type="radio" name="object-view-tab" id="info" data-content-div="info-content" checked="checked" data-role="none">
                 <label for="info">Информация</label>
+                <input type="radio" name="object-view-tab" id="plan" data-content-div="plan-content" data-role="none">
+                <label for="plan">План</label>
                 <input type="radio" name="object-view-tab" id="budget" data-content-div="budget-content"  data-role="none">
                 <label for="budget">Бюджет</label>
                 <input type="radio" name="object-view-tab" id="consumption" data-content-div="consumption-content" data-role="none">
                 <label for="consumption">Расход</label>
                 <input type="radio" name="object-view-tab" id="material" data-content-div="material-content" data-role="none">
                 <label for="material">Материалы</label>
+                <input type="radio" name="object-view-tab" id="storage" data-content-div="storage-content" data-role="none">
+                <label for="storage">Склад</label>
             </div>
             <div class="info-content tab-content" style="display: none">
                 <div class="map-wrapper"><div id="object_map"></div></div>
@@ -118,6 +115,38 @@
                     </div>
                 </div>
             </div>
+            <div class="plan-content tab-content" style="display:none;">
+                <div class="plan-table">
+                    <div class="plan-table-header list-header">
+                        <span>Этап</span>
+                        <span>Процент выполнения</span>
+                        <span>Статус</span>
+                    </div>
+                    <div class="plan-table-content" id="plan_table_content">
+                        <div class="plan-item">
+                            <div class="plan-part">
+                                <span>ГЛАВА 1. Подготовка территории строительства</span>
+                                <span>
+                                    <div class="progress progress-orange">
+                                        <div class="progress-value">10%</div>
+                                    </div>
+                                </span>
+                                <span class="completed">выполнено в срок</span>
+                            </div>
+                            <div class="plan-subpart">
+                                <span>Смета №1 - Разработка а/б покрытий</span>
+                                <span> <div class="progress progress-gray">
+                                    <div class="progress-value">10%</div>
+                                </div></span>
+                            </div>
+                            <div class="plan-subpart">
+                                <span>Смета №2 - Разработка а/б покрытий</span>
+                                <span>prbar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="budget-content tab-content" style="display: none">
                 <div class="object-chart" id="material_budget_chart"></div>
                 <div class="object-chart" id="finance_budget_chart"></div>
@@ -168,6 +197,23 @@
                      </div>
                  </div>
             </div>
+            <div class="storage-content tab-content" style="display:none;">
+                <div class="controls">
+                     <span class="search">
+                        <input id="storage_search_input" type="text" class="search-input" placeholder="Поиск по номенклатуре"/>
+                     </span>
+                </div>
+                <div class="storage-table">
+                    <div class="storage-table-header list-header">
+                        <span>Номенклатура</span>
+                        <span>Кол-во</span>
+                        <!--<span>Цена</span>-->
+                        <span>Сумма</span>
+                    </div>
+                    <div class="storage-table-content" id="storage_table_content">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -175,10 +221,16 @@
 <script type="application/javascript" src="js/app.js"></script>
 <script type="application/javascript" src="js/objs.js"></script>
 <script type="application/javascript" src="js/data/objects_data.js"></script>
+<script type="application/javascript" src="js/data/materials_data.js"></script>
 <script type="application/javascript" src="js/object_view.js"></script>
+<script type="application/javascript" src="js/notification.js"></script>
 <script type="application/javascript">
     $(function(){
        gApp.object_view.initObjectDetail(window.location.href)
+
+        var n = new Noty('notyfication_container_pages' , 'short_notyfication_container');
+        n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.success, null,0, false)
+        n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.error, {text: "попробовать снова", fn: function(){alert('i"m function')}},0, false)
     })
 
 </script>

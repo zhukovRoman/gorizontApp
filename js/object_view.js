@@ -4,6 +4,8 @@ gApp.object_view = {
     dateStart: null,
     dateEnd:null,
     filtered_by_dates_materials: null,
+    storage_materials: null,
+    map: null,
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
@@ -17,6 +19,8 @@ gApp.object_view = {
         gApp.object_view.changeObjectViewTab();
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
+        // TODO
+        // need move eventbinding to tab procesing
         $('#date_start').on('change', function(e){
             gApp.object_view.dateStart = moment($(this).val())
             gApp.object_view.getDataByDates();
@@ -29,6 +33,9 @@ gApp.object_view = {
         })
         $('#materials_search_input').on('keyup', function(){
             gApp.object_view.refillTable();
+        })
+        $('#storage_search_input').on('keyup', function(){
+            gApp.object_view.refillStorageTable();
         })
 
     },
@@ -43,6 +50,11 @@ gApp.object_view = {
             gApp.object_view.fillConsumptionTab();
         if (current_tab=='material')
             gApp.object_view.fillMaterialTab();
+        if (current_tab=='plan')
+            gApp.object_view.fillPlanTab();
+        if (current_tab=='storage')
+            gApp.object_view.fillStorageTab();
+
     },
     fillMaterialTab: function(){
         $('#object_view .material-content').show();
@@ -54,7 +66,6 @@ gApp.object_view = {
         gApp.object_view.filtered_by_dates_materials = gApp.object_view.materialDataProvider()
     },
     setDates: function(){
-        console.log(gApp.object_view.dateStart, gApp.object_view.dateEnd)
         if(!gApp.object_view.dateStart)
             gApp.object_view.dateStart = moment().subtract(1, 'week')
         if(!gApp.object_view.dateEnd)
@@ -65,7 +76,7 @@ gApp.object_view = {
     refillTable: function(){
         var container = $('#materials_table_content').html('')
         $.each(gApp.object_view.filtered_by_dates_materials, function(notation,materials){
-            if (!gApp.object_view.checkNotation(notation)) return;
+            if (!gApp.object_view.checkNotation(notation, $('#materials_search_input').val())) return;
             var table_row = $(document.createElement('div')).addClass('material-table-row')
             var notation =  $(document.createElement('div')).addClass('notation').text(notation)
             var mat_spends = $(document.createElement('div')).addClass('material-spends')
@@ -81,9 +92,8 @@ gApp.object_view = {
             container.append(table_row)
         })
     },
-    checkNotation: function(notation){
-
-        var query = $('#materials_search_input').val().toLowerCase()
+    checkNotation: function(notation, query){
+        var query = query.toLowerCase()
         if (query.length<2) return true;
         notation = notation.toLowerCase();
         if (notation.indexOf(query)>-1) return true;
@@ -104,28 +114,7 @@ gApp.object_view = {
         })
         return res
     },
-    fillInfoTab: function(){
-        $('#object_view .info-content').show();
-        initMap()
-        function  initMap (){
-            var obj =  gApp.object_view.current_object
-            var map = L.map('object_map', {
-                zoomControl: false,
-                dragging: false,
-                touchZoom: false,
-                scrollWheelZoom: false,
-                doubleClickZoom: false
-            }).setView([obj.latlng[0]-0.01,obj.latlng[1]], 15);
-            L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-                maxZoom: 18,
-                attribution: '',
-                //id: 'examples.map-20v6611k'
-                //id: 'zhuk99.kpafdddm'
-                id: 'examples.map-i86l3621'
-            }).addTo(map);
-            L.marker(obj.latlng,gApp.getMarkerOption(obj)).addTo(map)
-        }
-    },
+
     fillBudgetTab: function(){
         $('#object_view .budget-content').show();
         drawMaterialBudgetChart();
@@ -379,7 +368,103 @@ gApp.object_view = {
         }
 
     },
+    fillPlanTab: function (){
+        $('#object_view .plan-content').show();
+        gApp.object_view.refillPlanTable()
+    },
+    refillPlanTable: function(){
+        function generateProgressBar (cl, value) {
+            return $(document.createElement('div')).addClass('progress').addClass(cl)
+                .append($(document.createElement('div')).addClass('progress-value').text(value+'%').width(value+'%'))
+        }
 
+        function generateStatus (status, lag){
+            if (status=='completed' && lag==0)
+                return 'completed'
+            if (status=='completed' && lag>0)
+                return 'completed-overdue'
+            if (status=='completed' && lag<0)
+                return 'completed-intime'
+            if (status=='inprogress' && lag>0)
+                return 'inprogress-overdue'
+            if (status=='inprogress' && lag<=0)
+                return 'inprogress'
+        }
+
+        function generateStatusText (status, lag, date){
+            if (status=='completed' && lag==0)
+                return 'выполнено в срок'
+            if (status=='completed' && lag>0)
+                return 'позже на '+lag+' '+format_num(lag, {nom: 'день', gen: 'дня', plu: 'дней'})
+            if (status=='completed' && lag<0)
+                return 'раньше на '+lag*(-1)+' '+format_num(lag, {nom: 'день', gen: 'дня', plu: 'дней'})
+            if (status=='inprogress' && lag>0)
+                return 'отставание на '+lag+' '+format_num(lag, {nom: 'день', gen: 'дня', plu: 'дней'})
+            if (status=='inprogress' && lag<=0)
+                return 'срок '+moment(date).format('DD.MM.YYYY')
+        }
+
+        var container = $('#plan_table_content').html('')
+        $.each(gApp.object_view.current_object.plan.steps, function(i,step){
+            var plan_item = $(document.createElement('div')).addClass('plan-item')
+            var plan_part = $(document.createElement('div')).addClass('plan-part')
+
+            plan_part.append($(document.createElement('span')).text(step.name))
+            plan_part.append($(document.createElement('span')).append(generateProgressBar('progress-orange', step.percent)))
+            plan_part.append($(document.createElement('span')).addClass(generateStatus(step.status, step.days_lag))
+                .text(generateStatusText(step.status, step.days_lag, step.time)))
+            plan_item.append(plan_part)
+            $.each(step.substeps, function(i, substep){
+                var subpart = $(document.createElement('div')).addClass('plan-subpart');
+                subpart.append($(document.createElement('span')).text(substep.name));
+                subpart.append($(document.createElement('span')).append(generateProgressBar('progress-gray', substep.percent)))
+                plan_item.append(subpart)
+            })
+
+            container.append(plan_item)
+        })
+    },
+    refillStorageTable: function(){
+        var container = $('#storage_table_content').html('')
+        $.each(gApp.object_view.storage_materials, function(i,mat){
+            if (!gApp.object_view.checkNotation(mat.name, $('#storage_search_input').val())) return;
+            var mat_row = $(document.createElement('div')).addClass('storage-row')
+            mat_row.append($(document.createElement('span')).text(mat.name))
+            mat_row.append($(document.createElement('span')).text(mat.count+' '+mat.unit))
+            mat_row.append($(document.createElement('span')).text(thousands_sep((mat.price*mat.count).toFixed())+' ₽'))
+            container.append(mat_row);
+        })
+    },
+    fillStorageTab: function(){
+        gApp.object_view.storage_materials = materials_storage;
+        gApp.object_view.refillStorageTable();
+        $('#object_view .storage-content').show();
+
+    },
+    fillInfoTab: function(){
+        $('#object_view .info-content').show();
+        initMap()
+        function  initMap (){
+            if (gApp.object_view.map) gApp.object_view.map.remove();
+            var obj =  gApp.object_view.current_object
+            gApp.object_view.map = L.map('object_map', {
+                zoomControl: false,
+                dragging: false,
+                touchZoom: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false
+                // - 0.01 потому что маркер должен быть по центру верхней трети
+            }).setView([obj.latlng[0]-0.01,obj.latlng[1]], 15);
+            L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '',
+                //id: 'examples.map-20v6611k'
+                //id: 'zhuk99.kpafdddm'
+                id: 'examples.map-i86l3621'
+            }).addTo(gApp.object_view.map);
+            L.marker(obj.latlng,gApp.getMarkerOption(obj)).addTo(gApp.object_view.map)
+        }
+    },
     fillObjectInfo: function(){
         // fill budjet info
         $('#budget_info').text(mln_to_text(gApp.object_view.current_object.budget))
