@@ -30,10 +30,13 @@ var gApp = {
                 data.budget+=obj.budget||0;
                 data.budget_spent+=obj.budget_spent||0;
             })
-            //console.log(data)
-            $('#objects_count').text(data.count);
-            $('#all_objects_budget_spent').text(mln_to_text(data.budget_spent))
-            $('#all_objects_budget').text(mln_to_text(data.budget))
+            console.log(data)
+            setTimeout(function(){
+                $('#objects_count').text(data.count);
+                $('#all_objects_budget_spent').text(mln_to_text(data.budget_spent))
+                $('#all_objects_budget').text(mln_to_text(data.budget))
+            },100)
+
         }
         fillCommonInfo();
         gApp.setNotyContainersForMainPage();
