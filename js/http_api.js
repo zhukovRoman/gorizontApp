@@ -32,7 +32,7 @@ gApp.httpApi = {
                 console.log(data);
                 gApp.Noty.add('Ваши данные успешно обновленны до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
 
-                gApp.dataSaver.setObjectsInfo(fake);
+                gApp.dataSaver.setObjectsInfo(data);
                 console.log('plots update end')
             })
             .error(function(){
@@ -65,11 +65,10 @@ gApp.httpApi = {
     },
     updateMaterialsConsumtionData: function(object_id, callback){
         console.log('materials_plot start update')
-        $.ajax(gApp.httpApi.getRequestOption('plots/'+object_id+'/material_records'))
+        $.ajax(gApp.httpApi.getRequestOption('plots/'+object_id+'/materials_spent'))
             .done(function(data) {
-                console.log(data);
-                gApp.Noty.add('Данные по остаткам материалов на участке обновлены до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
-                gApp.dataSaver.setMaterialsPlotByObject(object_id , data)
+                gApp.Noty.add('Данные по списанию материалов на участке обновлены до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
+                gApp.dataSaver.setMaterialsConsumtionsByObject(object_id , data)
                 console.log('plots update end')
                 if(callback){
                     callback(data);
@@ -83,6 +82,26 @@ gApp.httpApi = {
             });
     }
 }
+
+
+var materialFake = {id: 12,
+    updated_at: 'ffff',
+    materials_spent: [{
+        name: "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л",
+        records: [
+            {date: '03.03.2015', count: 2, unit:'шт', price:1222.50 },
+            {date: '05.03.2015', count: 2, unit:'м3', price:1222.50 }
+        ]
+    },
+        {
+            name: "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 100л",
+            records: [
+                {date: '10.04.2015', count: 2, unit:'л', price:1222.50 },
+                {date: '05.04.2015', count: 2, unit:'уп', price:1222.50 }
+            ]
+        },
+
+]}
 
 var fake = [{"id":14,
     "name":"Долгопрудный база",
