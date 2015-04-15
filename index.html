@@ -49,6 +49,7 @@
 
             <div id="main" class="content" data-role="page" style="padding-left: 450px">
                  <div class="main-window">
+                     <div id="notyfication_container"></div>
                      <div class="main-content">
                          <div class="main-logo"></div>
                          <div class="main-info-part">
@@ -90,9 +91,16 @@
     <script type="application/javascript" src="js/data/materials_data.js"></script>
     <script type="application/javascript" src="js/filter_logic.js"></script>
     <script type="application/javascript" src="js/object_view.js"></script>
+    <script type="application/javascript" src="js/notification.js"></script>
     <script type="application/javascript">
         $(function(){
             gApp.initialize();
+//            gApp.Noty.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.error, {text: "попробовать снова", fn: function(){alert('i"m function')}},0, false)
+//            gApp.Noty.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.alert, null,0, false)
+//            gApp.Noty.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.success, null,0, false)
+//            var n = new Noty('notyfication_container_pages' , 'short_notyfication_container');
+//            n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.success, null,0, false)
+//            n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.error, {text: "попробовать снова", fn: function(){alert('i"m function')}},0, false)
         })
 
     </script>

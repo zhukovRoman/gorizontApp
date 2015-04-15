@@ -16,50 +16,7 @@ var materials_data = {
             {date: '06.03.2015', count: 2, unit:'шт', price:1222.50 }],
     "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем":
         [{date: '01.03.2015', count: 2, unit:'шт', price:1222.50 },
-            {date: '02.03.2015', count: 2, unit:'шт', price:1222.50 }]
+            {date: '02 .03.2015', count: 2, unit:'шт', price:1222.50 }]
 }
 
-var materials_storage = [
-    {
-        name: "Масло гидравлическое PETRO-CANADA HYDREX XV ALL SEASON 205л",
-        count: 2,
-        unit: 'шт',
-        price: 756.6
-    },{
-        name: "Бензомаслоотделитель 80л/с D=3200мм L=5300мм с колодцем",
-        count: 32,
-        unit: 'шт',
-        price: 1756.6
-    },{
-        name: "Горелка пропановая ГВ1-03 (круглая)",
-        count: 5,
-        unit: 'шт',
-        price: 5432
-    },{
-        name: "Стяжка винтовая для опалубки L=1000mm",
-        count: 129,
-        unit: 'шт',
-        price: 14.4
-    },{
-        name: "Аппарат инверторный 'Кедр' (220/380В, 20-250А)",
-        count: 1,
-        unit: 'шт',
-        price: 34500
-    },{
-        name: "Перчатки",
-        count: 500,
-        unit: 'пар',
-        price: 35
-    },{
-        name: "Сетка заградительная для аварийного ограждения 1,5х25",
-        count: 207,
-        unit: 'м',
-        price: 54
-    },{
-        name: "Кабель КГ 1х25",
-        count: 1005,
-        unit: 'м',
-        price: 2
-    }
-
-]
+//{"id":12,"name":"КНС № 2 Напорный коллектор","address":"","district":"","latlng":[55.75222,37.61556],"updated_at":"2015-04-14T20:00:40.082+03:00","budget":0.0,"budget_spent":0.0,"budget_used":0.0,"budget_current_plan":0.0,"consumption_data":[{"year":2015,"material_bought":[0,0,0,0,0,0,0,0,0,0,0,0],"material_spent":[0,0,0,0.0,0,0,0,0,0,0,0,0],"months":[{"index":4,"name":"Апрель","data":[[14,0.0]]}]}],"manager":{"name":"Краснышев А. В.","phone":"","email":"sad@sdf.ru"},"plan":{"steps_count":0,"steps_complete":0,"current_step":null,"steps":[],"percent":0}}

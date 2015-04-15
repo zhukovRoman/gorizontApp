@@ -31,7 +31,7 @@ gApp.objects = {
 
         $('#objects_search_input').on('keyup', gApp.objects.filterObjectAndRedrawAll);
         $('#show_complete_checkbox').on('change', gApp.objects.filterObjectAndRedrawAll);
-
+        gApp.setNotyContainersForOtherPages();
     },
 
     //getAllTypesByObjects: function(){
@@ -48,11 +48,12 @@ gApp.objects = {
     getAllDistinctsByObjects: function(){
         var items = {}
         $.each(objects, function(i,val){
-            if (!items[val.district])items[val.district] = val.district
+            var district = val.district;
+            if (!items[district]) items[district] = district
         })
         var res =[];
         $.each(items, function(i, val){
-            res.push ([val, val])
+            res.push ([val, val||'---'])
         })
         return res;
 

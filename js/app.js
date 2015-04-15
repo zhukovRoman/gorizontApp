@@ -9,26 +9,35 @@ var gApp = {
       'tech': "tech-menu-item",
       'avto': "avto-menu-item"
     },
-    initialize: function(){
-        gApp.bindPageEvents();
-        gApp.dataSaver.initDB();
 
+    initialize: function(){
+        $(document).on('databaseready', gApp.httpApi.updateData);
+        gApp.Noty = new Noty('', '');
+        gApp.Noty.updateNotifications = [];
+        gApp.dataSaver.initDB();
+        gApp.dataSaver.getObjectsInfo(function(data){
+            window.objects = data;
+            gApp.bindPageEvents();
+        })
     },
     bindPageEvents: function(){
         function fillCommonInfo(){
-            var data = {count:0, budget_spent:0, budget:0}
+            var data = {count:0, budget_spent:0, budget:0};
+            console.log(objects)
             $.each(objects, function(i, obj){
                 if(obj.is_completed) return;
                 data.count++;
                 data.budget+=obj.budget||0;
                 data.budget_spent+=obj.budget_spent||0;
             })
+            //console.log(data)
             $('#objects_count').text(data.count);
             $('#all_objects_budget_spent').text(mln_to_text(data.budget_spent))
             $('#all_objects_budget').text(mln_to_text(data.budget))
         }
         fillCommonInfo();
-        $(document).on('databaseready', gApp.httpApi.updateData);
+        gApp.setNotyContainersForMainPage();
+
 
         $( document ).on( "pagebeforehide","#main", function( event ) {
             $('.main-menu').removeClass('show-main-menu');
@@ -38,16 +47,19 @@ var gApp = {
             fillCommonInfo();
             $('.main-menu').removeClass('hide-main-menu');
             $('.main-menu').addClass('show-main-menu');
-        })
+            gApp.setNotyContainersForMainPage();
+        });
 
         $( document ).on( "pagebeforehide", function( event,data ) {
-            if (data.nextPage[0].id=='main')
+            if (data.nextPage[0].id=='main') {
                 $('.pages-menu').removeClass('show-pages-menu')
                 $('.pages-menu').addClass('hide-pages-menu');
+            }
 
         })
         $(document).on('pageshow', '#object_view', function(event, data){
             gApp.object_view.initObjectDetail($(this).data('url'));
+
         })
         $(document).on( "pageshow",'#objects', gApp.objects.onShowActions)
         gApp.addCommonEvents();

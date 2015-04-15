@@ -25,6 +25,7 @@ $(function(){
  * @return {String}  текстовое представление разницы '10 лет 4 месяца 4 дня'
  */
 function text_between_dates (dateFrom, dateTo){
+    if(!dateFrom || !dateTo) return "0" + format_num(0, {nom: ' день ', gen: ' дня ', plu: ' дней '})
     var string = ''
     var yearsDiff = dateTo.diff(dateFrom, 'years')
     if (yearsDiff != 0){
@@ -36,7 +37,6 @@ function text_between_dates (dateFrom, dateTo){
         string += monthDiff + format_num(monthDiff, {nom: ' месяц ', gen: ' месяца ', plu: ' месяцев '})
         dateFrom = dateFrom.add(monthDiff, 'month')
     }
-    console.log(dateFrom)
     var daysDiff = dateTo.diff(dateFrom, 'day') +1
     if (daysDiff != 0){
         string += daysDiff + format_num(daysDiff, {nom: ' день ', gen: ' дня ', plu: ' дней '})

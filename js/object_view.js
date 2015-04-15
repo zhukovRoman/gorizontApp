@@ -17,10 +17,11 @@ gApp.object_view = {
 
         gApp.object_view.fillObjectInfo()
         gApp.object_view.changeObjectViewTab();
+        gApp.object_view.loadStorageData();
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
         // TODO
-        // need move eventbinding to tab procesing
+        // need move event binding to tab processing
         $('#date_start').on('change', function(e){
             gApp.object_view.dateStart = moment($(this).val())
             gApp.object_view.getDataByDates();
@@ -37,6 +38,8 @@ gApp.object_view = {
         $('#storage_search_input').on('keyup', function(){
             gApp.object_view.refillStorageTable();
         })
+
+        gApp.setNotyContainersForOtherPages();
 
     },
     changeObjectViewTab: function(){
@@ -70,6 +73,7 @@ gApp.object_view = {
             gApp.object_view.dateStart = moment().subtract(1, 'week')
         if(!gApp.object_view.dateEnd)
             gApp.object_view.dateEnd = moment()
+        console.log(gApp.object_view.dateStart,gApp.object_view.dateEnd)
         $('#date_start').val(gApp.object_view.dateStart.format("YYYY-MM-DD"))
         $('#date_end').val(gApp.object_view.dateEnd.format("YYYY-MM-DD"))
     },
@@ -178,10 +182,10 @@ gApp.object_view = {
                     name: 'Бюджет',
                     data: [{
                         name: 'Принято материалов',
-                        y: gApp.object_view.current_object.material_bought
+                        y: gApp.object_view.current_object.material_bought||0
                     },{
                         name: 'Осталось закупить',
-                        y:gApp.object_view.current_object.material_all_count - gApp.object_view.current_object.material_bought
+                        y:gApp.object_view.current_object.material_all_count||0 - gApp.object_view.current_object.material_bought||0
                     }],
                     size: 450,
                     innerSize: 300,
@@ -196,7 +200,7 @@ gApp.object_view = {
                     name: 'Списано',
                     data: [{
                         name: 'Списано материалов',
-                        y: gApp.object_view.current_object.material_used,
+                        y: gApp.object_view.current_object.material_used||0,
                         color: '#C31A1A'
                     },],
                     //color: 'red',
@@ -205,11 +209,11 @@ gApp.object_view = {
                     startAngle: 0,
                     dataLabels: {
                         formatter: function () {
-                            var percent = (gApp.object_view.current_object.material_used*100/gApp.object_view.current_object.material_bought).toFixed()
+                            var percent = (gApp.object_view.current_object.material_used*100/gApp.object_view.current_object.material_bought).toFixed()||0
                             return percent > 2 ? percent + "%" : null;
                         }
                     },
-                    endAngle: calcAngile(gApp.object_view.current_object.material_all_count, gApp.object_view.current_object.material_used)
+                    endAngle: calcAngile(gApp.object_view.current_object.material_all_count||0, gApp.object_view.current_object.material_used||0)
                 }]
             })
         };
@@ -267,10 +271,10 @@ gApp.object_view = {
                     name: 'Бюджет',
                     data: [{
                         name: 'Принято на сумму',
-                        y: gApp.object_view.current_object.budget_spent
+                        y: gApp.object_view.current_object.budget_spent||0
                     },{
                         name: 'Остаток бюджета',
-                        y:  gApp.object_view.current_object.budget - gApp.object_view.current_object.budget_spent
+                        y:  (gApp.object_view.current_object.budget - gApp.object_view.current_object.budget_spent)||0
                     }],
                     size: 450,
                     innerSize: 300,
@@ -285,7 +289,7 @@ gApp.object_view = {
                     name: 'Списано',
                     data: [{
                         name: 'Списано на сумму',
-                        y: gApp.object_view.current_object.budget_used,
+                        y: gApp.object_view.current_object.budget_used||0,
                         color: '#C31A1A'
                     },],
                     //color: 'red',
@@ -294,11 +298,11 @@ gApp.object_view = {
                     startAngle: 0,
                     dataLabels: {
                         formatter: function () {
-                            var percent = (gApp.object_view.current_object.budget_used*100/gApp.object_view.current_object.budget_spent).toFixed()
+                            var percent = (gApp.object_view.current_object.budget_used*100/gApp.object_view.current_object.budget_spent).toFixed()||0
                             return percent > 2 ? percent + "%" : null;
                         }
                     },
-                    endAngle: calcAngile(gApp.object_view.current_object.budget, gApp.object_view.current_object.budget_used)
+                    endAngle: calcAngile(gApp.object_view.current_object.budget||0, gApp.object_view.current_object.budget_used||0)
                 }]
             })
         };
@@ -358,10 +362,10 @@ gApp.object_view = {
                 series: [
                     {
                         name: 'Потратили',
-                        data: [gApp.object_view.current_object.budget_spent]
+                        data: [gApp.object_view.current_object.budget_spent||0]
                     },{
                     name: 'Планировали потратить',
-                    data: [gApp.object_view.current_object.budget_current_plan]
+                    data: [gApp.object_view.current_object.budget_current_plan||0]
                 }]
             }
             )
@@ -404,8 +408,12 @@ gApp.object_view = {
                 return 'срок '+moment(date).format('DD.MM.YYYY')
         }
 
-        var container = $('#plan_table_content').html('')
-        $.each(gApp.object_view.current_object.plan.steps, function(i,step){
+        var container = $('#plan_table_content').html('');
+        if(!gApp.object_view.current_object.schedule || gApp.object_view.current_object.schedule.steps.length < 1) {
+            $('#plan_table_content').html(' <h2> Данных о плане нет… </h2>')
+            return;
+        }
+        $.each(gApp.object_view.current_object.schedule.subschedules, function(i,step){
             var plan_item = $(document.createElement('div')).addClass('plan-item')
             var plan_part = $(document.createElement('div')).addClass('plan-part')
 
@@ -414,7 +422,7 @@ gApp.object_view = {
             plan_part.append($(document.createElement('span')).addClass(generateStatus(step.status, step.days_lag))
                 .text(generateStatusText(step.status, step.days_lag, step.time)))
             plan_item.append(plan_part)
-            $.each(step.substeps, function(i, substep){
+            $.each(step.subschedules, function(i, substep){
                 var subpart = $(document.createElement('div')).addClass('plan-subpart');
                 subpart.append($(document.createElement('span')).text(substep.name));
                 subpart.append($(document.createElement('span')).append(generateProgressBar('progress-gray', substep.percent)))
@@ -423,22 +431,29 @@ gApp.object_view = {
 
             container.append(plan_item)
         })
+
     },
     refillStorageTable: function(){
         var container = $('#storage_table_content').html('')
+        if (!gApp.object_view.storage_materials) { return $('#storage_table_content').html('<h3>Склад пуст</h3>')};
+        if (gApp.object_view.storage_materials.length==0) { return $('#storage_table_content').html('<h3>Склад пуст</h3>')};
         $.each(gApp.object_view.storage_materials, function(i,mat){
-            if (!gApp.object_view.checkNotation(mat.name, $('#storage_search_input').val())) return;
+            if (!gApp.object_view.checkNotation(mat.notation_name, $('#storage_search_input').val())) return;
             var mat_row = $(document.createElement('div')).addClass('storage-row')
-            mat_row.append($(document.createElement('span')).text(mat.name))
-            mat_row.append($(document.createElement('span')).text(mat.count+' '+mat.unit))
-            mat_row.append($(document.createElement('span')).text(thousands_sep((mat.price*mat.count).toFixed())+' ₽'))
+            mat_row.append($(document.createElement('span')).text(mat.notation_name))
+            mat_row.append($(document.createElement('span')).text(mat.quantity+' '+mat.unit_name))
+            mat_row.append($(document.createElement('span')).text(thousands_sep((mat.price).toFixed())+' ₽'))
             container.append(mat_row);
         })
     },
     fillStorageTab: function(){
-        gApp.object_view.storage_materials = materials_storage;
-        gApp.object_view.refillStorageTable();
-        $('#object_view .storage-content').show();
+        //gApp.object_view.storage_materials = materials_storage;
+        gApp.dataSaver.getMaterialsPlotByObject(gApp.object_view.current_id, function(data){
+            gApp.object_view.storage_materials = data;
+            gApp.object_view.refillStorageTable();
+            $('#object_view .storage-content').show();
+        })
+
 
     },
     fillInfoTab: function(){
@@ -471,17 +486,21 @@ gApp.object_view = {
         $('#budget_spent').text(mln_to_text(gApp.object_view.current_object.budget_spent))
 
         var daysLastText = text_between_dates( moment(),
-                                moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY"))
-        $('#days_last').text("Осталось " + daysLastText)
+                                                (gApp.object_view.current_object.plan_date_end) ?
+                                                    moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY") :
+                                                    null
+                                                )
+        $('#days_last').text(format_num(daysLastText, {nom: ' Остался ', gen: ' Осталось ', plu: ' Осталось '})+daysLastText)
         if (gApp.object_view.current_object.days_lag <=0){
             $('.days-left').width('100%');
             $('.object-lag').hide();
         }
         $('#days_lag').text(
-            (gApp.object_view.current_object.days_lag <= 0 ) ? "" :
-                "Отставание "
-                + gApp.object_view.current_object.days_lag
-                + format_num(gApp.object_view.current_object.days_lag, {nom: ' день', gen: ' дня', plu: ' дней'})
+            "Отставание " + ((gApp.object_view.current_object.days_lag <= 0 || !gApp.object_view.current_object.days_lag ) ?
+                            " 0 дней " :
+                            gApp.object_view.current_object.days_lag + format_num(gApp.object_view.current_object.days_lag,
+                                                                                {nom: ' день', gen: ' дня', plu: ' дней'})
+                            )
         )
 
         var daysBetweenStartAndEnd = moment(gApp.object_view.current_object.plan_date_end, "DD.MM.YYYY").diff(
@@ -492,146 +511,152 @@ gApp.object_view = {
         $('#not_complete_progres').css('width', (daysBetweenCurrentAndEnd)*100/daysBetweenStartAndEnd+'%')
         $.each($('#object_view [data-value-name]'), function(i, element){
             var value = '';
+            if (!gApp.object_view.current_object[$(element).attr('data-part')]) {$(element).text('-'); return;}
             if ($(element).attr('data-part'))
-                value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')]||"")
+                value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')]||'-')
             else
-                value = (gApp.object_view.current_object[$(element).attr('data-value-name')]||'')
+                value = (gApp.object_view.current_object[$(element).attr('data-value-name')]||'-')
 
             $(element).text(value)
         })
-        $('#steps_count').text(gApp.object_view.current_object.plan.steps_count +
-         format_num(gApp.object_view.current_object.plan.steps_count, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
-        $('#steps_complete').text(gApp.object_view.current_object.plan.steps_complete +
-        format_num(gApp.object_view.current_object.plan.steps_complete, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
+        if(!gApp.object_view.current_object.schedule) {
+            $('#steps_count').text('-');
+            $('#steps_complete').text('-');
+            return;
+        }
+        $('#steps_count').text(gApp.object_view.current_object.schedule.steps_count||0 +
+            format_num(gApp.object_view.current_object.schedule.steps_count||0, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
+        $('#steps_complete').text(gApp.object_view.current_object.schedule.steps_complete||0 +
+            format_num(gApp.object_view.current_object.schedule.steps_complete||0, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
 
     },
 
-    drawConsumptionChart: function(){
-        var chart = new Highcharts.Chart({
-            chart: {
-                renderTo:'consumption_chart',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            },
-            title: {
-                text: 'Расход материалов на объекте',
-                style: {
-                    "fontSize": "32px"
-                }
-            },
-            plotOptions: {
-                pie: {
-                    center: ['25%', '50%'],
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            tooltip: {
-                enabled: false
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'left',
-                verticalAlign: 'center',
-                floating: true,
-                x: 700,
-                y: 300,
-                useHTML: true,
-                itemMarginBottom: 45,
-                //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
-                labelFormatter: function () {
-                    return '<div style="width: 650px; padding-top: 5px">' +
-                        '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
-                        '<div style="text-align: right; float: right; width: 250px;"> '+ mln_to_text(this.y) +'</div></div>';
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Сумма',
-                innerSize: '45%',
-                size: 550,
-                data: [
-                    ['Израсходовано материалов на сумму', gApp.object_view.current_object.material_spent],
-                    ['Осталось материалов на сумму', gApp.object_view.current_object.material_left]
-                ]
-            }]
-        });
-    },
-    drawBudgetChart: function(){
-        var chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'budget_chart',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'bar',
-                marginTop: -50
-            },
-            title: {
-                text: 'Освоение бюджета в '+new Date().getFullYear()+' году',
-                margin:20,
-                floating: true,
-                y: 20
-            },
-            xAxis: {
-                lineWidth: 0,
-                labels: {
-                    enabled: false
-                }
-            },
-            yAxis: {
-                title:{
-                    text: null
-                },
-                gridLineWidth: 0,
-                labels: {
-                    enabled: false
-                }
-            },
-            tooltip: {
-                enabled: false
+    ////Consumption tab
+    //drawConsumptionChart: function(){
+    //    var chart = new Highcharts.Chart({
+    //        chart: {
+    //            renderTo:'consumption_chart',
+    //            plotBackgroundColor: null,
+    //            plotBorderWidth: null,
+    //            plotShadow: false
+    //        },
+    //        title: {
+    //            text: 'Расход материалов на объекте',
+    //            style: {
+    //                "fontSize": "32px"
+    //            }
+    //        },
+    //        plotOptions: {
+    //            pie: {
+    //                center: ['25%', '50%'],
+    //                dataLabels: {
+    //                    enabled: false
+    //                },
+    //                showInLegend: true
+    //            }
+    //        },
+    //        tooltip: {
+    //            enabled: false
+    //        },
+    //        legend: {
+    //            layout: 'vertical',
+    //            align: 'left',
+    //            verticalAlign: 'center',
+    //            floating: true,
+    //            x: 700,
+    //            y: 300,
+    //            useHTML: true,
+    //            itemMarginBottom: 45,
+    //            //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
+    //            labelFormatter: function () {
+    //                return '<div style="width: 650px; padding-top: 5px">' +
+    //                    '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
+    //                    '<div style="text-align: right; float: right; width: 250px;"> '+ mln_to_text(this.y) +'</div></div>';
+    //            }
+    //        },
+    //        series: [{
+    //            type: 'pie',
+    //            name: 'Сумма',
+    //            innerSize: '45%',
+    //            size: 550,
+    //            data: [
+    //                ['Израсходовано материалов на сумму', gApp.object_view.current_object.material_spent],
+    //                ['Осталось материалов на сумму', gApp.object_view.current_object.material_left]
+    //            ]
+    //        }]
+    //    });
+    //},
+    //drawBudgetChart: function(){
+    //    var chart = new Highcharts.Chart({
+    //        chart: {
+    //            renderTo: 'budget_chart',
+    //            plotBackgroundColor: null,
+    //            plotBorderWidth: null,
+    //            plotShadow: false,
+    //            type: 'bar',
+    //            marginTop: -50
+    //        },
+    //        title: {
+    //            text: 'Освоение бюджета в '+new Date().getFullYear()+' году',
+    //            margin:20,
+    //            floating: true,
+    //            y: 20
+    //        },
+    //        xAxis: {
+    //            lineWidth: 0,
+    //            labels: {
+    //                enabled: false
+    //            }
+    //        },
+    //        yAxis: {
+    //            title:{
+    //                text: null
+    //            },
+    //            gridLineWidth: 0,
+    //            labels: {
+    //                enabled: false
+    //            }
+    //        },
+    //        tooltip: {
+    //            enabled: false
+    //
+    //        },
+    //        legend:{
+    //            reversed: true,
+    //            align: 'center',
+    //            useHTML: true,
+    //            floating: true,
+    //            layout: 'horizontal',
+    //            itemStyle: { "color": "#91a0ab",
+    //                "fontSize": "26px",
+    //                "white-space": "normal",
+    //                "padding-top": '5px'
+    //                //font: '18pt Helvetica, Arial, sans-serif'
+    //            },
+    //            labelFormatter: function () {
+    //                //console.log(this)
+    //                return '<div class = "legend-series-name" style="float: left; width: 600px; white-space: normal; ">'+this.name +
+    //                    ' <span id="work-chart-values'+this._i+'"> '+ mln_to_text((this.userOptions.data[0])) +'</span> </div>';
+    //            }
+    //        },
+    //        plotOptions: {
+    //            series: {
+    //                stacking: 'percent',
+    //                pointWidth: 50
+    //            }
+    //        },
+    //        series: [{
+    //            name: 'Закуплено материалов на сумму',
+    //            data: [gApp.object_view.current_object.current_year_budget_spent]
+    //        }, {
+    //            name: 'Остаток бюджета',
+    //            data: [gApp.object_view.current_object.current_year_budget-
+    //            gApp.object_view.current_object.current_year_budget_spent]
+    //        }]
+    //    });
+    //
+    //},
 
-            },
-            legend:{
-                reversed: true,
-                align: 'center',
-                useHTML: true,
-                floating: true,
-                layout: 'horizontal',
-                itemStyle: { "color": "#91a0ab",
-                    "fontSize": "26px",
-                    "white-space": "normal",
-                    "padding-top": '5px'
-                    //font: '18pt Helvetica, Arial, sans-serif'
-                },
-                labelFormatter: function () {
-                    //console.log(this)
-                    return '<div class = "legend-series-name" style="float: left; width: 600px; white-space: normal; ">'+this.name +
-                        ' <span id="work-chart-values'+this._i+'"> '+ mln_to_text((this.userOptions.data[0])) +'</span> </div>';
-                }
-            },
-            plotOptions: {
-                series: {
-                    stacking: 'percent',
-                    pointWidth: 50
-                }
-            },
-            series: [{
-                name: 'Закуплено материалов на сумму',
-                data: [gApp.object_view.current_object.current_year_budget_spent]
-            }, {
-                name: 'Остаток бюджета',
-                data: [gApp.object_view.current_object.current_year_budget-
-                gApp.object_view.current_object.current_year_budget_spent]
-            }]
-        });
-
-    },
-
-    //Consumption tab
     fillConsumptionTab: function() {
         $('#object_view .consumption-content').show();
         //$('#object_view .right-content').hide();
@@ -660,8 +685,8 @@ gApp.object_view = {
     fillConsumtionYearSelect: function(){
         var select = $('#consumption_current_year');
         select.html('')
-        $.each(gApp.object_view.current_object.consumption_data, function(year, data){
-            select.append($('<option>', {value:year, text:year}));
+        $.each(gApp.object_view.current_object.consumption_data, function(id, data){
+            select.append($('<option>', {value:data.year, text:data.year}));
         })
         select.val($('#consumption_current_year option').last().attr('value'));
         select.selectmenu( "refresh" );
@@ -671,8 +696,8 @@ gApp.object_view = {
         select.html('')
         var currentYear = gApp.object_view.getCurrentConsumtionYear();
         if (!currentYear) return
-        $.each(gApp.object_view.current_object.consumption_data[currentYear].month_data, function(year, data){
-            select.append($('<option>', {value:year, text:year}));
+        $.each(currentYear.months, function(year, data){
+            select.append($('<option>', {value:data.name, text:data.name}));
         })
         select.val($('#consumption_current_month option').last().attr('value'));
         select.selectmenu( "refresh" );
@@ -683,10 +708,22 @@ gApp.object_view = {
         gApp.object_view.drawConsumtionMonthChart();
     },
     getCurrentConsumtionYear: function(){
-        return $('#consumption_current_year').val()
+        var yearName = $('#consumption_current_year').val();
+        if(!yearName) return null;
+        var year = null;
+        $.each(gApp.object_view.current_object.consumption_data, function(i,yearData){
+            if (yearData.year == yearName) year = yearData;
+        })
+        return year;
     },
-    getCurrentConsumtionMonth: function(){
-        return $('#consumption_current_month').val()
+    getCurrentConsumtionMonth: function(yearData){
+        var monthName = $('#consumption_current_month').val();
+        if (!monthName) return null;
+        var month = null;
+        $.each(yearData.months, function(i,monthData){
+            if (monthData.name == monthName) month = monthData;
+        })
+        return month;
     },
     selectNextYear: function(){
         var selected = $('#consumption_current_year option:selected').next();
@@ -763,7 +800,7 @@ gApp.object_view = {
                 shared: true,
                 formatter: function(){
                     var tooltip = "<div class='gorizont-tooltip'>"
-                    tooltip += tooltipHeader(this.x+ " " + selected_year)
+                    tooltip += tooltipHeader(this.x+ " " + selected_year.year)
                     $.each(this.points, function(i,point){
                         tooltip += tooltipRow(point.series.name, point.y,  point.series.color)
                     })
@@ -778,10 +815,10 @@ gApp.object_view = {
             },
             series: [ {
                 name: 'Потрачено материалов на сумму',
-                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_spent
+                data: selected_year.material_spent
             }, {
                 name: 'Завезено материалов на сумму',
-                data: gApp.object_view.current_object.consumption_data[selected_year].year_data.material_bought
+                data: selected_year.material_bought
 
             }]
         });
@@ -790,7 +827,7 @@ gApp.object_view = {
             var months = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
             var month =   ""+(months.indexOf(this.textContent) + 1)
             if (month.length==1) month = '0'+month
-            var year = gApp.object_view.getCurrentConsumtionYear()
+            var year = selected_year.year;
             gApp.object_view.dateStart = moment(year+"-"+month+"-01", "YYYY-MM-DD").startOf('month');
             gApp.object_view.dateEnd = moment(year+"-"+month+"-01", "YYYY-MM-DD").endOf('month');
             $('#object_view .left-content [name=object-view-tab]').prop('checked', false)
@@ -800,8 +837,8 @@ gApp.object_view = {
     },
 
     drawConsumtionMonthChart: function(){
-        var selectedMonth = gApp.object_view.getCurrentConsumtionMonth();
         var selectedYear = gApp.object_view.getCurrentConsumtionYear();
+        var selectedMonth = gApp.object_view.getCurrentConsumtionMonth(selectedYear);
         if (!selectedYear|| !selectedMonth) return
         var chart = new Highcharts.Chart({
             chart: {
@@ -840,7 +877,7 @@ gApp.object_view = {
                 shared: true,
                 formatter: function(){
                     var tooltip = "<div class='gorizont-tooltip'>"
-                    tooltip += tooltipHeader(this.x + " "+ tooltipDict[selectedMonth])
+                    tooltip += tooltipHeader(this.x + " "+ tooltipDict[selectedMonth.name])
                     $.each(this.points, function(i,point){
                         tooltip += tooltipRow(point.series.name, point.y,  point.series.color, ths_to_text)
                     })
@@ -859,7 +896,7 @@ gApp.object_view = {
 
             series: [{
                 name: 'Израсходовано материалов на сумму',
-                data: gApp.object_view.current_object.consumption_data[selectedYear].month_data[selectedMonth]
+                data: selectedMonth.data
 
             }]
         });
@@ -879,10 +916,11 @@ gApp.object_view = {
         }
         $('#month_consumption_chart .highcharts-xaxis-labels span').click(goToMaterialsTabFromMonthChart)
         function goToMaterialsTabFromMonthChart  (){
-            var months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-            var month =   ""+(months.indexOf(selectedMonth) + 1)
+            //var months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь ', 'Ноябрь', 'Декабрь']
+            //var month =   ""+(months.indexOf(selectedMonth.name) + 1)
+            var month = ""+ selectedMonth.index;
             if (month.length==1) month = '0'+month
-            var year = gApp.object_view.getCurrentConsumtionYear()
+            var year = selectedYear.year;
             var day = ""+(this.textContent)
             if (day.length==1) day = '0'+day
             console.log(year+"-"+month+"-"+day)
@@ -892,5 +930,10 @@ gApp.object_view = {
             $('#object_view .left-content #material').prop('checked', true)
             gApp.object_view.changeObjectViewTab();
         };
+    },
+    loadStorageData: function (){
+        gApp.httpApi.updateMaterialsPlotData(gApp.object_view.current_id, function(mat_plot){
+            gApp.object_view.storage_materials = mat_plot;
+        })
     }
 }

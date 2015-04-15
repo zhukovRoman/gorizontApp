@@ -20,6 +20,7 @@
         var headerSpanClick = function () {
             $('#'+id+" .tf-header input").prop('checked',
                 !$('#'+id+" .tf-header input").prop('checked') );
+            console.log('click')
             headerCheckboxEvent();
         }
 
@@ -57,6 +58,7 @@
                 var filterBody = $(document.createElement('div')).addClass('tf-body')
                 var itemWidth = 100 / options.columns + '%'
                 var filterRow = $(document.createElement('div')).addClass('tf-row');
+                console.log(options.items)
                 for (var i = 0; i < options.items.length; i++) {
                     filterRow.append($(document.createElement('input')).attr('id', options.items[i][0])
                         .attr('type', 'checkbox')

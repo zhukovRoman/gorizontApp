@@ -86,7 +86,7 @@
                             <h1>Начальник</h1>
                             <div class="info-row">
                                 <span class="info-icon"><i class="fa fa-user"></i></span>
-                                <span class="object-info-content" data-part='manager' data-value-name="fio"></span>
+                                <span class="object-info-content" data-part='manager' data-value-name="name"></span>
                             </div>
                             <div class="info-row">
                                 <span class="info-icon"><i class="fa fa-mobile"></i></span>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="info-row">
                                 <span class="info-icon"><i class="fa fa-envelope-o"></i></span>
-                                <span class="object-info-content" data-part='manager' data-value-name="mail">mail@mail.com</span>
+                                <span class="object-info-content" data-part='manager' data-value-name="email">mail@mail.com</span>
                             </div>
                         </div>
                         <div class="info-part plan-info-part">
@@ -109,7 +109,7 @@
                             </div>
                             <div class="info-row">
                                 <span class="info-icon"><i class="fa fa-arrow-right"></i></span>
-                                Текущий этап: <span class="object-info-content"  data-part='plan' data-value-name="current_step" >Коллектор 4</span>
+                                Текущий этап: <span class="object-info-content"  data-part='schedule' data-value-name="current_step" >Коллектор 4</span>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="right-arrow" id="next_year_button"><i class="fa fa-angle-double-right"></i></div>
                 </div>
-                <div id="year_consumption_chart" style="height: 595px"></div>
+                <div id="year_consumption_chart" style="height: 595px; text-align: center; line-height: 100px">Нет данных для отображения</div>
                 <div class="chart-control shadow ">
                     <div class="left-arrow" id="prev_month_button"><i class="fa fa-angle-double-left"></i></div>
                     <div class="current-month">
@@ -171,7 +171,7 @@
                     </div>
                     <div class="right-arrow" id="next_month_button"><i class="fa fa-angle-double-right"></i></div>
                 </div>
-                <div id="month_consumption_chart" style="height: 590px"></div>
+                <div id="month_consumption_chart" style="height: 590px; text-align: center; line-height: 100px">Нет данных для отображения</div>
             </div>
             <div class="material-content tab-content" style="display: none">
                  <div class="controls">
@@ -207,7 +207,6 @@
                     <div class="storage-table-header list-header">
                         <span>Номенклатура</span>
                         <span>Кол-во</span>
-                        <!--<span>Цена</span>-->
                         <span>Сумма</span>
                     </div>
                     <div class="storage-table-content" id="storage_table_content">
@@ -228,9 +227,6 @@
     $(function(){
        gApp.object_view.initObjectDetail(window.location.href)
 
-        var n = new Noty('notyfication_container_pages' , 'short_notyfication_container');
-        n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.success, null,0, false)
-        n.add('Ваши данные успешно обновленны до 02.02.2015', Noty.types.error, {text: "попробовать снова", fn: function(){alert('i"m function')}},0, false)
     })
 
 </script>

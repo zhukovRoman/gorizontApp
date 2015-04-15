@@ -1,0 +1,7 @@
+#notyfication_container {
+  position: absolute; }
+
+.noty {
+  width: 100%;
+  height: 70px;
+  background-color: rgba(103, 194, 176, 0.3); }
