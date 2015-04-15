@@ -18,6 +18,7 @@ gApp.object_view = {
         gApp.object_view.fillObjectInfo()
         gApp.object_view.changeObjectViewTab();
         gApp.object_view.loadStorageData();
+        gApp.object_view.loadConsumtionData();
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
         // TODO
@@ -63,10 +64,14 @@ gApp.object_view = {
         $('#object_view .material-content').show();
         gApp.object_view.setDates();
         gApp.object_view.getDataByDates();
-        gApp.object_view.refillTable();
+        //gApp.object_view.refillTable();
     },
     getDataByDates: function(){
-        gApp.object_view.filtered_by_dates_materials = gApp.object_view.materialDataProvider()
+        gApp.dataSaver.getMaterialsConsumtionsByObject(gApp.object_view.current_id, function(data){
+            gApp.object_view.filtered_by_dates_materials = gApp.object_view.materialDataProvider(data)
+            gApp.object_view.refillTable();
+        })
+
     },
     setDates: function(){
         if(!gApp.object_view.dateStart)
@@ -103,17 +108,16 @@ gApp.object_view = {
         if (notation.indexOf(query)>-1) return true;
         return false
     },
-    materialDataProvider: function(obj_id){
+    materialDataProvider: function(data){
         dateStart = gApp.object_view.dateStart
         dateEnd = gApp.object_view.dateEnd
-        var data = materials_data;
         var res = {}
-        $.each(data, function(not,mats){
-            $.each(mats, function(i,item){
+        $.each(data.materials_spent, function(i,material_spent){
+            $.each(material_spent.records, function(i,item){
                 var date =  moment(item.date, "DD-MM-YYYY")
                 if (date.isBefore(dateStart) || date.isAfter(dateEnd)) return;
-                if (!res[not]) res[not]=[]
-                res[not].push(item)
+                if (!res[material_spent.name]) res[material_spent.name]=[];
+                res[material_spent.name].push(item)
             })
         })
         return res
@@ -410,7 +414,7 @@ gApp.object_view = {
 
         var container = $('#plan_table_content').html('');
         if(!gApp.object_view.current_object.schedule || gApp.object_view.current_object.schedule.steps.length < 1) {
-            $('#plan_table_content').html(' <h2> Данных о плане нет… </h2>')
+            $('#plan_table_content').html(' <h1> Данных о плане нет… </h1>')
             return;
         }
         $.each(gApp.object_view.current_object.schedule.subschedules, function(i,step){
@@ -435,8 +439,8 @@ gApp.object_view = {
     },
     refillStorageTable: function(){
         var container = $('#storage_table_content').html('')
-        if (!gApp.object_view.storage_materials) { return $('#storage_table_content').html('<h3>Склад пуст</h3>')};
-        if (gApp.object_view.storage_materials.length==0) { return $('#storage_table_content').html('<h3>Склад пуст</h3>')};
+        if (!gApp.object_view.storage_materials) { return $('#storage_table_content').html('<h4>Склад пуст</h4>')};
+        if (gApp.object_view.storage_materials.length==0) { return $('#storage_table_content').html('<h4>Склад пуст</h4>')};
         $.each(gApp.object_view.storage_materials, function(i,mat){
             if (!gApp.object_view.checkNotation(mat.notation_name, $('#storage_search_input').val())) return;
             var mat_row = $(document.createElement('div')).addClass('storage-row')
@@ -935,5 +939,8 @@ gApp.object_view = {
         gApp.httpApi.updateMaterialsPlotData(gApp.object_view.current_id, function(mat_plot){
             gApp.object_view.storage_materials = mat_plot;
         })
+    },
+    loadConsumtionData: function(){
+        gApp.httpApi.updateMaterialsConsumtionData(gApp.object_view.current_id)
     }
 }
