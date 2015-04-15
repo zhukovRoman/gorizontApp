@@ -20,9 +20,9 @@ gApp.dataSaver = {
         gApp.dataSaver.db.transaction(query, gApp.dataSaver.onError, success);
         function query (tx){
             //tx.executeSql('CREATE TABLE IF NOT EXISTS SETTINGS ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "key" TEXT, "value" TEXT)');
-            tx.executeSql('DROP TABLE IF EXISTS OBJECTS');
-            tx.executeSql('DROP TABLE IF EXISTS MATERIALS_CONSUMPTIONS');
-            tx.executeSql('DROP TABLE IF EXISTS MATERIALS_PLOT');
+            //tx.executeSql('DROP TABLE IF EXISTS OBJECTS');
+            //tx.executeSql('DROP TABLE IF EXISTS MATERIALS_CONSUMPTIONS');
+            //tx.executeSql('DROP TABLE IF EXISTS MATERIALS_PLOT');
             tx.executeSql('CREATE TABLE IF NOT EXISTS OBJECTS ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "key" TEXT, "value" TEXT)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS MATERIALS_CONSUMPTIONS ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" TEXT, "value" TEXT)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS MATERIALS_PLOT ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" TEXT, "value" TEXT)');
@@ -72,11 +72,14 @@ gApp.dataSaver = {
         }
         function success(tx, results){
             var len = results.rows.length;
-            var res = [];
+            var res = null;
             for (var i=0; i<len; i++){
-                res.push(eval(results.rows.item(i).value))
+                console.log((results.rows.item(i).value))
+                res = (results.rows.item(i).value+'')
             }
-            callback(res);
+            console.log('fin')
+            var tmp = eval("["+res+"]");
+            if(callback) callback(tmp[0]);
         }
     },
     setMaterialsConsumtionsByObject: function(obj_id, value, callback){
@@ -122,7 +125,7 @@ gApp.dataSaver = {
             for (var i=0; i<len; i++){
                 res = (eval(results.rows.item(i).value))
             }
-            callback(res);
+            if(callback) callback(res);
             //console.log(res)
         }
     },
