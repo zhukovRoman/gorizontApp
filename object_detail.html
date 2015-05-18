@@ -45,6 +45,8 @@
                 <label for="material">Материалы</label>
                 <input type="radio" name="object-view-tab" id="storage" data-content-div="storage-content" data-role="none">
                 <label for="storage">Склад</label>
+                <input type="radio" name="object-view-tab" id="requests" data-content-div="requests-content" data-role="none">
+                <label for="requests">Заявки</label>
             </div>
             <div class="info-content tab-content" style="display: none">
                 <div class="map-wrapper"><div id="object_map"></div></div>
@@ -190,6 +192,37 @@
                     </div>
                     <div class="storage-table-content" id="storage_table_content">
                     </div>
+                </div>
+            </div>
+            <div class="request_details tab-content" style="display:none;">
+                <span><h1></h1>
+                <h2></h2></span>
+                <span class="close-button" onclick="gApp.object_view.hideRequestDetail()"><i class="fa fa-times"></i></span>
+                <div class="request-detail-table">
+                    <div class="request"></div>
+                </div>
+            </div>
+            <div class="requests-content tab-content" style="display:none;">
+                <div class="controls">
+                     <span class="dates">
+                         Показывать с
+                         <input type="date" name="date_start" id="request_date_start" data-role="none">
+                         по
+                         <input type="date" name="date_end" id="request_date_end" data-role="none">
+                     </span>
+                     <span class="filters">
+                        <input type="checkbox" id="requests_status_in_work" checked data-role="none" data-value="В процессе">
+                        <label for="requests_status_in_work">В процессе</label>
+                        <input type="checkbox" id="requests_status_comleted" checked data-role="none" data-value="Заверщено">
+                        <label for="requests_status_comleted">Завершенные</label>
+                         <input type="checkbox" id="requests_status_new" checked data-role="none" data-value="Новая">
+                        <label for="requests_status_new">Новые</label>
+                    </span>
+                     <span class="search">
+                        <input id="requests_search_input" type="text" class="search-input" placeholder="Поиск по номенклатуре"/>
+                     </span>
+                </div>
+                <div class="requests-table-content" id="requests_table_content">
                 </div>
             </div>
         </div>

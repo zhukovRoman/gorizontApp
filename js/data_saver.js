@@ -26,6 +26,7 @@ gApp.dataSaver = {
             tx.executeSql('CREATE TABLE IF NOT EXISTS OBJECTS ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "key" TEXT, "value" TEXT)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS MATERIALS_CONSUMPTIONS ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" TEXT, "value" TEXT)');
             tx.executeSql('CREATE TABLE IF NOT EXISTS MATERIALS_PLOT ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" TEXT, "value" TEXT)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS REQUESTS_PLOT ("id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" TEXT, "value" TEXT)');
         }
         function success(){
             $(document).trigger('databaseready');
@@ -94,6 +95,39 @@ gApp.dataSaver = {
             }
             else gApp.dataSaver.db.transaction(function(tx) {
                 tx.executeSql("UPDATE MATERIALS_CONSUMPTIONS SET value = ? where object_id =  ?", [JSON.stringify(value), obj_id], callback, gApp.dataSaver.onError);
+            });
+        }
+
+    },
+    getRequestsByObject: function(obj_id, callback){
+        gApp.dataSaver.db.transaction(query, gApp.dataSaver.onError);
+        function query (tx){
+            tx.executeSql("SELECT * FROM REQUESTS_PLOT WHERE object_id=?", [obj_id], success, gApp.dataSaver.onError)
+        }
+        function success(tx, results){
+            var len = results.rows.length;
+            var res = null;
+            for (var i=0; i<len; i++){
+                console.log((results.rows.item(i).value))
+                res = (results.rows.item(i).value+'')
+            }
+            console.log('fin')
+            var tmp = eval("["+res+"]");
+            if(callback) callback(tmp[0]);
+        }
+    },
+    setRequestsByObject: function(obj_id, value, callback){
+        gApp.dataSaver.db.transaction(function(tx) {
+            tx.executeSql("SELECT * FROM REQUESTS_PLOT where object_id=?", [obj_id], querySuccess, gApp.dataSaver.onError);
+        });
+        function querySuccess(tx, results) {
+            if (results.rows.length == 0 ) {
+                gApp.dataSaver.db.transaction(function(tx) {
+                    tx.executeSql("INSERT INTO REQUESTS_PLOT (object_id, value) values(?, ?)", [obj_id, JSON.stringify(value)], callback, gApp.dataSaver.onError);
+                });
+            }
+            else gApp.dataSaver.db.transaction(function(tx) {
+                tx.executeSql("UPDATE REQUESTS_PLOT SET value = ? where object_id =  ?", [JSON.stringify(value), obj_id], callback, gApp.dataSaver.onError);
             });
         }
 

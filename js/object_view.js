@@ -5,10 +5,12 @@ gApp.object_view = {
     dateEnd:null,
     filtered_by_dates_materials: null,
     storage_materials: null,
+    requests: null,
     map: null,
     initObjectDetail: function(url){
         var id = url.split("?")[1].replace("id=","");
         this.current_id = parseInt(id);
+
         //this.current_id = 1;
         $.each(objects, function(i,val){
             if(val.id==gApp.object_view.current_id)
@@ -19,6 +21,7 @@ gApp.object_view = {
         gApp.object_view.changeObjectViewTab();
         gApp.object_view.loadStorageData();
         gApp.object_view.loadConsumtionData();
+        gApp.object_view.loadRequestsData();
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
         // TODO
@@ -58,6 +61,8 @@ gApp.object_view = {
             gApp.object_view.fillPlanTab();
         if (current_tab=='storage')
             gApp.object_view.fillStorageTab();
+        if (current_tab=='requests')
+            gApp.object_view.fillRequestsTab();
 
     },
     fillMaterialTab: function(){
@@ -78,7 +83,7 @@ gApp.object_view = {
             gApp.object_view.dateStart = moment().subtract(1, 'week')
         if(!gApp.object_view.dateEnd)
             gApp.object_view.dateEnd = moment()
-        console.log(gApp.object_view.dateStart,gApp.object_view.dateEnd)
+        //console.log(gApp.object_view.dateStart,gApp.object_view.dateEnd)
         $('#date_start').val(gApp.object_view.dateStart.format("YYYY-MM-DD"))
         $('#date_end').val(gApp.object_view.dateEnd.format("YYYY-MM-DD"))
     },
@@ -397,9 +402,13 @@ gApp.object_view = {
                 return 'inprogress-overdue'
             if (status=='inprogress' && lag<=0)
                 return 'inprogress'
+            if(status=='notstarted')
+                return 'inprogress'
         }
 
         function generateStatusText (status, lag, date){
+            if (status=='notstarted')
+                return 'не начато'
             if (status=='completed' && lag==0)
                 return 'выполнено в срок'
             if (status=='completed' && lag>0)
@@ -413,7 +422,7 @@ gApp.object_view = {
         }
 
         var container = $('#plan_table_content').html('');
-        if(!gApp.object_view.current_object.schedule || gApp.object_view.current_object.schedule.steps.length < 1) {
+        if(!gApp.object_view.current_object.schedule || gApp.object_view.current_object.schedule.subschedules.length < 1) {
             $('#plan_table_content').html(' <h1> Данных о плане нет… </h1>')
             return;
         }
@@ -515,7 +524,8 @@ gApp.object_view = {
         $('#not_complete_progres').css('width', (daysBetweenCurrentAndEnd)*100/daysBetweenStartAndEnd+'%')
         $.each($('#object_view [data-value-name]'), function(i, element){
             var value = '';
-            if (!gApp.object_view.current_object[$(element).attr('data-part')]) {$(element).text('-'); return;}
+            if (!gApp.object_view.current_object[$(element).attr('data-part')] &&
+                                        $(element).attr('data-part')) {$(element).text('-'); return;}
             if ($(element).attr('data-part'))
                 value = (gApp.object_view.current_object[$(element).attr('data-part')][$(element).attr('data-value-name')]||'-')
             else
@@ -534,132 +544,6 @@ gApp.object_view = {
             format_num(gApp.object_view.current_object.schedule.steps_complete||0, {nom: ' этап', gen: ' этапа', plu: ' этапов'}))
 
     },
-
-    ////Consumption tab
-    //drawConsumptionChart: function(){
-    //    var chart = new Highcharts.Chart({
-    //        chart: {
-    //            renderTo:'consumption_chart',
-    //            plotBackgroundColor: null,
-    //            plotBorderWidth: null,
-    //            plotShadow: false
-    //        },
-    //        title: {
-    //            text: 'Расход материалов на объекте',
-    //            style: {
-    //                "fontSize": "32px"
-    //            }
-    //        },
-    //        plotOptions: {
-    //            pie: {
-    //                center: ['25%', '50%'],
-    //                dataLabels: {
-    //                    enabled: false
-    //                },
-    //                showInLegend: true
-    //            }
-    //        },
-    //        tooltip: {
-    //            enabled: false
-    //        },
-    //        legend: {
-    //            layout: 'vertical',
-    //            align: 'left',
-    //            verticalAlign: 'center',
-    //            floating: true,
-    //            x: 700,
-    //            y: 300,
-    //            useHTML: true,
-    //            itemMarginBottom: 45,
-    //            //itemStyle: { "color": "#8d9296", "fontSize": "18pt", "fontWeight": "normal", "white-space": "normal" },
-    //            labelFormatter: function () {
-    //                return '<div style="width: 650px; padding-top: 5px">' +
-    //                    '<div class = "legend-series-name" style="float: left; width: 400px; white-space: normal">'+this.name+'</div>' +
-    //                    '<div style="text-align: right; float: right; width: 250px;"> '+ mln_to_text(this.y) +'</div></div>';
-    //            }
-    //        },
-    //        series: [{
-    //            type: 'pie',
-    //            name: 'Сумма',
-    //            innerSize: '45%',
-    //            size: 550,
-    //            data: [
-    //                ['Израсходовано материалов на сумму', gApp.object_view.current_object.material_spent],
-    //                ['Осталось материалов на сумму', gApp.object_view.current_object.material_left]
-    //            ]
-    //        }]
-    //    });
-    //},
-    //drawBudgetChart: function(){
-    //    var chart = new Highcharts.Chart({
-    //        chart: {
-    //            renderTo: 'budget_chart',
-    //            plotBackgroundColor: null,
-    //            plotBorderWidth: null,
-    //            plotShadow: false,
-    //            type: 'bar',
-    //            marginTop: -50
-    //        },
-    //        title: {
-    //            text: 'Освоение бюджета в '+new Date().getFullYear()+' году',
-    //            margin:20,
-    //            floating: true,
-    //            y: 20
-    //        },
-    //        xAxis: {
-    //            lineWidth: 0,
-    //            labels: {
-    //                enabled: false
-    //            }
-    //        },
-    //        yAxis: {
-    //            title:{
-    //                text: null
-    //            },
-    //            gridLineWidth: 0,
-    //            labels: {
-    //                enabled: false
-    //            }
-    //        },
-    //        tooltip: {
-    //            enabled: false
-    //
-    //        },
-    //        legend:{
-    //            reversed: true,
-    //            align: 'center',
-    //            useHTML: true,
-    //            floating: true,
-    //            layout: 'horizontal',
-    //            itemStyle: { "color": "#91a0ab",
-    //                "fontSize": "26px",
-    //                "white-space": "normal",
-    //                "padding-top": '5px'
-    //                //font: '18pt Helvetica, Arial, sans-serif'
-    //            },
-    //            labelFormatter: function () {
-    //                //console.log(this)
-    //                return '<div class = "legend-series-name" style="float: left; width: 600px; white-space: normal; ">'+this.name +
-    //                    ' <span id="work-chart-values'+this._i+'"> '+ mln_to_text((this.userOptions.data[0])) +'</span> </div>';
-    //            }
-    //        },
-    //        plotOptions: {
-    //            series: {
-    //                stacking: 'percent',
-    //                pointWidth: 50
-    //            }
-    //        },
-    //        series: [{
-    //            name: 'Закуплено материалов на сумму',
-    //            data: [gApp.object_view.current_object.current_year_budget_spent]
-    //        }, {
-    //            name: 'Остаток бюджета',
-    //            data: [gApp.object_view.current_object.current_year_budget-
-    //            gApp.object_view.current_object.current_year_budget_spent]
-    //        }]
-    //    });
-    //
-    //},
 
     fillConsumptionTab: function() {
         $('#object_view .consumption-content').show();
@@ -748,7 +632,6 @@ gApp.object_view = {
         $('#consumption_current_year').selectmenu( "refresh" );
         gApp.object_view.redrawConsumtionsCharts();
     },
-
     selectNextMonth: function(){
         var selected = $('#consumption_current_month option:selected').next();
         selected = (selected.length==0) ? $('#consumption_current_month option').first() : selected
@@ -942,5 +825,159 @@ gApp.object_view = {
     },
     loadConsumtionData: function(){
         gApp.httpApi.updateMaterialsConsumtionData(gApp.object_view.current_id)
+    },
+    loadRequestsData: function(){
+        gApp.httpApi.updateRequestsData(gApp.object_view.current_id)
+    },
+    fillRequestsTab: function(){
+
+        $('#object_view .requests-content').show();
+        $('#request_date_start').val(moment().subtract(2, 'week').format("YYYY-MM-DD"));
+        $('#request_date_end').val(moment().format("YYYY-MM-DD"));
+
+        $('#request_date_start, #request_date_end, .filters input').on('change', fillTable);
+        $('#requests_search_input').on('keyup', function(){fillTable()});
+
+        getRequestsData();
+
+        function getRequestsData (){
+            gApp.dataSaver.getRequestsByObject(gApp.object_view.current_id, function(data){
+                gApp.object_view.requests = data;
+                fillTable();
+            })
+        }
+        function fillTable(){
+            console.log('fill')
+            var table = $('#requests_table_content').html('')
+            //console.log(filtrateData(requestDataProvider()))
+            $.each (filtrateData(gApp.object_view.requests), function(i, req){
+                var request = $('<div class="request" data-request-id="'+req.id+'"></div>')
+                var request_header = $('<div class="request-header"></div>')
+                request_header.append($('<span> Заявка №'+req.type_id+'</span>'))
+                request_header.append($('<span>'+req.pos_count+' позиций</span>'))
+                request_header.append($('<span>от '+req.created_at+'</span>'))
+                request_header.append($('<span>на '+req.amount.toFixed(2)+' ₽</span>'))
+                request_header.append($('<span>'+(req.status)+'</span>'))
+                request.append(request_header);
+                $.each(req.documents, function(t, doc){
+                    var part = $('<div class="request-part"></div>')
+                    part.append($('<span>'+typeHumanized(doc.type)+' '+doc.type_id+'</span>'))
+                    part.append($('<span>'+doc.created_at+'</span>'))
+                    part.append($('<span>'+doc.contractor+'</span>'))
+                    part.append($('<span>'+doc.status+'</span>'))
+                    request.append(part);
+                })
+                table.append(request)
+            })
+            $('#requests_table_content .request').click(function(){
+                var id = ($(this).attr("data-request-id"));
+                var request = null;
+                $.each(gApp.object_view.requests, function(i,val){
+                    if (val.id == id) request = val;
+                });
+                gApp.object_view.showRequestDetail(request);
+            })
+        }
+        function typeHumanized(type){
+            types = {
+                'Invoice' : 'Счет',
+                'Request': 'Запрос'
+            }
+            return types[type];
+
+        }
+        function filtrateData(data){
+            var statuses = (function(){
+                 var res = [];
+                $.each($('.filters input:checked'),function(i,checkbox){
+                    res.push($(checkbox).attr('data-value'))
+                })
+                return res;
+            })();
+            var res = [];
+            var dateStart =  $('#request_date_start').val();
+            var dateEnd = $('#request_date_end').val();
+            var notation = $('#requests_search_input').val();
+            //console.log(statuses, dateStart, dateEnd, notation,data, moment("16.04.2015", 'DD.MM.YYYY'))
+            $.each(data, function(i,val){
+                 //console.log(moment(val.create_date, 'DD.MM.YYYY').isBetween(dateStart, dateEnd))
+                 if(!moment(val.created_at, 'DD.MM.YYYY').isBetween(dateStart, dateEnd))return;
+                 //console.log('date ok')
+                 if(statuses.indexOf(val.status)==-1) return;
+                 //console.log('stat ok')
+                 var is_notation_check = false;
+                 if(notation.length>=2){
+                     $.each(val.documents, function(t,doc){
+                         $.each(doc.items,function(k,item){
+                             if(item.notation_name.toLowerCase().indexOf(notation.toLowerCase())!=-1) is_notation_check = true;
+                         })
+                     });
+                     $.each(val.items, function(t,item){
+                         if(item.notation_name.toLowerCase().indexOf(notation.toLowerCase())!=-1) is_notation_check = true;
+                     });
+                 }
+                console.log(is_notation_check, notation.length>2,!is_notation_check && notation.length>2 )
+                if (!is_notation_check && notation.length>=2) return;
+                res.push(val)
+            })
+            //console.log('after filtrate',res)
+            return res;
+        }
+
+    },
+    showRequestDetail: function(req){
+        //console.log(req.documents[0].ship_price)
+         $('.requests-content').hide();
+         $('.request_details h1').text('Заявка №'+req.type_id+' от '+req.created_at)
+         $('.request_details h2').text('Автор: '+req.author)
+         var table = $('.request-detail-table').html('');
+        $.each (req.documents, function(i, doc){
+            var request = $('<div class="request"></div>')
+            var request_header = $('<div class="request-part-header"></div>')
+            request_header.append($('<span>'+typeHumanized(doc.type)+' №'+doc.type_id+'</span>'))
+            request_header.append($('<span>'+doc.contractor+'</span>'))
+            request_header.append($('<span>Доставка: '+(doc.ship_price||'-')+' ₽</span>'))
+            request.append(request_header);
+            //console.log(doc.ship_price)
+            $.each(doc.items, function(t, item){
+                var part = $('<div class="request-part-row"></div>')
+                part.append($('<span>'+item.notation_name+'</span>'))
+                part.append($('<span>'+item.quantity+" "+item.unit_name+'</span>'))
+                part.append($('<span>к '+item.required_date+'</span>'))
+                part.append($('<span>'+item.price+' ₽</span>'))
+                request.append(part);
+            })
+            table.append(request)
+        })
+        var request = $('<div class="request"></div>')
+        var request_header = $('<div class="request-part-header"></div>')
+        request_header.append($('<span>Не заказано</span>'))
+        request_header.append($('<span></span>'))
+        request_header.append($('<span></span>'))
+        request.append(request_header);
+        $.each(req.items, function(t, item){
+            var part = $('<div class="request-part-row"></div>')
+            part.append($('<span>'+item.notation_name+'</span>'))
+            part.append($('<span>'+item.quantity+" "+item.unit_name+'</span>'))
+            part.append($('<span>к '+item.required_date+'</span>'))
+            part.append($('<span>'+item.price+' ₽</span>'))
+            request.append(part);
+        })
+        table.append(request)
+         $('.request_details').show();
+
+
+        function typeHumanized(type){
+            types = {
+                'Invoice' : 'Счет',
+                'Request': 'Запрос'
+            }
+            return types[type];
+
+        }
+    },
+    hideRequestDetail: function(){
+        $('.requests-content').show();
+        $('.request_details').hide();
     }
 }
