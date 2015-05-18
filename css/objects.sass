@@ -400,5 +400,153 @@
     .right-arrow
       padding-right: 100px
 
+  .requests-content
+    .controls
+      padding-bottom: 10px
+    .dates
+      font-size: 26px
+      color: $light-gray
+      line-height: 70px
+      float: right
+      margin-right: 20px
+      input
+        height: 50px
+        font-family: "PT Sans", sans-serif
+        color: inherit
+        font-size: inherit
+        padding-left: 20px
+        width: 200px
+    .filters
+      float: right
+      color: $light-gray
+      input
+        display: none
+      label
+        font-size: 30px
+        font-weight: bold
+        //text-transform: uppercase
+        vertical-align: middle
+        display: table-cell
+        margin: 0
+        height: 60px
+        background-repeat: no-repeat
+        background-position: left center
+        padding-left: 50px
+        padding-right: 45px
 
+      input:checked+label
+        background-image: url('images/tf-header-checked.png')
 
+      input+label
+        background-image: url('images/tf-unchecked.png')
+    .search > div
+      width: 400px
+      margin-top: 10px
+      margin-left: 20px
+
+    .requests-table-content
+      margin-right: 20px
+      margin-left: 20px
+      overflow-y: scroll
+      height: 1200px
+      width: 1828px
+
+    .request
+      font-size: 30px
+      color: $light-gray
+      margin-top: 20px
+      .request-header
+        display: block
+        border-left: 10px solid $orange-color
+        border-bottom: 2px solid #D7DBDF
+        border-top: 4px solid
+        padding-left: 20px
+        min-height: 60px
+        span
+          display: table-cell
+          height: 60px
+          vertical-align: middle
+
+        span:first-child
+          width: 850px
+        span:nth-child(0n+2)
+          width: 250px
+        span:nth-child(0n+3)
+          width: 250px
+        span:nth-child(0n+4)
+          width: 250px
+        span:last-child
+          width: 250px
+      .request-part
+        display: block
+        margin-left: 300px
+        min-height: 60px
+        border-bottom: 2px solid #D7DBDF
+        &:last-child
+          border-bottom: 0px
+        span
+          display: table-cell
+          height: 60px
+          vertical-align: middle
+        span:first-child
+          width: 350px
+        span:nth-child(0n+2)
+          width: 250px
+        span:nth-child(0n+3)
+          width: 750px
+        span:last-child
+          width: 250px
+
+  .request_details
+    color: $dark-font
+    .close-button
+      font-size: 40px
+      position: absolute
+      top: 215px
+      left: 1975px
+      padding: 10px
+    h1,h2
+      text-align: center
+    .request-detail-table
+      padding-left: 20px
+      padding-right: 20px
+      overflow-y: scroll
+      max-height: 1200px
+      .request
+        font-size: 30px
+        color: $light-gray
+        margin-top: 40px
+      .request-part-header
+        display: block
+        border-left: 10px solid $orange-color
+        border-bottom: 2px solid #D7DBDF
+        padding-left: 20px
+        min-height: 60px
+        span
+          display: table-cell
+          height: 60px
+          vertical-align: middle
+
+        span:first-child
+          width: 650px
+        span:nth-child(0n+2)
+          width: 900px
+        span:last-child
+          width: 350px
+      .request-part-row
+        display: block
+        margin-left: 300px
+        min-height: 60px
+        border-bottom: 2px solid #D7DBDF
+        span
+          display: table-cell
+          height: 60px
+          vertical-align: middle
+        span:first-child
+          width: 650px
+        span:nth-child(0n+2)
+          width: 250px
+        span:nth-child(0n+3)
+          width: 450px
+        span:last-child
+          width: 250px
