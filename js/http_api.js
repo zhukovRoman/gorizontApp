@@ -63,6 +63,7 @@ gApp.httpApi = {
                 gApp.Noty.updateNotifications.push(nId);
                 console.log('plots update end')
             });
+
     },
     updateMaterialsConsumtionData: function(object_id, callback){
         console.log('materials_plot start update')
@@ -99,6 +100,51 @@ gApp.httpApi = {
                 gApp.Noty.updateNotifications.push(nId);
                 console.log('plots update end')
             });
+    },
+    updateObjectsDetailInfo: function(object_id, callbacks){
+        console.log('materials_plot start update')
+        $.ajax(gApp.httpApi.getRequestOption('plots/'+object_id+'/material_records'))
+            .done(function(data) {
+                //console.log(data);
+                //gApp.Noty.add('Данные по остаткам материалов на участке обновлены до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
+                gApp.dataSaver.setMaterialsPlotByObject(object_id , data)
+                console.log('plots update end', callbacks)
+
+                if(callbacks[0]){
+                    callbacks[0](data);
+                }
+                $.ajax(gApp.httpApi.getRequestOption('plots/'+object_id+'/orders'))
+                    .done(function(data) {
+                        //gApp.Noty.add('Данные по заявкам участка обновлены до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
+                        gApp.dataSaver.setRequestsByObject(object_id , data)
+
+                        console.log('plots update orders end', data)
+                        if(callbacks[1]){
+                            callback[1](data);
+                        }
+                        $.ajax(gApp.httpApi.getRequestOption('plots/'+object_id+'/materials_spent'))
+                            .done(function(data) {
+                                gApp.Noty.add('Детальные данные по участку обновлены до '+moment().format('DD.MM.YYYY'), Noty.types.success, null, 3000, true)
+                                gApp.dataSaver.setMaterialsConsumtionsByObject(object_id , data)
+                                console.log('plots update end')
+                                if(callbacks[2]){
+                                    callbacks[2](data);
+                                }
+                            })
+                            .error(errorfn)
+
+                    })
+                    .error(errorfn);
+
+            })
+            .error(errorfn);
+        function errorfn() {
+            console.log(gApp.Noty)
+            var nId =  gApp.Noty.add('Произошла ошибка при обновлении детальных данных по участку',Noty.types.error, null, 0, true);
+            console.log(gApp.Noty)
+            //gApp.Noty.updateNotifications.push(nId);
+            console.log('plots update end')
+        }
     }
 }
 

@@ -19,9 +19,10 @@ gApp.object_view = {
 
         gApp.object_view.fillObjectInfo()
         gApp.object_view.changeObjectViewTab();
-        gApp.object_view.loadStorageData();
-        gApp.object_view.loadConsumtionData();
-        gApp.object_view.loadRequestsData();
+        gApp.object_view.loadDetailData();
+        //gApp.object_view.loadStorageData();
+        //gApp.object_view.loadConsumtionData();
+        //gApp.object_view.loadRequestsData();
 
         $('#object_view .left-content [name=object-view-tab]').on('change', gApp.object_view.changeObjectViewTab)
         // TODO
@@ -818,10 +819,18 @@ gApp.object_view = {
             gApp.object_view.changeObjectViewTab();
         };
     },
+
+    loadDetailData: function(){
+         gApp.httpApi.updateObjectsDetailInfo(gApp.object_view.current_id, [function(mat_plot){
+
+             gApp.object_view.storage_materials = mat_plot;
+             console.log("gApp.object_view.storage_materials",gApp.object_view.storage_materials)
+         }])
+    } ,
     loadStorageData: function (){
-        gApp.httpApi.updateMaterialsPlotData(gApp.object_view.current_id, function(mat_plot){
+        gApp.httpApi.updateMaterialsPlotData(gApp.object_view.current_id,function(mat_plot){
             gApp.object_view.storage_materials = mat_plot;
-        })
+        } )
     },
     loadConsumtionData: function(){
         gApp.httpApi.updateMaterialsConsumtionData(gApp.object_view.current_id)
