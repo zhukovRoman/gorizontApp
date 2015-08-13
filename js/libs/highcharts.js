@@ -379,7 +379,7 @@ Highcharts.theme = {
 
     },
     tooltip:{
-        backgroundColor: "#fff",
+        backgroundColor: "white",
         borderWidth:0,
         animation: false,
         style:{

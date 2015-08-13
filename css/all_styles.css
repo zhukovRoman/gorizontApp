@@ -926,6 +926,10 @@ a.avto-menu-item.active {
       #object_view .request_details .request-detail-table .request-part-row span:last-child {
         width: 250px; }
 
+.highcharts-tooltip {
+  z-index: 10;
+  border: 0; }
+
 .gorizont-tooltip {
   background-color: #ffffff;
   font-size: 26px;
